@@ -1,3 +1,22 @@
+# Purion GT — site
+
+Landing page for Purion GT, built with Vite + React + TypeScript from the Claude Design handoff in `project/` (`Purion GT.dc.html`).
+
+```bash
+npm install
+npm run dev      # local dev server
+npm run build    # typecheck + production build in dist/
+```
+
+- `src/ds/` — TypeScript port of the PURION GT design system components; tokens are in `src/styles/tokens.css`.
+- `src/sections/` — one component per page section, in page order in `src/App.tsx`.
+- `src/lib/content.ts` — all copy, prices, notes, FAQ and reviews.
+- `public/assets`, `public/icons` — images and self-hosted Lucide icons.
+
+Still to fill in (marked `TODO` in the code): WhatsApp number, video files, newsletter integration, privacy/terms pages, and a real checkout (for now "Comprar agora" opens WhatsApp). Kit and subscription discounts (10% / 15% / 15%) came from the design and still need confirming.
+
+---
+
 # CODING AGENTS: READ THIS FIRST
 
 This is a **handoff bundle** from Claude Design (claude.ai/design).

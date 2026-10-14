@@ -1,0 +1,70 @@
+/* Google Fonts substitutes — see readme "Fonts". Archivo (variable width) = display; Geist = text; Geist Mono = data. */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..800&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap');
+:root{
+/* Ink — the black of the wordmark and night court */
+--ink-950:#0B0C0E;--ink-900:#141518;--ink-800:#1E2024;--ink-700:#2C2F34;--ink-600:#43474D;
+/* Steel — brushed cap */
+--steel-500:#8A8B86;--steel-400:#A9AAA5;--steel-300:#C8C8C3;--steel-200:#DCDCD8;
+/* Paper — warm stone / limestone facade */
+--paper-0:#FFFFFF;--paper-50:#F7F6F2;--paper-100:#EFEDE7;--paper-200:#E3E0D8;
+/* Ice — the liquid */
+--ice-100:#E6F0F3;--ice-200:#CFE3EA;--ice-400:#9FC4D1;--ice-600:#5B8C9C;--ice-800:#28505D;
+/* Sun — golden-hour reflections */
+--sun-200:#F4E9C9;--sun-400:#E6C374;--sun-600:#B98E33;
+/* Signal — sport accent, use sparingly (one per view) */
+--signal-400:#D6FF3D;--signal-500:#C3EE22;--signal-700:#6E8A08;
+/* Semantic */
+--success-500:#3E9B6B;--warning-500:#D99A2B;--danger-500:#D2463A;--info-500:var(--ice-600);
+
+/* Semantic aliases */
+--surface-page:var(--paper-50);--surface-card:var(--paper-0);--surface-sunken:var(--paper-100);
+--surface-inverse:var(--ink-950);--surface-inverse-raised:var(--ink-800);
+--surface-glass:rgba(255,255,255,.14);--surface-glass-dark:rgba(11,12,14,.42);
+--text-primary:var(--ink-950);--text-secondary:var(--ink-600);--text-muted:var(--steel-500);
+--text-inverse:var(--paper-0);--text-inverse-muted:rgba(255,255,255,.62);--text-accent:var(--signal-400);
+--border-subtle:rgba(11,12,14,.08);--border-strong:rgba(11,12,14,.18);--border-glass:rgba(255,255,255,.28);--border-inverse:rgba(255,255,255,.14);
+--action-primary:var(--ink-950);--action-primary-hover:var(--ink-700);--action-on-primary:var(--paper-0);
+--action-accent:var(--signal-400);--action-accent-hover:var(--signal-500);--action-on-accent:var(--ink-950);
+--focus-ring:var(--ice-400);
+}
+:root{
+--font-display:'Archivo','Helvetica Neue',Arial,sans-serif;
+--font-text:'Geist','Helvetica Neue',Arial,sans-serif;
+--font-mono:'Geist Mono',ui-monospace,Menlo,monospace;
+/* width axis for Archivo: compressed headlines / expanded labels */
+--wdth-tight:88;/* @kind font */--wdth-normal:100;/* @kind font */--wdth-wide:125;/* @kind font */
+--fs-mega:clamp(88px,14vw,232px);/* @kind font */--fs-display-xl:clamp(64px,9vw,136px);/* @kind font */--fs-display-l:clamp(48px,6vw,88px);/* @kind font */
+--fs-h1:56px;/* @kind font */--fs-h2:40px;/* @kind font */--fs-h3:28px;/* @kind font */--fs-h4:20px;/* @kind font */
+--fs-body-l:18px;/* @kind font */--fs-body:15px;/* @kind font */--fs-small:13px;/* @kind font */--fs-caption:11px;/* @kind font */
+--lh-mega:.84;/* @kind font */--lh-display:.9;/* @kind font */--lh-heading:1.02;/* @kind font */--lh-body:1.5;/* @kind font */--lh-tight:1.2;/* @kind font */
+--ls-mega:-.065em;/* @kind font */--ls-display:-.045em;/* @kind font */--ls-heading:-.03em;/* @kind font */--ls-body:-.005em;/* @kind font */--ls-caps:.14em;/* @kind font */
+--fw-light:300;/* @kind font */--fw-regular:400;/* @kind font */--fw-medium:500;/* @kind font */--fw-semibold:600;/* @kind font */--fw-bold:700;/* @kind font */
+}
+:root{
+--space-0:0;--space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:20px;--space-6:24px;--space-8:32px;--space-10:40px;--space-12:48px;--space-16:64px;--space-20:80px;--space-24:96px;--space-32:128px;--space-40:160px;
+--gutter:clamp(16px,2.2vw,28px);/* @kind spacing */--section-y:clamp(80px,12vw,180px);/* @kind spacing */--content-max:1440px;/* @kind spacing */
+--control-h-sm:32px;/* @kind spacing */--control-h-md:44px;/* @kind spacing */--control-h-lg:56px;/* @kind spacing */
+}
+:root{
+--radius-xs:6px;--radius-sm:12px;--radius-md:20px;--radius-lg:28px;--radius-xl:40px;--radius-pill:999px;
+--shadow-none:none;
+--shadow-sm:0 1px 2px rgba(11,12,14,.06),0 2px 8px rgba(11,12,14,.04);
+--shadow-md:0 8px 24px -8px rgba(11,12,14,.16),0 2px 6px rgba(11,12,14,.05);
+--shadow-lg:0 30px 60px -20px rgba(11,12,14,.28);
+--shadow-bottle:0 40px 50px -30px rgba(11,12,14,.45);
+--glass-blur:blur(18px) saturate(140%);/* @kind shadow */
+--inset-glass:inset 0 1px 0 rgba(255,255,255,.35);/* @kind shadow */
+--scrim-bottom:linear-gradient(180deg,rgba(11,12,14,0) 40%,rgba(11,12,14,.72) 100%);/* @kind shadow */
+--scrim-top:linear-gradient(0deg,rgba(11,12,14,0) 60%,rgba(11,12,14,.45) 100%);/* @kind shadow */
+}
+:root{
+--ease-out:cubic-bezier(.16,1,.3,1);/* @kind other */--ease-in-out:cubic-bezier(.65,0,.35,1);/* @kind other */--ease-soft:cubic-bezier(.33,1,.68,1);/* @kind other */
+--dur-fast:160ms;/* @kind other */--dur-base:320ms;/* @kind other */--dur-slow:640ms;/* @kind other */--dur-reveal:1100ms;/* @kind other */--dur-marquee:38s;/* @kind other */
+--stagger:70ms;/* @kind other */
+}
+@keyframes pg-marquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@keyframes pg-rise{from{transform:translate3d(0,105%,0)}to{transform:translate3d(0,0,0)}}
+@keyframes pg-fade-up{from{opacity:0;transform:translate3d(0,24px,0)}to{opacity:1;transform:none}}
+@keyframes pg-scale-in{from{transform:scale(1.12)}to{transform:scale(1)}}
+@keyframes pg-pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){:root{--dur-reveal:1ms;/* @kind other */--dur-slow:1ms;/* @kind other */--dur-marquee:0s/* @kind other */}}
