@@ -58,7 +58,7 @@ export function Manifesto() {
           ref={tile}
           style={{ width: 'min(380px,80%)', aspectRatio: '380/500', borderRadius: 'var(--radius-xl)', background: 'var(--paper-0)', boxShadow: 'var(--shadow-lg)', display: 'flex', alignItems: 'center', justifyContent: 'center', willChange: 'transform', transform: 'rotate(-6deg)' }}
         >
-          <img ref={bottle} src="/assets/bottle.png" alt="Frasco Purion GT" style={{ height: '84%', filter: 'drop-shadow(0 30px 30px rgba(11,12,14,.25))', willChange: 'transform' }} />
+          <img ref={bottle} src="assets/bottle.png" alt="Frasco Purion GT" style={{ height: '84%', filter: 'drop-shadow(0 30px 30px rgba(11,12,14,.25))', willChange: 'transform' }} />
         </div>
         <div
           style={{ position: 'absolute', left: 0, bottom: 24, width: 168, height: 168, borderRadius: '50%', background: 'var(--paper-0)', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', padding: 20, gap: 2, boxSizing: 'border-box' }}

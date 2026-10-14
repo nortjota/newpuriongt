@@ -78,7 +78,7 @@ export function Pyramid() {
             </div>
             <div style={{ position: 'absolute', left: '12%', right: '12%', bottom: '9%', height: '16%', borderRadius: '50%', background: glow, filter: 'blur(26px)', opacity: 0.95, zIndex: 2, pointerEvents: 'none', transition: 'background .8s var(--ease-out)' }} />
             <img
-              src="/assets/bottle.png"
+              src="assets/bottle.png"
               alt="Frasco Purion GT"
               style={{ position: 'absolute', left: '50%', top: '50%', height: '86%', transform: 'translate(-50%,-50%)', zIndex: 3, pointerEvents: 'none', filter: 'drop-shadow(0 30px 24px rgba(0,0,0,.45))' }}
             />

@@ -39,7 +39,7 @@ export function QuickBuy() {
         <div style={{ position: 'relative', minHeight: 'clamp(420px,52vw,680px)', borderRadius: 'var(--radius-xl)', overflow: 'hidden', background: 'var(--paper-100)' }}>
           <img
             className="h-zoom105"
-            src="/assets/product-studio.png"
+            src="assets/product-studio.png"
             alt="Purion GT 60 ml"
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 1.4s var(--ease-out)' }}
           />

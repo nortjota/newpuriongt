@@ -89,7 +89,7 @@ export function Quiz() {
             </div>
           ) : (
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(200px,1fr))', gap: 24, alignItems: 'center', animation: 'pg-fade-up .8s var(--ease-out) both' }}>
-              <div role="img" aria-label="Frasco Purion GT" style={{ aspectRatio: '3/4', borderRadius: 'var(--radius-lg)', background: 'var(--paper-100) center/auto 86% no-repeat url(/assets/bottle.png)' }} />
+              <div role="img" aria-label="Frasco Purion GT" style={{ aspectRatio: '3/4', borderRadius: 'var(--radius-lg)', background: 'var(--paper-100) center/auto 86% no-repeat url(assets/bottle.png)' }} />
               <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
                 <span style={caps()}>Compatibilidade {80 + cnt[win] * 4}%</span>
                 <h3 style={{ margin: 0, ...display(44, '-.045em', 0.92) }}>{res.title}</h3>

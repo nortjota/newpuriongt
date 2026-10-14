@@ -75,7 +75,7 @@ export function Offer() {
         // Sticky only beside the panel; stacked on phones it would cover the plan options.
         style={{ position: wide ? 'sticky' : 'relative', top: 84, height: 'clamp(480px,62vw,720px)', borderRadius: 'var(--radius-xl)', background: 'var(--paper-100)', overflow: 'hidden', cursor: 'pointer' }}
       >
-        <img ref={img} src="/assets/product-studio.png" alt="Purion GT 60 ml" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.04)', transition: 'transform 1.1s var(--ease-out)', willChange: 'transform' }} />
+        <img ref={img} src="assets/product-studio.png" alt="Purion GT 60 ml" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transform: 'scale(1.04)', transition: 'transform 1.1s var(--ease-out)', willChange: 'transform' }} />
         <div style={{ position: 'absolute', left: 22, top: 22, display: 'flex', gap: 8 }}>
           <Badge tone="ink">35% off</Badge>
         </div>

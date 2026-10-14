@@ -18,7 +18,7 @@ import {
 export type IconProps = HTMLAttributes<HTMLSpanElement> & { name?: string; size?: number; color?: string };
 
 export function Icon({ name = 'arrow-up-right', size = 18, color = 'currentColor', style, ...rest }: IconProps) {
-  const url = `url(/icons/${name}.svg)`;
+  const url = `url(icons/${name}.svg)`;
   return (
     <span
       aria-hidden="true"

@@ -140,7 +140,7 @@ export function EmailPopup() {
   return (
     <Dialog open={open} onClose={() => setOpen(false)} width={500}>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-        <div style={{ height: 180, margin: '-4px 0 4px', borderRadius: 'var(--radius-md)', background: 'center 45%/cover url(/assets/hero-banner.png)' }} />
+        <div style={{ height: 180, margin: '-4px 0 4px', borderRadius: 'var(--radius-md)', background: 'center 45%/cover url(assets/hero-banner.png)' }} />
         {!done ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
             <span style={caps()}>Lista Purion</span>

@@ -45,7 +45,7 @@ export function DriveScene() {
     <section ref={sec} data-screen-label="A viagem" style={{ position: 'relative', height: '340vh' }}>
       <div style={{ position: 'sticky', top: 0, height: '100vh', padding: 10, boxSizing: 'border-box' }}>
         <div style={{ position: 'relative', height: '100%', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--ink-950)', color: 'var(--paper-0)' }}>
-          <div ref={img} style={{ position: 'absolute', inset: 0, background: 'center 55%/cover url(/assets/hero-street.png)', transform: 'scale(1.3)', willChange: 'transform' }} />
+          <div ref={img} style={{ position: 'absolute', inset: 0, background: 'center 55%/cover url(assets/hero-street.png)', transform: 'scale(1.3)', willChange: 'transform' }} />
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(90deg,rgba(11,12,14,.78) 0%,rgba(11,12,14,.35) 55%,rgba(11,12,14,.1) 100%)' }} />
           <div ref={dots} aria-hidden="true" style={{ position: 'absolute', inset: 0, pointerEvents: 'none', overflow: 'hidden' }}>
             {DOTS.map((d, i) => (

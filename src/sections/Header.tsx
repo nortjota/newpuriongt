@@ -56,7 +56,7 @@ export function Header() {
           ))}
       </nav>
       <a href="#topo" style={{ display: 'flex', alignItems: 'center', gap: 10, color: 'inherit' }}>
-        <img src="/assets/logo-mark.png" alt="PURION GT" style={{ height: 42, filter: hdr.logoFilter, transition: 'filter var(--dur-slow)' }} />
+        <img src="assets/logo-mark.png" alt="PURION GT" style={{ height: 42, filter: hdr.logoFilter, transition: 'filter var(--dur-slow)' }} />
       </a>
       <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: 14 }}>
         {wide && (

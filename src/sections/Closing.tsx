@@ -18,9 +18,9 @@ export function FinalCta() {
       data-screen-label="CTA final"
       style={{ position: 'relative', margin: 10, borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--ink-900)', color: 'var(--paper-0)', padding: 'clamp(100px,14vw,180px) var(--gutter)', textAlign: 'center' }}
     >
-      <div ref={img} style={{ position: 'absolute', inset: '-15% 0', background: 'center 70%/cover url(/assets/hero-street.png)', opacity: 0.42, willChange: 'transform' }} />
+      <div ref={img} style={{ position: 'absolute', inset: '-15% 0', background: 'center 70%/cover url(assets/hero-street.png)', opacity: 0.42, willChange: 'transform' }} />
       <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 28 }}>
-        <img src="/assets/logo-mark.png" alt="" style={{ height: 28 }} />
+        <img src="assets/logo-mark.png" alt="" style={{ height: 28 }} />
         <div style={{ fontSize: 'var(--fs-display-l)' }}>
           <RevealText as="h2" text="Seu carro nunca mais" lineStyle={ghostLight} />
           <RevealText as="div" delay={120} text="vai cheirar ao mesmo." />
@@ -44,7 +44,7 @@ export function Footer() {
     <footer style={{ background: 'var(--ink-950)', color: 'var(--paper-0)', margin: 10, borderRadius: 'var(--radius-lg)', overflow: 'hidden', padding: '64px var(--gutter) 0' }}>
       <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', gap: 32, maxWidth: 'var(--content-max)', margin: '0 auto' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 14, maxWidth: 340 }}>
-          <img src="/assets/logo-mark.png" alt="PURION GT" style={{ height: 22, alignSelf: 'flex-start' }} />
+          <img src="assets/logo-mark.png" alt="PURION GT" style={{ height: 22, alignSelf: 'flex-start' }} />
           <span style={{ fontSize: 14, lineHeight: 1.5, color: 'var(--text-inverse-muted)' }}>Exala presença. Deixa memória.</span>
         </div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 28, fontSize: 14 }}>

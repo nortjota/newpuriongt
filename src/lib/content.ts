@@ -113,14 +113,14 @@ export const QUIZ_RESULTS: Record<1 | 2 | 3, { title: string; body: string }> = 
 export type Video = { t: 'Influencers' | 'UGC' | 'Clientes'; h: string; title: string; img: string; pos: string; src: string };
 // TODO: replace `src` with real MP4 (9:16) files from influencers, UGC and customers.
 export const VIDEOS: Video[] = [
-  { t: 'Influencers', h: '@creator', title: 'Primeira impressão no carro', img: '/assets/hero-banner.png', pos: '72% center', src: '' },
-  { t: 'UGC', h: '@cliente', title: 'Unboxing Purion GT', img: '/assets/product-studio.png', pos: 'center', src: '' },
-  { t: 'Clientes', h: 'Gilson · Itajaí/SC', title: '“Todo mundo pergunta o que é”', img: '/assets/hero-street.png', pos: 'left center', src: '' },
-  { t: 'Influencers', h: '@creator', title: 'Teste de fixação', img: '/assets/hero-street.png', pos: 'right center', src: '' },
-  { t: 'UGC', h: '@cliente', title: 'POV: entrando no carro', img: '/assets/hero-banner.png', pos: '58% center', src: '' },
-  { t: 'Clientes', h: 'Marcos · BH/MG', title: '“O frasco fica bonito no porta-luvas”', img: '/assets/product-studio.png', pos: 'center', src: '' },
-  { t: 'Influencers', h: '@creator', title: 'Review completo', img: '/assets/hero-banner.png', pos: '85% center', src: '' },
-  { t: 'UGC', h: '@cliente', title: 'Antes e depois do habitáculo', img: '/assets/hero-street.png', pos: 'center', src: '' },
+  { t: 'Influencers', h: '@creator', title: 'Primeira impressão no carro', img: 'assets/hero-banner.png', pos: '72% center', src: '' },
+  { t: 'UGC', h: '@cliente', title: 'Unboxing Purion GT', img: 'assets/product-studio.png', pos: 'center', src: '' },
+  { t: 'Clientes', h: 'Gilson · Itajaí/SC', title: '“Todo mundo pergunta o que é”', img: 'assets/hero-street.png', pos: 'left center', src: '' },
+  { t: 'Influencers', h: '@creator', title: 'Teste de fixação', img: 'assets/hero-street.png', pos: 'right center', src: '' },
+  { t: 'UGC', h: '@cliente', title: 'POV: entrando no carro', img: 'assets/hero-banner.png', pos: '58% center', src: '' },
+  { t: 'Clientes', h: 'Marcos · BH/MG', title: '“O frasco fica bonito no porta-luvas”', img: 'assets/product-studio.png', pos: 'center', src: '' },
+  { t: 'Influencers', h: '@creator', title: 'Review completo', img: 'assets/hero-banner.png', pos: '85% center', src: '' },
+  { t: 'UGC', h: '@cliente', title: 'Antes e depois do habitáculo', img: 'assets/hero-street.png', pos: 'center', src: '' },
 ];
 export const VIDEO_TABS = ['Todos', 'Influencers', 'UGC', 'Clientes'];
 

@@ -52,7 +52,7 @@ export function Story() {
             <p style={body}>
               Você investe R$ 80 mil, R$ 150 mil, R$ 300 mil num carro. Polimento cerâmico, bancos de couro, som premium. E no retrovisor, um papelão em forma de árvore. A Purion GT nasceu da raiva saudável de quem ama carros demais para aceitar isso.
             </p>
-            <div style={{ height: 300, borderRadius: 'var(--radius-lg)', background: 'center 60%/cover url(/assets/hero-street.png)' }} />
+            <div style={{ height: 300, borderRadius: 'var(--radius-lg)', background: 'center 60%/cover url(assets/hero-street.png)' }} />
           </article>
           <article data-ch="1" style={article}>
             <span style={mono(12, 'var(--text-muted)')}>Capítulo 2</span>
@@ -70,7 +70,7 @@ export function Story() {
             <span style={mono(12, 'var(--text-muted)')}>Capítulo 3</span>
             <h3 style={h3}>O interior, enfim, combina com o exterior.</h3>
             <p style={body}>Um frasco de vidro que você vai querer exibir. Até 700 borrifadas. Um produto à altura do carro que você escolheu.</p>
-            <div role="img" aria-label="Frasco Purion GT" style={{ height: 300, borderRadius: 'var(--radius-lg)', background: 'var(--paper-100) center/auto 86% no-repeat url(/assets/bottle.png)' }} />
+            <div role="img" aria-label="Frasco Purion GT" style={{ height: 300, borderRadius: 'var(--radius-lg)', background: 'var(--paper-100) center/auto 86% no-repeat url(assets/bottle.png)' }} />
           </article>
         </div>
       </div>

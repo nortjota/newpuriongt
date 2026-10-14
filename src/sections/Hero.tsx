@@ -31,7 +31,7 @@ export function Hero() {
         style={{ position: 'relative', margin: 10, width: 'calc(100% - 20px)', borderRadius: 'var(--radius-lg)', overflow: 'hidden', background: 'var(--ink-900)', aspectRatio: '1672/941', minHeight: 420 }}
       >
         <div ref={img} style={{ position: 'absolute', inset: 0, willChange: 'transform' }}>
-          <div style={{ position: 'absolute', inset: 0, background: 'center/cover url(/assets/hero-banner.png)', animation: 'pg-scale-in 2.2s var(--ease-out)' }} />
+          <div style={{ position: 'absolute', inset: 0, background: 'center/cover url(assets/hero-banner.png)', animation: 'pg-scale-in 2.2s var(--ease-out)' }} />
           {/* Click target over the "Conheça" button painted into the banner artwork */}
           <a href="#comprar" aria-label="Conheça o Purion GT" style={{ position: 'absolute', left: '5.2%', top: '56.6%', width: '16.8%', height: '7%', borderRadius: 'var(--radius-pill)' }} />
         </div>
