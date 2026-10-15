@@ -1,17 +1,53 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { PenLine, Star } from "lucide-react";
 import { REVIEWS_SEED } from "@/lib/content/reviews.seed";
 import Marquee from "@/components/ui/Marquee";
 import ReviewSubmitModal from "@/components/widgets/ReviewSubmitModal";
 
-// O spotlight rotativo automático ganha interatividade no Marco 7 — por ora
-// mostra sempre o primeiro depoimento. O modal de depoimento já funciona
-// (grava só no localStorage do navegador, como no protótipo).
+const SPOTLIGHT_INTERVAL = 6000;
+
+// Anima de 0% a 100% ao montar — remontado (via `key`) a cada vez que o
+// spotlight muda, reproduzindo a barra "width 6s linear" do protótipo.
+function ScrubProgress({ durationMs }: { durationMs: number }) {
+  const [full, setFull] = useState(false);
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setFull(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+  return (
+    <span
+      className="block h-full bg-paper-0"
+      style={{ width: full ? "100%" : "0%", transition: `width ${durationMs}ms linear` }}
+    />
+  );
+}
+
 export default function Reviews() {
-  const spotlight = REVIEWS_SEED[0];
   const [reviewOpen, setReviewOpen] = useState(false);
+  const [spot, setSpot] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  function startTimer() {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => setSpot((s) => (s + 1) % REVIEWS_SEED.length), SPOTLIGHT_INTERVAL);
+  }
+
+  useEffect(() => {
+    startTimer();
+    return () => {
+      if (timerRef.current) clearInterval(timerRef.current);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  function jumpTo(i: number) {
+    setSpot(i);
+    startTimer();
+  }
+
+  const spotlight = REVIEWS_SEED[spot];
 
   return (
     <section id="avaliacoes" className="py-[var(--section-y)]">
@@ -75,7 +111,7 @@ export default function Reviews() {
               ))}
             </div>
             <span className="font-mono text-xs text-[var(--text-inverse-muted)]">
-              01 / {String(REVIEWS_SEED.length).padStart(2, "0")}
+              {String(spot + 1).padStart(2, "0")} / {String(REVIEWS_SEED.length).padStart(2, "0")}
             </span>
           </div>
           <figure className="relative m-0 flex flex-col gap-7">
@@ -99,9 +135,15 @@ export default function Reviews() {
           </figure>
           <div className="relative flex gap-1.5">
             {REVIEWS_SEED.map((r, i) => (
-              <span key={r.name} className="h-1 flex-1 overflow-hidden rounded bg-white/16">
-                <span className="block h-full bg-paper-0" style={{ width: i === 0 ? "100%" : "0%" }} />
-              </span>
+              <button key={r.name} onClick={() => jumpTo(i)} aria-label="Ver depoimento" className="h-[18px] flex-1 py-[7px]">
+                <span className="block h-1 overflow-hidden rounded bg-white/16">
+                  {i < spot ? (
+                    <span className="block h-full w-full bg-paper-0" />
+                  ) : i === spot ? (
+                    <ScrubProgress key={`${spot}-${i}`} durationMs={SPOTLIGHT_INTERVAL} />
+                  ) : null}
+                </span>
+              </button>
             ))}
           </div>
         </div>
