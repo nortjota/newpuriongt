@@ -58,8 +58,8 @@ export default function TermsPage() {
           Conforme o Código de Defesa do Consumidor (Art. 49), você tem até 7 dias corridos após o recebimento do
           produto para desistir da compra, sem precisar justificar o motivo, com devolução integral do valor pago.
           Para exercer esse direito, fale com a gente pelo WhatsApp ou por{" "}
-          <a href="mailto:contato@puriongt.com.br" className="underline">
-            contato@puriongt.com.br
+          <a href="mailto:puriongt@gmail.com" className="underline">
+            puriongt@gmail.com
           </a>
           .
         </p>
@@ -131,8 +131,8 @@ export default function TermsPage() {
         <h2 className="font-display text-xl font-medium text-ink-950">13. Contato</h2>
         <p className="mt-3">
           Dúvidas sobre estes termos? Fale com a gente em{" "}
-          <a href="mailto:contato@puriongt.com.br" className="underline">
-            contato@puriongt.com.br
+          <a href="mailto:puriongt@gmail.com" className="underline">
+            puriongt@gmail.com
           </a>{" "}
           ou pelo WhatsApp.
         </p>

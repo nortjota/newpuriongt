@@ -1,29 +1,58 @@
 import Image from "next/image";
 import { WHATSAPP_URL } from "@/lib/content/whatsapp";
 
+const INSTITUCIONAL = [
+  { href: "#historia", label: "Nossa história" },
+  { href: "#fragrancia", label: "Fragrância" },
+  { href: "#avaliacoes", label: "Avaliações" },
+  { href: "/privacy", label: "Política de Privacidade" },
+  { href: "/terms", label: "Termos de Uso" },
+];
+
+const ATENDIMENTO = [
+  { href: WHATSAPP_URL, label: "Falar no WhatsApp", external: true },
+  { href: "#faq", label: "Perguntas frequentes" },
+  { href: "https://instagram.com/puriongt", label: "Instagram @puriongt", external: true },
+  { href: "mailto:puriongt@gmail.com", label: "puriongt@gmail.com" },
+];
+
 export default function Footer() {
   return (
     <footer className="m-[10px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 px-6 pt-16 text-paper-0">
-      <div className="mx-auto flex max-w-[var(--content-max)] flex-wrap justify-between gap-8">
+      <div className="mx-auto grid max-w-[var(--content-max)] gap-10 [grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))]">
         <div className="flex max-w-[340px] flex-col gap-3">
-          <Image src="/logo-mark.png" alt="PURION GT" width={22} height={22} className="h-[22px] w-auto" />
+          <Image src="/logo-white.png" alt="PURION GT" width={150} height={37} className="h-7 w-auto" />
           <span className="text-sm leading-relaxed text-[var(--text-inverse-muted)]">
             Exala presença. Deixa memória.
           </span>
         </div>
-        <div className="flex flex-wrap gap-7 text-sm">
-          <a href="https://instagram.com/puriongt" target="_blank" rel="noreferrer" className="text-paper-0">
-            Instagram @puriongt
-          </a>
-          <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="text-paper-0">
-            WhatsApp
-          </a>
-          <a href="/privacy" className="text-[var(--text-inverse-muted)]">
-            Política de Privacidade
-          </a>
-          <a href="/terms" className="text-[var(--text-inverse-muted)]">
-            Termos
-          </a>
+
+        <div className="flex flex-col gap-3.5">
+          <span className="text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
+            Institucional
+          </span>
+          {INSTITUCIONAL.map((link) => (
+            <a key={link.label} href={link.href} className="text-sm text-paper-0/90 hover:text-paper-0">
+              {link.label}
+            </a>
+          ))}
+        </div>
+
+        <div className="flex flex-col gap-3.5">
+          <span className="text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
+            Central de Atendimento
+          </span>
+          {ATENDIMENTO.map((link) => (
+            <a
+              key={link.label}
+              href={link.href}
+              target={link.external ? "_blank" : undefined}
+              rel={link.external ? "noreferrer" : undefined}
+              className="text-sm text-paper-0/90 hover:text-paper-0"
+            >
+              {link.label}
+            </a>
+          ))}
         </div>
       </div>
 

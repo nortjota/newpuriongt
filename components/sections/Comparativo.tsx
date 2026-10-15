@@ -139,7 +139,7 @@ export default function Comparativo() {
             </span>
             <span className={`block h-2 overflow-hidden rounded ${winning ? "bg-white/10" : "bg-ink-950/8"}`}>
               <span
-                className={`block h-full rounded ${winning ? "bg-signal-400" : "bg-steel-400"}`}
+                className={`block h-full rounded ${winning ? "bg-signal-400" : "bg-[var(--danger-500)]"}`}
                 style={{ width: `${score}%`, transition: "width 1.2s var(--ease-out)" }}
               />
             </span>
@@ -182,7 +182,7 @@ export default function Comparativo() {
                       className="h-1.5 flex-1 rounded transition-colors duration-500"
                       style={{
                         background: i < filled
-                          ? winning ? "var(--signal-400)" : "var(--steel-400)"
+                          ? winning ? "var(--signal-400)" : "var(--danger-500)"
                           : winning ? "rgba(255,255,255,.1)" : "rgba(11,12,14,.08)",
                         transitionDelay: `${i * 80}ms`,
                       }}

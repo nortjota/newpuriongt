@@ -111,8 +111,8 @@ export default function PrivacyPage() {
         </ul>
         <p className="mt-3">
           Para exercer qualquer um desses direitos, escreva para{" "}
-          <a href="mailto:contato@puriongt.com.br" className="underline">
-            contato@puriongt.com.br
+          <a href="mailto:puriongt@gmail.com" className="underline">
+            puriongt@gmail.com
           </a>{" "}
           ou fale com a gente no WhatsApp.
         </p>
@@ -131,8 +131,8 @@ export default function PrivacyPage() {
         <h2 className="font-display text-xl font-medium text-ink-950">Contato</h2>
         <p className="mt-3">
           Dúvidas sobre esta política? Fale com a gente em{" "}
-          <a href="mailto:contato@puriongt.com.br" className="underline">
-            contato@puriongt.com.br
+          <a href="mailto:puriongt@gmail.com" className="underline">
+            puriongt@gmail.com
           </a>
           .
         </p>

@@ -89,7 +89,7 @@ export default function SprayJourney() {
             <span className="font-mono">GT · 60 ml</span>
           </div>
 
-          <div className="absolute left-6 top-1/2 grid max-w-[min(640px,86vw)] -translate-y-1/2">
+          <div className="absolute left-6 top-1/2 grid max-w-[min(640px,62vw)] -translate-y-1/2 sm:max-w-[min(640px,86vw)]">
             {JOURNEY_STEPS.map((step, i) => (
               <div
                 key={step.label}
@@ -111,7 +111,7 @@ export default function SprayJourney() {
             ))}
           </div>
 
-          <div className="absolute right-6 top-1/2 flex aspect-square w-[clamp(120px,14vw,180px)] -translate-y-1/2 items-center justify-center">
+          <div className="absolute right-4 top-1/2 hidden aspect-square w-[clamp(90px,14vw,180px)] -translate-y-1/2 items-center justify-center sm:right-6 sm:flex">
             <svg viewBox="0 0 120 120" className="absolute inset-0 h-full w-full -rotate-90">
               <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,.14)" strokeWidth="3" />
               <motion.circle

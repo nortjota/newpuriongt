@@ -43,14 +43,11 @@ export default function Header() {
 
       <a href="#topo" className="flex items-center gap-2 justify-self-center">
         <Image
-          src="/logo-mark.png"
+          src={scrolled ? "/logo-black.png" : "/logo-white.png"}
           alt="PURION GT"
-          width={42}
-          height={42}
-          className={`h-[42px] w-auto transition-[filter] duration-500 ${
-            scrolled ? "" : "invert brightness-0 saturate-0 contrast-200"
-          }`}
-          style={scrolled ? undefined : { filter: "invert(1)" }}
+          width={160}
+          height={37}
+          className="h-7 w-auto sm:h-8"
           priority
         />
       </a>

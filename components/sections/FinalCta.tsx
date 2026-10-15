@@ -16,7 +16,7 @@ export default function FinalCta() {
         <Image src="/hero-street.png" alt="" fill className="object-cover" style={{ objectPosition: "center 70%" }} />
       </motion.div>
       <div className="relative flex flex-col items-center gap-7">
-        <Image src="/logo-mark.png" alt="" width={28} height={28} className="h-7 w-auto" />
+        <Image src="/logo-white.png" alt="" width={150} height={37} className="h-7 w-auto" />
         <div
           className="font-display text-[var(--fs-display-l)] font-medium leading-[0.9] tracking-[var(--ls-display)]"
           style={{ fontVariationSettings: "'wdth' 88" }}
