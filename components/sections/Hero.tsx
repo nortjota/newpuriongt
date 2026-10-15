@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 
 export default function Hero() {
@@ -20,9 +21,10 @@ export default function Hero() {
           initial={reduceMotion ? false : { scale: 1.12 }}
           animate={{ scale: 1 }}
           transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url(/hero-banner.png)" }}
-        />
+          className="absolute inset-0"
+        >
+          <Image src="/hero-banner.png" alt="" fill priority className="object-cover" sizes="100vw" />
+        </motion.div>
       </motion.div>
       <div className="absolute inset-0" style={{ background: "var(--scrim-top)" }} />
 

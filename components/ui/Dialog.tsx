@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import type { ReactNode } from "react";
 
@@ -15,12 +15,15 @@ export default function Dialog({
   width?: number;
   children: ReactNode;
 }) {
+  const panelRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") onClose();
     };
     document.addEventListener("keydown", onKey);
+    panelRef.current?.focus();
     return () => document.removeEventListener("keydown", onKey);
   }, [open, onClose]);
 
@@ -29,7 +32,11 @@ export default function Dialog({
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-ink-950/60 p-4" onClick={onClose}>
       <div
-        className="relative max-h-[86vh] w-full overflow-y-auto rounded-[var(--radius-lg)] bg-paper-0 p-6 sm:p-8"
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        tabIndex={-1}
+        className="relative max-h-[86vh] w-full overflow-y-auto rounded-[var(--radius-lg)] bg-paper-0 p-6 outline-none sm:p-8"
         style={{ maxWidth: width }}
         onClick={(e) => e.stopPropagation()}
       >

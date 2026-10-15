@@ -1,10 +1,13 @@
+"use client";
+
+import { useState } from "react";
 import { Plus } from "lucide-react";
 import { FAQ } from "@/lib/content/faq";
 import { WHATSAPP_URL } from "@/lib/content/whatsapp";
 
-// Estático (Marco 1): o accordion abre/fecha de verdade no Marco 8. A primeira
-// pergunta aparece aberta, como no estado inicial do protótipo.
 export default function Faq() {
+  const [open, setOpen] = useState(0);
+
   return (
     <section
       id="faq"
@@ -28,15 +31,18 @@ export default function Faq() {
 
       <div className="flex flex-col gap-2">
         {FAQ.map((item, i) => {
-          const open = i === 0;
+          const isOpen = open === i;
           return (
             <div
               key={item.q}
-              className={`overflow-hidden rounded-[var(--radius-md)] border ${
-                open ? "border-ink-950 bg-ink-950 text-paper-0" : "border-[var(--border-subtle)] bg-paper-0 text-ink-950"
+              className={`overflow-hidden rounded-[var(--radius-md)] border transition-colors duration-500 ${
+                isOpen ? "border-ink-950 bg-ink-950 text-paper-0" : "border-[var(--border-subtle)] bg-paper-0 text-ink-950"
               }`}
             >
-              <div className="flex items-center gap-4.5 px-5.5 py-5.5">
+              <button
+                onClick={() => setOpen(isOpen ? -1 : i)}
+                className="flex w-full items-center gap-4.5 px-5.5 py-5.5 text-left transition-[padding] hover:pl-7.5"
+              >
                 <span className="flex-none font-mono text-xs opacity-55">{String(i + 1).padStart(2, "0")}</span>
                 <span
                   className="flex-1 font-display text-[clamp(18px,1.6vw,22px)] font-medium leading-tight tracking-[-0.02em]"
@@ -45,15 +51,22 @@ export default function Faq() {
                   {item.q}
                 </span>
                 <span
-                  className={`flex h-9 w-9 flex-none items-center justify-center rounded-full ${
-                    open ? "bg-signal-400 text-ink-950" : "bg-paper-100 text-ink-950"
+                  className={`flex h-9 w-9 flex-none items-center justify-center rounded-full transition-transform duration-700 ${
+                    isOpen ? "bg-signal-400 text-ink-950" : "bg-paper-100 text-ink-950"
                   }`}
-                  style={{ transform: open ? "rotate(135deg)" : "none" }}
+                  style={{ transform: isOpen ? "rotate(135deg)" : "none" }}
                 >
                   <Plus size={16} />
                 </span>
+              </button>
+              <div
+                className="grid transition-[grid-template-rows] duration-700"
+                style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
+              >
+                <div className="overflow-hidden">
+                  <p className="m-0 px-14 pb-6 text-[15px] leading-relaxed">{item.a}</p>
+                </div>
               </div>
-              {open && <p className="m-0 px-14 pb-6 text-[15px] leading-relaxed">{item.a}</p>}
             </div>
           );
         })}

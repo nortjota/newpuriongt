@@ -1,6 +1,7 @@
 "use client";
 
 import { useReducer, useRef } from "react";
+import Image from "next/image";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { JOURNEY_STEPS } from "@/lib/content/journey";
 
@@ -69,10 +70,9 @@ export default function SprayJourney() {
     <section ref={ref} className="relative" style={{ height: "340vh" }}>
       <div className="sticky top-0 h-screen p-[10px]">
         <div className="relative h-full overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 text-paper-0">
-          <motion.div
-            className="absolute inset-0 bg-cover will-change-transform"
-            style={{ backgroundImage: "url(/hero-street.png)", backgroundPosition: "center 55%", scale: imageScale, x: imageX }}
-          />
+          <motion.div className="absolute inset-0 will-change-transform" style={{ scale: imageScale, x: imageX }}>
+            <Image src="/hero-street.png" alt="" fill className="object-cover" style={{ objectPosition: "center 55%" }} sizes="100vw" />
+          </motion.div>
           <div
             className="absolute inset-0"
             style={{ background: "linear-gradient(90deg,rgba(11,12,14,.78) 0%,rgba(11,12,14,.35) 55%,rgba(11,12,14,.1) 100%)" }}
