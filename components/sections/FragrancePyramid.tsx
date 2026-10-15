@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Calendar, Flower2, Gauge, Layers, Leaf, Moon, Snowflake, Sun, SunMedium } from "lucide-react";
 import { ACCORDS, FRAGRANCE_LAYERS, NOTE_COLORS, PERFORMANCE, SEASONS } from "@/lib/content/fragrance";
+import RevealBar from "@/components/ui/RevealBar";
 
 const SEASON_ICONS: Record<string, typeof Snowflake> = {
   snowflake: Snowflake,
@@ -116,12 +117,13 @@ export default function FragrancePyramid() {
           <div className="flex flex-col gap-1">
             {ACCORDS.map((a) => (
               <div key={a.key} className="flex h-[34px]">
-                <div
+                <RevealBar
+                  targetWidth={`${a.pct}%`}
                   className="flex items-center justify-center overflow-hidden whitespace-nowrap rounded-r-xl text-sm font-medium"
-                  style={{ width: `${a.pct}%`, background: a.color, color: a.dark ? "var(--ink-950)" : "var(--paper-0)" }}
+                  style={{ background: a.color, color: a.dark ? "var(--ink-950)" : "var(--paper-0)" }}
                 >
                   {a.key}
-                </div>
+                </RevealBar>
               </div>
             ))}
           </div>
@@ -141,7 +143,7 @@ export default function FragrancePyramid() {
                 </span>
                 <span className="text-[13px]">{s.key}</span>
                 <span className="block h-[5px] w-full overflow-hidden rounded-full bg-white/10">
-                  <span className="block h-full rounded-full" style={{ width: `${s.pct}%`, background: s.color }} />
+                  <RevealBar targetWidth={`${s.pct}%`} className="block h-full rounded-full" style={{ background: s.color }} />
                 </span>
                 <span className="font-mono text-[11px] text-[var(--text-inverse-muted)]">{s.pct}%</span>
               </div>

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { WHATSAPP_URL } from "@/lib/content/whatsapp";
+import { usePurion } from "@/lib/store/PurionProvider";
 
 const NAV_LINKS = [
   { href: "#fragrancia", label: "Fragrância" },
@@ -15,7 +16,7 @@ const NAV_LINKS = [
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
-  const [cartCount] = useState(0);
+  const { state } = usePurion();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -63,14 +64,14 @@ export default function Header() {
         >
           WhatsApp
         </a>
-        <button
-          type="button"
+        <a
+          href="#comprar"
           className={`flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium transition-colors ${
             scrolled ? "bg-ink-950 text-paper-0" : "bg-paper-0 text-ink-950"
           }`}
         >
-          Sacola · {cartCount}
-        </button>
+          Sacola · {state.cart}
+        </a>
       </div>
     </header>
   );

@@ -1,5 +1,6 @@
 import { Check } from "lucide-react";
 import { COMPARATIVO_TILES } from "@/lib/content/comparativo";
+import RevealBar from "@/components/ui/RevealBar";
 
 // Estado padrão (Marco 1): "Purion GT" venceu (score 98), como no estado de repouso do protótipo.
 export default function Comparativo() {
@@ -52,7 +53,7 @@ export default function Comparativo() {
               98
             </span>
             <span className="block h-2 overflow-hidden rounded bg-white/10">
-              <span className="block h-full w-[98%] rounded bg-signal-400" />
+              <RevealBar targetWidth="98%" className="block h-full rounded bg-signal-400" />
             </span>
           </div>
         </div>

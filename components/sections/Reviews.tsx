@@ -1,5 +1,6 @@
 import { PenLine, Star } from "lucide-react";
 import { REVIEWS_SEED } from "@/lib/content/reviews.seed";
+import Marquee from "@/components/ui/Marquee";
 
 // Estático (Marco 1): o spotlight rotativo, a marquee infinita e o modal de
 // depoimento ganham interatividade no Marco 7. Mostra o primeiro depoimento.
@@ -97,12 +98,20 @@ export default function Reviews() {
         </div>
       </div>
 
-      <div className="mt-16 flex flex-col gap-3 overflow-hidden">
-        {[REVIEWS_SEED, [...REVIEWS_SEED].reverse()].map((row, rowIdx) => (
-          <div key={rowIdx} className="flex gap-3 overflow-x-auto px-6">
-            {row.map((review) => (
+      <div className="mt-16 flex flex-col gap-3">
+        {[
+          { items: REVIEWS_SEED, duration: "70s", reverse: false },
+          { items: [...REVIEWS_SEED].reverse(), duration: "80s", reverse: true },
+        ].map((row, rowIdx) => (
+          <Marquee
+            key={rowIdx}
+            items={row.items}
+            duration={row.duration}
+            reverse={row.reverse}
+            className="pl-6"
+            renderItem={(review) => (
               <div
-                key={review.name + rowIdx}
+                key={review.name}
                 className="flex w-[340px] flex-none flex-col gap-3.5 rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-paper-0 p-5"
               >
                 <div className="flex items-center justify-between">
@@ -122,8 +131,8 @@ export default function Reviews() {
                   <span className="font-mono text-[11px] text-[var(--text-muted)]">{review.city}</span>
                 </div>
               </div>
-            ))}
-          </div>
+            )}
+          />
         ))}
       </div>
     </section>

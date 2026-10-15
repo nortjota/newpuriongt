@@ -1,10 +1,14 @@
-import Image from "next/image";
-import { Check, ShieldCheck, Truck, RotateCcw, Star } from "lucide-react";
-import { PLANS, DEFAULT_TOTAL, DEFAULT_OLD_PRICE, DEFAULT_INSTALLMENT } from "@/lib/content/plans";
+"use client";
 
-const selectedPlanId = "un";
+import Image from "next/image";
+import { Check, Minus, Plus, RotateCcw, ShieldCheck, Star, Truck } from "lucide-react";
+import { PLANS } from "@/lib/content/plans";
+import { CHECKOUT_URL } from "@/lib/content/checkout";
+import { usePurion } from "@/lib/store/PurionProvider";
 
 export default function QuickBuy() {
+  const { state, plan, total, oldPrice, installment, ctaLabel, showQty, setPlan, setQty, addToCart } = usePurion();
+
   return (
     <section id="comprar-topo" className="mx-auto max-w-[var(--content-max)] px-6">
       <div className="grid gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))]">
@@ -70,37 +74,38 @@ export default function QuickBuy() {
               <span className="text-xs text-[var(--text-muted)]">Preço por frasco cai no kit</span>
             </div>
             <div className="grid grid-cols-2 gap-2">
-              {PLANS.map((plan) => {
-                const selected = plan.id === selectedPlanId;
+              {PLANS.map((p) => {
+                const selected = p.id === plan.id;
                 return (
-                  <div
-                    key={plan.id}
-                    className={`relative flex flex-col gap-2.5 rounded-[var(--radius-md)] border-[1.5px] p-4 text-left ${
+                  <button
+                    key={p.id}
+                    onClick={() => setPlan(p.id)}
+                    className={`relative flex flex-col gap-2.5 rounded-[var(--radius-md)] border-[1.5px] p-4 text-left transition-transform hover:-translate-y-0.5 ${
                       selected
                         ? "border-ink-950 bg-paper-0 text-ink-950"
                         : "border-[var(--border-strong)] bg-paper-50 text-ink-950"
                     }`}
                   >
                     <div className="flex min-h-[22px] items-center justify-between gap-2">
-                      <span className="text-[15px] font-semibold">{plan.title}</span>
-                      {plan.badge && (
+                      <span className="text-[15px] font-semibold">{p.title}</span>
+                      {p.badge && (
                         <span
                           className={`rounded-full px-2 py-0.5 text-[11px] ${
-                            plan.badgeTone === "signal" ? "bg-signal-400 text-ink-950" : "bg-ink-950 text-paper-0"
+                            p.badgeTone === "signal" ? "bg-signal-400 text-ink-950" : "bg-ink-950 text-paper-0"
                           }`}
                         >
-                          {plan.badge}
+                          {p.badge}
                         </span>
                       )}
                     </div>
-                    <span className="font-mono text-2xl leading-none tracking-[-0.03em]">{plan.price}</span>
-                    <span className="text-xs leading-snug text-[var(--text-muted)]">{plan.perQuickBuy}</span>
+                    <span className="font-mono text-2xl leading-none tracking-[-0.03em]">{p.price}</span>
+                    <span className="text-xs leading-snug text-[var(--text-muted)]">{p.perQuickBuy}</span>
                     {selected && (
                       <span className="absolute bottom-3.5 right-3.5 flex h-[22px] w-[22px] items-center justify-center rounded-full bg-signal-400 text-ink-950">
                         <Check size={12} />
                       </span>
                     )}
-                  </div>
+                  </button>
                 );
               })}
             </div>
@@ -110,29 +115,41 @@ export default function QuickBuy() {
             <div className="flex flex-col gap-1.5">
               <span className="text-[11px] font-semibold uppercase text-ink-950 tracking-[var(--ls-caps)]">2 · Total</span>
               <div className="flex flex-wrap items-baseline gap-3">
-                <span className="font-mono text-[clamp(36px,3.6vw,48px)] leading-none tracking-[-0.04em]">
-                  {DEFAULT_TOTAL}
-                </span>
-                <span className="font-mono text-sm text-[var(--text-muted)] line-through">{DEFAULT_OLD_PRICE}</span>
+                <span className="font-mono text-[clamp(36px,3.6vw,48px)] leading-none tracking-[-0.04em]">{total}</span>
+                <span className="font-mono text-sm text-[var(--text-muted)] line-through">{oldPrice}</span>
               </div>
               <span className="text-sm text-[var(--text-secondary)]">
-                ou 3× de <span className="font-mono">{DEFAULT_INSTALLMENT}</span> sem juros
+                ou 3× de <span className="font-mono">{installment}</span> sem juros
               </span>
             </div>
-            <div className="flex h-11 items-center gap-3 rounded-[var(--radius-pill)] border border-[var(--border-strong)] px-3 font-mono text-sm">
-              <span>−</span>
-              <span>1</span>
-              <span>+</span>
-            </div>
+            {showQty && (
+              <div className="flex h-11 items-center gap-3 rounded-[var(--radius-pill)] border border-[var(--border-strong)] px-3 font-mono text-sm">
+                <button aria-label="Diminuir" onClick={() => setQty(state.qty - 1)}>
+                  <Minus size={14} />
+                </button>
+                <span className="w-4 text-center">{state.qty}</span>
+                <button aria-label="Aumentar" onClick={() => setQty(state.qty + 1)}>
+                  <Plus size={14} />
+                </button>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col gap-2.5">
-            <button className="w-full rounded-[var(--radius-pill)] bg-signal-400 py-4 text-sm font-medium text-ink-950">
-              Adicionar ao carrinho
+            <button
+              onClick={addToCart}
+              className="w-full rounded-[var(--radius-pill)] bg-signal-400 py-4 text-sm font-medium text-ink-950"
+            >
+              {ctaLabel}
             </button>
-            <button className="w-full rounded-[var(--radius-pill)] bg-ink-950 py-4 text-sm font-medium text-paper-0">
+            <a
+              href={CHECKOUT_URL}
+              target="_blank"
+              rel="noreferrer"
+              className="w-full rounded-[var(--radius-pill)] bg-ink-950 py-4 text-center text-sm font-medium text-paper-0"
+            >
               Comprar agora
-            </button>
+            </a>
           </div>
 
           <div className="mt-auto grid grid-cols-3 gap-2.5">

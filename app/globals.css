@@ -69,6 +69,14 @@ a {
   color: var(--ink-950);
 }
 
+.marquee-track {
+  animation: pg-marquee var(--dur-marquee) linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 1ms !important;

@@ -1,4 +1,5 @@
 import { Droplet, Gem, ShieldCheck, Truck } from "lucide-react";
+import Reveal from "@/components/ui/Reveal";
 
 const CARDS = [
   {
@@ -42,12 +43,13 @@ const CARDS = [
 export default function Benefits() {
   return (
     <section className="mx-auto grid max-w-[var(--content-max)] gap-3.5 px-6 pb-[var(--section-y)] [grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))]">
-      {CARDS.map((card) => {
+      {CARDS.map((card, i) => {
         const Icon = card.icon;
         const signal = card.tone === "signal";
         return (
-          <div
+          <Reveal
             key={card.n}
+            delay={(i % 4) * 70}
             className={`relative flex min-h-[380px] flex-col justify-between gap-10 overflow-hidden rounded-[var(--radius-lg)] p-7 transition-transform hover:-translate-y-2 ${
               signal ? "bg-signal-400 text-ink-950" : "bg-ink-950 text-paper-0"
             }`}
@@ -100,7 +102,7 @@ export default function Benefits() {
                 </p>
               </div>
             </div>
-          </div>
+          </Reveal>
         );
       })}
     </section>

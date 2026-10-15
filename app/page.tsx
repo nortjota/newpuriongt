@@ -14,6 +14,7 @@ import Reviews from "@/components/sections/Reviews";
 import Offer from "@/components/sections/Offer";
 import Faq from "@/components/sections/Faq";
 import FinalCta from "@/components/sections/FinalCta";
+import Marquee from "@/components/ui/Marquee";
 
 const MARQUEE_ITEMS = ["Exala presença", "Deixa memória", "Luxo em cada detalhe", "A diferença que você pode cheirar"];
 
@@ -23,12 +24,12 @@ export default function Home() {
       <Header />
       <main id="topo">
         <Hero />
-        <div className="overflow-hidden py-6.5">
-          <div className="flex gap-10 whitespace-nowrap font-mono text-sm">
-            {MARQUEE_ITEMS.concat(MARQUEE_ITEMS).map((item, i) => (
-              <span key={i}>{item}</span>
-            ))}
-          </div>
+        <div className="py-6.5">
+          <Marquee
+            items={MARQUEE_ITEMS}
+            itemClassName="whitespace-nowrap font-mono text-sm"
+            renderItem={(item, i) => <span key={i}>{item}</span>}
+          />
         </div>
         <QuickBuy />
         <Manifesto />
