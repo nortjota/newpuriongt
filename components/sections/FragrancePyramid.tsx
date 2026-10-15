@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import { Calendar, Flower2, Gauge, Layers, Leaf, Moon, Snowflake, Sun, SunMedium } from "lucide-react";
 import { ACCORDS, FRAGRANCE_LAYERS, NOTE_COLORS, PERFORMANCE, SEASONS } from "@/lib/content/fragrance";
 import RevealBar from "@/components/ui/RevealBar";
+import { usePurion } from "@/lib/store/PurionProvider";
 
 const SEASON_ICONS: Record<string, typeof Snowflake> = {
   snowflake: Snowflake,
@@ -17,8 +20,15 @@ function SeasonIcon({ name }: { name: string }) {
   return <Icon size={20} />;
 }
 
-// Estado padrão (Marco 1): aba "Completo" selecionada, como no carregamento inicial do protótipo.
 export default function FragrancePyramid() {
+  const { state, setPyramidLevel } = usePurion();
+  const level = state.pyramidLevel;
+  const isAll = level === 0;
+  const active = isAll ? null : FRAGRANCE_LAYERS[level - 1];
+  const glow = isAll
+    ? `linear-gradient(90deg,${FRAGRANCE_LAYERS.map((l) => l.glow).join(",")})`
+    : active!.glow;
+
   return (
     <section
       id="fragrancia"
@@ -41,18 +51,24 @@ export default function FragrancePyramid() {
         <div className="relative flex h-[540px] justify-center">
           <div className="relative aspect-[300/540] h-full overflow-hidden rounded-[var(--radius-xl)] bg-ink-800">
             <div className="absolute inset-0 z-[1] flex flex-col">
-              {FRAGRANCE_LAYERS.map((layer) => (
-                <div
-                  key={layer.key}
-                  className="flex flex-1 items-start justify-between border-t border-[var(--border-inverse)] px-4 py-3.5 font-mono text-[11px] uppercase tracking-[.08em]"
-                >
-                  <span>{layer.key}</span>
-                </div>
-              ))}
+              {FRAGRANCE_LAYERS.map((layer, i) => {
+                const on = isAll || level === i + 1;
+                return (
+                  <button
+                    key={layer.key}
+                    onClick={() => setPyramidLevel(level === i + 1 ? 0 : ((i + 1) as 1 | 2 | 3))}
+                    className="flex flex-1 items-start justify-between border-t border-[var(--border-inverse)] px-4 py-3.5 text-left font-mono text-[11px] uppercase tracking-[.08em] transition-colors"
+                    style={{ background: on ? layer.band : "transparent" }}
+                  >
+                    <span>{layer.key}</span>
+                    <span style={{ opacity: on ? 1 : 0.4 }}>0{i + 1}</span>
+                  </button>
+                );
+              })}
             </div>
             <div
-              className="absolute inset-x-[12%] bottom-[9%] z-[2] h-[16%] rounded-full opacity-95 blur-[26px]"
-              style={{ background: `linear-gradient(90deg,${FRAGRANCE_LAYERS.map((l) => l.glow).join(",")})` }}
+              className="absolute inset-x-[12%] bottom-[9%] z-[2] h-[16%] rounded-full opacity-95 blur-[26px] transition-[background] duration-700"
+              style={{ background: glow }}
             />
             <Image
               src="/bottle.png"
@@ -66,44 +82,77 @@ export default function FragrancePyramid() {
 
         <div className="flex flex-col gap-6.5">
           <div className="flex gap-1 rounded-[var(--radius-pill)] bg-white/10 p-1 text-sm">
-            <span className="rounded-[var(--radius-pill)] bg-paper-0 px-4 py-1.5 text-ink-950">Completo</span>
-            {FRAGRANCE_LAYERS.map((layer) => (
-              <span key={layer.key} className="px-4 py-1.5 text-[var(--text-inverse-muted)]">
+            <button
+              onClick={() => setPyramidLevel(0)}
+              className={`rounded-[var(--radius-pill)] px-4 py-1.5 ${isAll ? "bg-paper-0 text-ink-950" : "text-[var(--text-inverse-muted)]"}`}
+            >
+              Completo
+            </button>
+            {FRAGRANCE_LAYERS.map((layer, i) => (
+              <button
+                key={layer.key}
+                onClick={() => setPyramidLevel((i + 1) as 1 | 2 | 3)}
+                className={`rounded-[var(--radius-pill)] px-4 py-1.5 ${
+                  level === i + 1 ? "bg-paper-0 text-ink-950" : "text-[var(--text-inverse-muted)]"
+                }`}
+              >
                 {layer.key}
-              </span>
+              </button>
             ))}
           </div>
           <p className="m-0 min-h-[50px] text-[17px] leading-snug text-[var(--text-inverse-muted)]">
-            A pirâmide inteira: da abertura frutada ao fundo de couro e âmbar.
+            {isAll ? "A pirâmide inteira: da abertura frutada ao fundo de couro e âmbar." : active!.text}
           </p>
-          <div className="flex flex-col gap-5">
-            {FRAGRANCE_LAYERS.map((layer, i) => (
-              <div key={layer.key} className="flex flex-col gap-2.5 border-b border-[var(--border-inverse)] pb-4.5">
-                <div className="flex items-center justify-between">
-                  <span
-                    className="font-display text-2xl font-medium tracking-[-0.03em]"
-                    style={{ fontVariationSettings: "'wdth' 88" }}
-                  >
-                    {layer.key}
-                  </span>
-                  <span className="font-mono text-[11px] text-[var(--text-inverse-muted)]">
-                    0{i + 1} · {layer.notes.length} notas
-                  </span>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {layer.notes.map((note) => (
+          {isAll ? (
+            <div className="flex flex-col gap-5">
+              {FRAGRANCE_LAYERS.map((layer, i) => (
+                <div key={layer.key} className="flex flex-col gap-2.5 border-b border-[var(--border-inverse)] pb-4.5">
+                  <div className="flex items-center justify-between">
                     <span
-                      key={note}
-                      className="flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--border-inverse)] bg-white/6 py-1.5 pl-2 pr-3.5 text-sm"
+                      className="font-display text-2xl font-medium tracking-[-0.03em]"
+                      style={{ fontVariationSettings: "'wdth' 88" }}
                     >
-                      <span className="h-3 w-3 rounded-full" style={{ background: NOTE_COLORS[note] }} />
+                      {layer.key}
+                    </span>
+                    <span className="font-mono text-[11px] text-[var(--text-inverse-muted)]">
+                      0{i + 1} · {layer.notes.length} notas
+                    </span>
+                  </div>
+                  <div className="flex flex-wrap gap-2">
+                    {layer.notes.map((note) => (
+                      <span
+                        key={note}
+                        className="flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--border-inverse)] bg-white/6 py-1.5 pl-2 pr-3.5 text-sm"
+                      >
+                        <span className="h-3 w-3 rounded-full" style={{ background: NOTE_COLORS[note] }} />
+                        {note}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="flex flex-col">
+              {active!.notes.map((note, i) => (
+                <div key={note} className="flex items-baseline justify-between border-b border-[var(--border-inverse)] py-3">
+                  <span className="flex items-center gap-3.5">
+                    <span
+                      className="h-3.5 w-3.5 flex-none rounded-full"
+                      style={{ background: NOTE_COLORS[note], boxShadow: "0 0 0 4px rgba(255,255,255,.06)" }}
+                    />
+                    <span
+                      className="font-display text-[clamp(28px,3vw,40px)] font-medium leading-none tracking-[-0.04em]"
+                      style={{ fontVariationSettings: "'wdth' 88" }}
+                    >
                       {note}
                     </span>
-                  ))}
+                  </span>
+                  <span className="font-mono text-xs text-[var(--text-inverse-muted)]">0{i + 1}</span>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
 

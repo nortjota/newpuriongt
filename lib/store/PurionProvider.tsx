@@ -9,6 +9,10 @@ type State = {
   freq: number;
   cart: number;
   toast: string;
+  // 0 = "Completo" (todas as camadas). Fica no contexto só porque o resultado
+  // do Quiz precisa "empurrar" esse valor para a Pirâmide, que fica muito
+  // distante no DOM — ver nota no plano sobre essa única ligação cruzada.
+  pyramidLevel: 0 | 1 | 2 | 3;
 };
 
 type Action =
@@ -16,9 +20,10 @@ type Action =
   | { type: "SET_QTY"; qty: number }
   | { type: "SET_FREQ"; freq: number }
   | { type: "ADD_TO_CART" }
-  | { type: "CLEAR_TOAST" };
+  | { type: "CLEAR_TOAST" }
+  | { type: "SET_PYRAMID_LEVEL"; level: 0 | 1 | 2 | 3 };
 
-const initialState: State = { planId: "un", qty: 1, freq: 60, cart: 0, toast: "" };
+const initialState: State = { planId: "un", qty: 1, freq: 60, cart: 0, toast: "", pyramidLevel: 0 };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -39,6 +44,8 @@ function reducer(state: State, action: Action): State {
     }
     case "CLEAR_TOAST":
       return { ...state, toast: "" };
+    case "SET_PYRAMID_LEVEL":
+      return { ...state, pyramidLevel: action.level };
     default:
       return state;
   }
@@ -71,6 +78,7 @@ type Ctx = {
   setFreq: (freq: number) => void;
   addToCart: () => void;
   clearToast: () => void;
+  setPyramidLevel: (level: 0 | 1 | 2 | 3) => void;
 };
 
 const PurionContext = createContext<Ctx | null>(null);
@@ -98,6 +106,7 @@ export function PurionProvider({ children }: { children: ReactNode }) {
       setFreq: (freq) => dispatch({ type: "SET_FREQ", freq }),
       addToCart: () => dispatch({ type: "ADD_TO_CART" }),
       clearToast: () => dispatch({ type: "CLEAR_TOAST" }),
+      setPyramidLevel: (level) => dispatch({ type: "SET_PYRAMID_LEVEL", level }),
     };
   }, [state]);
 
