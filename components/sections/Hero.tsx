@@ -14,7 +14,7 @@ export default function Hero() {
     <section
       ref={ref}
       className="relative m-[10px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-900"
-      style={{ aspectRatio: "1672/941", minHeight: 420 }}
+      style={{ aspectRatio: "1672/941", minHeight: "clamp(280px,68vw,420px)" }}
     >
       <motion.div style={{ y }} className="absolute inset-0 will-change-transform">
         <motion.div

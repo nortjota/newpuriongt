@@ -1,17 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { Minus, Plus, MapPin, Receipt, RotateCcw, ShieldCheck, Sparkles, Truck } from "lucide-react";
+import { Minus, Plus, MapPin, RotateCcw, Sparkles, Star, Truck } from "lucide-react";
 import { PLANS, SUBSCRIPTION_FREQUENCIES, TRUST_SEALS } from "@/lib/content/plans";
 import { CHECKOUT_URL } from "@/lib/content/checkout";
 import { usePurion } from "@/lib/store/PurionProvider";
 
 const SEAL_ICONS = {
-  "shield-check": ShieldCheck,
   truck: Truck,
   "map-pin": MapPin,
   "rotate-ccw": RotateCcw,
-  receipt: Receipt,
+  star: Star,
 } as const;
 
 export default function Offer() {
@@ -163,15 +162,20 @@ export default function Offer() {
             <u className="text-ink-950 underline-offset-[3px]">Descubra seu perfil olfativo em 30s</u>
           </span>
         </a>
-        <div className="grid gap-3.5 gap-x-5 pt-2 [grid-template-columns:repeat(auto-fit,minmax(200px,1fr))]">
+        <div className="grid grid-cols-2 gap-2.5 pt-2">
           {TRUST_SEALS.map((seal) => {
             const Icon = SEAL_ICONS[seal.icon];
             return (
-              <div key={seal.title} className="flex items-start gap-2.5 text-[13px] leading-snug">
-                <Icon size={16} className="flex-none" />
-                <span className="flex flex-col">
-                  <span className="font-medium">{seal.title}</span>
-                  <span className="text-[var(--text-muted)]">{seal.desc}</span>
+              <div
+                key={seal.title}
+                className="flex flex-col gap-2.5 rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-paper-50 p-4 transition-transform hover:-translate-y-0.5"
+              >
+                <span className="flex h-9 w-9 items-center justify-center rounded-full bg-signal-400 text-ink-950">
+                  <Icon size={16} />
+                </span>
+                <span className="flex flex-col gap-0.5">
+                  <span className="text-sm font-medium leading-snug">{seal.title}</span>
+                  <span className="text-xs leading-snug text-[var(--text-muted)]">{seal.desc}</span>
                 </span>
               </div>
             );

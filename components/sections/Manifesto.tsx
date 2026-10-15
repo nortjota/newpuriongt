@@ -16,11 +16,13 @@ const MANIFESTO_WORDS =
 
 export default function Manifesto() {
   const ref = useRef<HTMLDivElement>(null);
+  const wordsRef = useRef<HTMLParagraphElement>(null);
   const reduceMotion = useReducedMotion();
-  // Reproduz a formula original: progresso vai de 0 (secao a 80% da tela) a 1
-  // (secao subiu 70% da sua altura) - cada palavra acende quando o progresso
-  // passa da sua posicao na frase.
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 0.8", "end 0.1"] });
+  // Preso ao proprio paragrafo (nao a secao inteira) - no mobile a secao fica
+  // muito mais alta que o paragrafo (imagem empilha embaixo), e usar o scroll
+  // da secao inteira fazia a animacao nunca terminar de colorir o texto.
+  const { scrollYProgress: wordsProgress } = useScroll({ target: wordsRef, offset: ["start 0.85", "start 0.3"] });
   const tileY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [40, -40]);
   const tileRotate = useTransform(scrollYProgress, [0, 1], reduceMotion ? [-6, -6] : [-9, -3]);
   const bottleY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [50, -50]);
@@ -38,11 +40,12 @@ export default function Manifesto() {
           <div>insatisfação.</div>
         </div>
         <p
+          ref={wordsRef}
           className="m-0 flex flex-wrap gap-x-[0.26em] font-display text-[clamp(22px,2.2vw,32px)] font-medium leading-[1.22] tracking-[-0.02em]"
           style={{ fontVariationSettings: "'wdth' 100" }}
         >
           {MANIFESTO_WORDS.map((word, i) => (
-            <RevealWord key={i} word={word} index={i} total={MANIFESTO_WORDS.length} progress={scrollYProgress} />
+            <RevealWord key={i} word={word} index={i} total={MANIFESTO_WORDS.length} progress={wordsProgress} />
           ))}
         </p>
         <p className="m-0 max-w-[440px] text-[15px] leading-relaxed text-[var(--text-secondary)]">

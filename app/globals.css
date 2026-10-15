@@ -48,6 +48,7 @@
 html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
 }
 
 body {
@@ -59,14 +60,6 @@ body {
   line-height: var(--lh-body);
   letter-spacing: var(--ls-body);
   overflow-x: hidden;
-}
-
-html {
-  overflow-x: hidden;
-}
-
-a {
-  color: inherit;
 }
 
 ::selection {

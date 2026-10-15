@@ -12,9 +12,11 @@ import Historia from "@/components/sections/Historia";
 import VideoGallery from "@/components/sections/VideoGallery";
 import Reviews from "@/components/sections/Reviews";
 import Offer from "@/components/sections/Offer";
+import Guarantee from "@/components/sections/Guarantee";
 import Faq from "@/components/sections/Faq";
 import FinalCta from "@/components/sections/FinalCta";
 import Marquee from "@/components/ui/Marquee";
+import StickyBuyBar from "@/components/widgets/StickyBuyBar";
 
 const MARQUEE_ITEMS = ["Exala presença", "Deixa memória", "Luxo em cada detalhe", "A diferença que você pode cheirar"];
 
@@ -42,10 +44,12 @@ export default function Home() {
         <VideoGallery />
         <Reviews />
         <Offer />
+        <Guarantee />
         <Faq />
         <FinalCta />
       </main>
       <Footer />
+      <StickyBuyBar />
     </>
   );
 }

@@ -59,10 +59,11 @@ export const DEFAULT_TOTAL = fmt(97.9);
 export const DEFAULT_OLD_PRICE = fmt(149.9);
 export const DEFAULT_INSTALLMENT = fmt(97.9 / 3);
 
+// Trocado por pedido do usuário em 2026-10-15: tirou "compra segura" e "nota
+// fiscal" (não convertiam) por gatilhos mais emocionais/sociais.
 export const TRUST_SEALS = [
-  { icon: "shield-check", title: "Compra segura", desc: "Pagamento protegido" },
-  { icon: "truck", title: "Envio no mesmo dia", desc: "Rastreio após aprovação" },
-  { icon: "map-pin", title: "Frete seguro", desc: "Para todo o Brasil" },
-  { icon: "rotate-ccw", title: "Garantia de 7 dias", desc: "100% de volta, sem perguntas" },
-  { icon: "receipt", title: "Nota fiscal emitida", desc: "Em todo pedido" },
+  { icon: "rotate-ccw", title: "Garantia de 7 dias", desc: "Não curtiu o cheiro? Devolvemos 100%." },
+  { icon: "truck", title: "Envio no mesmo dia", desc: "Rastreio liberado na hora." },
+  { icon: "map-pin", title: "Chega em todo o Brasil", desc: "Frete calculado no checkout." },
+  { icon: "star", title: "+100 motoristas já trocaram", desc: "4.9 de nota em avaliações reais." },
 ] as const;

@@ -67,8 +67,8 @@ export default function SprayJourney() {
   const currentStep = stepRef.current;
 
   return (
-    <section ref={ref} className="relative" style={{ height: "340vh" }}>
-      <div className="sticky top-0 h-screen p-[10px]">
+    <section ref={ref} className="relative" style={{ height: "340dvh" }}>
+      <div className="sticky top-0 p-[10px]" style={{ height: "100dvh" }}>
         <div className="relative h-full overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 text-paper-0">
           <motion.div className="absolute inset-0 will-change-transform" style={{ scale: imageScale, x: imageX }}>
             <Image src="/hero-street.png" alt="" fill className="object-cover" style={{ objectPosition: "center 55%" }} sizes="100vw" />

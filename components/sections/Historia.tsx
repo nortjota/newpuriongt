@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import Reveal from "@/components/ui/Reveal";
 
 const CHAPTERS = [
   {
@@ -26,7 +27,9 @@ const CHAPTERS = [
   },
 ];
 
-const CHAPTER_HEIGHT = "clamp(140px,16vw,240px)";
+// Minimo bem menor que antes (era 140px fixo, ocupava quase 1/4 da tela no
+// mobile e nunca encolhia) - agora escala suavemente de telas pequenas a grandes.
+const CHAPTER_HEIGHT = "clamp(64px,18vw,240px)";
 
 export default function Historia() {
   const [active, setActive] = useState(0);
@@ -63,9 +66,31 @@ export default function Historia() {
   }, []);
 
   return (
-    <section id="historia" className="m-[10px] rounded-[var(--radius-lg)] bg-paper-100 px-6 py-[var(--section-y)]">
-      <div className="mx-auto flex max-w-[var(--content-max)] flex-wrap items-start gap-12">
-        <div className="flex flex-1 basis-[380px] flex-col gap-7 sm:sticky sm:top-[110px]">
+    <section id="historia" className="relative m-[10px] rounded-[var(--radius-lg)] bg-paper-100 px-6 py-[var(--section-y)]">
+      {/* Mobile/tablet: barra compacta fixa no topo (o bloco gigante do desktop
+          não consegue ficar sticky aqui porque empilha com os capítulos em vez
+          de ficar ao lado - sem um "vão" alto pra grudar, ele só aparecia uma
+          vez no topo e nunca mais se mexia). */}
+      <div className="sticky top-[72px] z-10 -mx-6 mb-6 flex items-center gap-3 bg-paper-100/95 px-6 py-3 backdrop-blur-sm lg:hidden">
+        <span
+          className="font-display text-2xl font-medium leading-none tracking-[-0.05em]"
+          style={{ fontVariationSettings: "'wdth' 88" }}
+        >
+          {["01", "02", "03"][active]}
+        </span>
+        <div className="flex flex-1 gap-1.5">
+          {CHAPTERS.map((_, i) => (
+            <span
+              key={i}
+              className={`h-[3px] flex-1 rounded transition-colors duration-500 ${i <= active ? "bg-ink-950" : "bg-[var(--border-strong)]"}`}
+            />
+          ))}
+        </div>
+        <span className="font-mono text-xs text-[var(--text-muted)]">/ 03</span>
+      </div>
+
+      <div className="mx-auto flex max-w-[var(--content-max)] flex-col items-start gap-12 lg:flex-row lg:flex-wrap">
+        <div className="hidden flex-1 basis-[380px] flex-col gap-7 lg:sticky lg:top-[110px] lg:flex">
           <span className="text-[11px] uppercase text-[var(--text-muted)] tracking-[var(--ls-caps)]">
             A história por trás do melhor cheiro que seu carro já teve
           </span>
@@ -107,30 +132,32 @@ export default function Historia() {
               ref={(el) => {
                 articleRefs.current[i] = el;
               }}
-              className="flex min-h-[72vh] flex-col justify-center gap-6 py-10"
+              className="flex min-h-[60vh] flex-col justify-center py-8 lg:min-h-[72vh] lg:py-10"
             >
-              <span className="font-mono text-xs text-[var(--text-muted)]">{chapter.n}</span>
-              <h3
-                className="m-0 font-display text-[var(--fs-h1)] font-medium leading-[0.95] tracking-[-0.04em]"
-                style={{ fontVariationSettings: "'wdth' 88" }}
-              >
-                {chapter.title}
-              </h3>
-              <p className="m-0 max-w-[520px] text-[17px] leading-relaxed text-[var(--text-secondary)]">{chapter.body}</p>
-              {chapter.image && (
-                <div className="relative h-[300px] overflow-hidden rounded-[var(--radius-lg)] bg-paper-100">
-                  <Image src={chapter.image} alt="" fill sizes="(min-width: 640px) 480px, 100vw" className="object-cover" />
-                </div>
-              )}
-              {chapter.tags && (
-                <div className="flex flex-wrap gap-2">
-                  {chapter.tags.map((tag) => (
-                    <span key={tag} className="rounded-[var(--radius-pill)] border border-[var(--border-subtle)] px-4 py-2 text-sm">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              )}
+              <Reveal className="flex flex-col gap-6">
+                <span className="font-mono text-xs text-[var(--text-muted)]">{chapter.n}</span>
+                <h3
+                  className="m-0 font-display text-[var(--fs-h1)] font-medium leading-[0.95] tracking-[-0.04em]"
+                  style={{ fontVariationSettings: "'wdth' 88" }}
+                >
+                  {chapter.title}
+                </h3>
+                <p className="m-0 max-w-[520px] text-[17px] leading-relaxed text-[var(--text-secondary)]">{chapter.body}</p>
+                {chapter.image && (
+                  <div className="relative h-[220px] overflow-hidden rounded-[var(--radius-lg)] bg-paper-100 sm:h-[300px]">
+                    <Image src={chapter.image} alt="" fill sizes="(min-width: 640px) 480px, 100vw" className="object-cover" />
+                  </div>
+                )}
+                {chapter.tags && (
+                  <div className="flex flex-wrap gap-2">
+                    {chapter.tags.map((tag) => (
+                      <span key={tag} className="rounded-[var(--radius-pill)] border border-[var(--border-subtle)] px-4 py-2 text-sm">
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </Reveal>
             </article>
           ))}
         </div>

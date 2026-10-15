@@ -42,7 +42,7 @@ const CARDS = [
 
 export default function Benefits() {
   return (
-    <section className="mx-auto grid max-w-[var(--content-max)] gap-3.5 px-6 pb-[var(--section-y)] [grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))]">
+    <section className="mx-auto grid max-w-[var(--content-max)] grid-cols-2 gap-2.5 px-6 pb-[var(--section-y)] sm:gap-3.5 lg:[grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))]">
       {CARDS.map((card, i) => {
         const Icon = card.icon;
         const signal = card.tone === "signal";
@@ -50,30 +50,31 @@ export default function Benefits() {
           <Reveal
             key={card.n}
             delay={(i % 4) * 70}
-            className={`relative flex min-h-[380px] flex-col justify-between gap-10 overflow-hidden rounded-[var(--radius-lg)] p-7 transition-transform hover:-translate-y-2 ${
+            className={`relative flex min-h-[220px] flex-col justify-between gap-5 overflow-hidden rounded-[var(--radius-lg)] p-4 transition-transform hover:-translate-y-2 sm:min-h-[380px] sm:gap-10 sm:p-7 ${
               signal ? "bg-signal-400 text-ink-950" : "bg-ink-950 text-paper-0"
             }`}
           >
             <Icon
               size={220}
-              className="pointer-events-none absolute -right-7 -bottom-7 opacity-[0.07]"
+              className="pointer-events-none absolute -right-7 -bottom-7 hidden opacity-[0.07] sm:block"
             />
             <div className="relative flex items-center justify-between">
-              <span className={`font-mono text-[13px] ${signal ? "text-ink-700" : "text-[var(--text-inverse-muted)]"}`}>
+              <span className={`font-mono text-xs sm:text-[13px] ${signal ? "text-ink-700" : "text-[var(--text-inverse-muted)]"}`}>
                 {card.n}
               </span>
               <span
-                className={`flex h-11 w-11 items-center justify-center rounded-full border ${
+                className={`flex h-8 w-8 items-center justify-center rounded-full border sm:h-11 sm:w-11 ${
                   signal ? "border-ink-950/18" : "border-[var(--border-inverse)]"
                 }`}
               >
-                <Icon size={18} />
+                <Icon size={14} className="sm:hidden" />
+                <Icon size={18} className="hidden sm:block" />
               </span>
             </div>
-            <div className="relative flex flex-col gap-4.5">
-              <div className="flex flex-col gap-1.5">
+            <div className="relative flex flex-col gap-2.5 sm:gap-4.5">
+              <div className="flex flex-col gap-1">
                 <span
-                  className="font-display text-[clamp(56px,6vw,96px)] font-medium leading-[0.85] tracking-[-0.06em]"
+                  className="font-display text-[clamp(32px,9vw,96px)] font-medium leading-[0.85] tracking-[-0.06em] sm:text-[clamp(56px,6vw,96px)]"
                   style={{ fontVariationSettings: "'wdth' 88" }}
                 >
                   {card.big}
