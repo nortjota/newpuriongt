@@ -1,0 +1,3 @@
+const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "5561996949688";
+
+export const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;

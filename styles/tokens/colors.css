@@ -1,0 +1,27 @@
+:root{
+/* Ink — the black of the wordmark and night court */
+--ink-950:#0B0C0E;--ink-900:#141518;--ink-800:#1E2024;--ink-700:#2C2F34;--ink-600:#43474D;
+/* Steel — brushed cap */
+--steel-500:#8A8B86;--steel-400:#A9AAA5;--steel-300:#C8C8C3;--steel-200:#DCDCD8;
+/* Paper — warm stone / limestone facade */
+--paper-0:#FFFFFF;--paper-50:#F7F6F2;--paper-100:#EFEDE7;--paper-200:#E3E0D8;
+/* Ice — the liquid */
+--ice-100:#E6F0F3;--ice-200:#CFE3EA;--ice-400:#9FC4D1;--ice-600:#5B8C9C;--ice-800:#28505D;
+/* Sun — golden-hour reflections */
+--sun-200:#F4E9C9;--sun-400:#E6C374;--sun-600:#B98E33;
+/* Signal — sport accent, use sparingly (one per view) */
+--signal-400:#D6FF3D;--signal-500:#C3EE22;--signal-700:#6E8A08;
+/* Semantic */
+--success-500:#3E9B6B;--warning-500:#D99A2B;--danger-500:#D2463A;--info-500:var(--ice-600);
+
+/* Semantic aliases */
+--surface-page:var(--paper-50);--surface-card:var(--paper-0);--surface-sunken:var(--paper-100);
+--surface-inverse:var(--ink-950);--surface-inverse-raised:var(--ink-800);
+--surface-glass:rgba(255,255,255,.14);--surface-glass-dark:rgba(11,12,14,.42);
+--text-primary:var(--ink-950);--text-secondary:var(--ink-600);--text-muted:var(--steel-500);
+--text-inverse:var(--paper-0);--text-inverse-muted:rgba(255,255,255,.62);--text-accent:var(--signal-400);
+--border-subtle:rgba(11,12,14,.08);--border-strong:rgba(11,12,14,.18);--border-glass:rgba(255,255,255,.28);--border-inverse:rgba(255,255,255,.14);
+--action-primary:var(--ink-950);--action-primary-hover:var(--ink-700);--action-on-primary:var(--paper-0);
+--action-accent:var(--signal-400);--action-accent-hover:var(--signal-500);--action-on-accent:var(--ink-950);
+--focus-ring:var(--ice-400);
+}
