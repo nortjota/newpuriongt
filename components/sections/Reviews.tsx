@@ -1,11 +1,17 @@
+"use client";
+
+import { useState } from "react";
 import { PenLine, Star } from "lucide-react";
 import { REVIEWS_SEED } from "@/lib/content/reviews.seed";
 import Marquee from "@/components/ui/Marquee";
+import ReviewSubmitModal from "@/components/widgets/ReviewSubmitModal";
 
-// Estático (Marco 1): o spotlight rotativo, a marquee infinita e o modal de
-// depoimento ganham interatividade no Marco 7. Mostra o primeiro depoimento.
+// O spotlight rotativo automático ganha interatividade no Marco 7 — por ora
+// mostra sempre o primeiro depoimento. O modal de depoimento já funciona
+// (grava só no localStorage do navegador, como no protótipo).
 export default function Reviews() {
   const spotlight = REVIEWS_SEED[0];
+  const [reviewOpen, setReviewOpen] = useState(false);
 
   return (
     <section id="avaliacoes" className="py-[var(--section-y)]">
@@ -46,7 +52,10 @@ export default function Reviews() {
               <span className="text-[13px] text-[var(--text-secondary)]">motoristas satisfeitos</span>
             </div>
           </div>
-          <button className="flex w-fit items-center gap-2.5 rounded-[var(--radius-pill)] bg-ink-950 px-5.5 py-3 text-sm font-medium text-paper-0">
+          <button
+            onClick={() => setReviewOpen(true)}
+            className="flex w-fit items-center gap-2.5 rounded-[var(--radius-pill)] bg-ink-950 px-5.5 py-3 text-sm font-medium text-paper-0"
+          >
             <PenLine size={16} />
             Deixar meu depoimento
           </button>
@@ -135,6 +144,8 @@ export default function Reviews() {
           />
         ))}
       </div>
+
+      <ReviewSubmitModal open={reviewOpen} onClose={() => setReviewOpen(false)} />
     </section>
   );
 }

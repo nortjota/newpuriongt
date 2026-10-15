@@ -8,4 +8,4 @@ Itens herdados do protótipo de design (`project/Purion GT.dc.html`) que não de
 - [ ] **Reviews**: as 5 reviews do protótipo são rascunho da ferramenta de design, que se recusou a inventar mais citando CDC/CONAR. Não adicionar novas sem reviews reais fornecidas pelo usuário.
 - [ ] **Vídeos**: galeria mantém o estado vazio "Espaço para o vídeo" do protótipo — sem URLs de vídeo reais ainda.
 - [ ] **Páginas legais**: `/privacy` e `/terms` são stubs "em elaboração" — precisam de texto jurídico real antes do lançamento.
-- [ ] **E-mail capture → Supabase**: usuário confirmou integrar com a tabela `leads_site` do Supabase do `purion-os`; falta configurar as env vars `NEXT_PUBLIC_SUPABASE_URL`/`NEXT_PUBLIC_SUPABASE_ANON_KEY` no projeto Vercel (marco 4 do build).
+- [ ] **E-mail capture → Supabase**: código já grava direto na tabela `leads_site` do mesmo projeto Supabase do `purion-os` (`lib/supabase/client.ts` + `EmailCaptureModal`). Falta só configurar `NEXT_PUBLIC_SUPABASE_URL`/`NEXT_PUBLIC_SUPABASE_ANON_KEY` como env vars no projeto Vercel — sem elas o insert é pulado silenciosamente (`supabase` fica `null`).
