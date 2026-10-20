@@ -4,6 +4,7 @@ import { useReducer, useRef } from "react";
 import Image from "next/image";
 import { motion, useMotionValueEvent, useReducedMotion, useScroll, useTransform, type MotionValue } from "motion/react";
 import { JOURNEY_STEPS } from "@/lib/content/journey";
+import Reveal from "@/components/ui/Reveal";
 
 const RING_CIRCUMFERENCE = 339.3;
 
@@ -67,7 +68,46 @@ export default function SprayJourney() {
   const currentStep = stepRef.current;
 
   return (
-    <section ref={ref} className="relative" style={{ height: "340dvh" }}>
+    <>
+      {/* Mobile/tablet: o efeito pinado de 340dvh depende de vh/toolbar do
+          navegador de um jeito que nunca ficou estável no celular (vão
+          branco, animação que não termina) - ver histórico de tentativas.
+          Abaixo de lg, troca pra uma lista simples que rola normalmente. */}
+      <section className="m-[10px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 text-paper-0 lg:hidden">
+        <div className="relative h-[220px] sm:h-[280px]">
+          <Image src="/hero-street.png" alt="" fill className="object-cover" style={{ objectPosition: "center 55%" }} sizes="100vw" />
+          <div
+            className="absolute inset-0"
+            style={{ background: "linear-gradient(0deg,rgba(11,12,14,.85) 0%,rgba(11,12,14,.25) 60%,rgba(11,12,14,.1) 100%)" }}
+          />
+        </div>
+        <div className="flex flex-col gap-1 px-6 pb-2 pt-6">
+          <div className="mb-4 flex items-center gap-3.5 text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
+            <span>A viagem de uma borrifada</span>
+            <span className="h-px flex-1 bg-[var(--border-inverse)]" />
+            <span className="font-mono">GT · 60 ml</span>
+          </div>
+          {JOURNEY_STEPS.map((step, i) => (
+            <Reveal
+              key={step.label}
+              delay={i * 60}
+              className={`flex flex-col gap-2 py-5 ${i < JOURNEY_STEPS.length - 1 ? "border-b border-[var(--border-inverse)]" : ""}`}
+            >
+              <span className="font-mono text-[13px] text-signal-400">{step.time}</span>
+              <span
+                className="font-display text-3xl font-medium leading-[0.9] tracking-[-0.03em]"
+                style={{ fontVariationSettings: "'wdth' 88" }}
+              >
+                {step.title}
+              </span>
+              <span className="text-sm leading-relaxed text-[var(--text-inverse-muted)]">{step.body}</span>
+            </Reveal>
+          ))}
+        </div>
+      </section>
+
+      {/* Desktop: o scrollytelling pinado original. */}
+      <section ref={ref} className="relative hidden lg:block" style={{ height: "340dvh" }}>
       <div className="sticky top-0 p-[10px]" style={{ height: "100dvh" }}>
         <div className="relative h-full overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 text-paper-0">
           <motion.div className="absolute inset-0 will-change-transform" style={{ scale: imageScale, x: imageX }}>
@@ -151,6 +191,7 @@ export default function SprayJourney() {
           </div>
         </div>
       </div>
-    </section>
+      </section>
+    </>
   );
 }

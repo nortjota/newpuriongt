@@ -20,8 +20,8 @@ export default function Footer() {
   return (
     <footer className="m-[10px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 px-6 pt-16 text-paper-0">
       <div className="mx-auto grid max-w-[var(--content-max)] gap-10 [grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr))]">
-        <div className="flex max-w-[340px] flex-col gap-3">
-          <Image src="/logo-white.png" alt="PURION GT" width={150} height={37} className="h-7 w-auto" />
+        <div className="flex max-w-[340px] flex-col items-start gap-3">
+          <Image src="/logo-white.png" alt="PURION GT" width={150} height={37} className="h-7 w-auto flex-none" />
           <span className="text-sm leading-relaxed text-[var(--text-inverse-muted)]">
             Exala presença. Deixa memória.
           </span>

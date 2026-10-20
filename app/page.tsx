@@ -34,14 +34,14 @@ export default function Home() {
           />
         </div>
         <QuickBuy />
+        <FragrancePyramid />
+        <VideoGallery />
         <Manifesto />
         <Benefits />
         <SprayJourney />
-        <FragrancePyramid />
         <Comparativo />
         <Quiz />
         <Historia />
-        <VideoGallery />
         <Reviews />
         <Offer />
         <Guarantee />

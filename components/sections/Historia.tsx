@@ -24,6 +24,9 @@ const CHAPTERS = [
     title: "O interior, enfim, combina com o exterior.",
     body: "Um frasco de vidro que você vai querer exibir. Até 700 borrifadas. Um produto à altura do carro que você escolheu.",
     image: "/bottle.png",
+    // bottle.png é uma foto de produto vertical — "cover" cortava o gargalo e a
+    // base do frasco. "contain" mostra o frasco inteiro.
+    fit: "contain" as const,
   },
 ];
 
@@ -67,11 +70,11 @@ export default function Historia() {
 
   return (
     <section id="historia" className="relative m-[10px] rounded-[var(--radius-lg)] bg-paper-100 px-6 py-[var(--section-y)]">
-      {/* Mobile/tablet: barra compacta fixa no topo (o bloco gigante do desktop
-          não consegue ficar sticky aqui porque empilha com os capítulos em vez
-          de ficar ao lado - sem um "vão" alto pra grudar, ele só aparecia uma
-          vez no topo e nunca mais se mexia). */}
-      <div className="sticky top-[72px] z-10 -mx-6 mb-6 flex items-center gap-3 bg-paper-100/95 px-6 py-3 backdrop-blur-sm lg:hidden">
+      {/* Mobile/tablet: barra de progresso SEM sticky (position:sticky empilhado
+          com os capítulos abaixo se comportou de forma instável — ficava
+          "grudado" no lugar errado). Rola normalmente junto com a página,
+          mas o número e a barra continuam animando conforme o `active` muda. */}
+      <div className="mb-6 flex items-center gap-3 lg:hidden">
         <span
           className="font-display text-2xl font-medium leading-none tracking-[-0.05em]"
           style={{ fontVariationSettings: "'wdth' 88" }}
@@ -145,7 +148,13 @@ export default function Historia() {
                 <p className="m-0 max-w-[520px] text-[17px] leading-relaxed text-[var(--text-secondary)]">{chapter.body}</p>
                 {chapter.image && (
                   <div className="relative h-[220px] overflow-hidden rounded-[var(--radius-lg)] bg-paper-100 sm:h-[300px]">
-                    <Image src={chapter.image} alt="" fill sizes="(min-width: 640px) 480px, 100vw" className="object-cover" />
+                    <Image
+                      src={chapter.image}
+                      alt=""
+                      fill
+                      sizes="(min-width: 640px) 480px, 100vw"
+                      className={"fit" in chapter && chapter.fit === "contain" ? "object-contain p-8" : "object-cover"}
+                    />
                   </div>
                 )}
                 {chapter.tags && (
