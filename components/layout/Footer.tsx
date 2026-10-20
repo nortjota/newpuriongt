@@ -5,6 +5,7 @@ const INSTITUCIONAL = [
   { href: "#historia", label: "Nossa história" },
   { href: "#fragrancia", label: "Fragrância" },
   { href: "#avaliacoes", label: "Avaliações" },
+  { href: "#parceiros", label: "Seja um parceiro" },
   { href: "/privacy", label: "Política de Privacidade" },
   { href: "/terms", label: "Termos de Uso" },
 ];

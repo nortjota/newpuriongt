@@ -15,6 +15,7 @@ import Offer from "@/components/sections/Offer";
 import Guarantee from "@/components/sections/Guarantee";
 import Faq from "@/components/sections/Faq";
 import FinalCta from "@/components/sections/FinalCta";
+import PartnerCta from "@/components/sections/PartnerCta";
 import Marquee from "@/components/ui/Marquee";
 import StickyBuyBar from "@/components/widgets/StickyBuyBar";
 
@@ -47,6 +48,7 @@ export default function Home() {
         <Guarantee />
         <Faq />
         <FinalCta />
+        <PartnerCta />
       </main>
       <Footer />
       <StickyBuyBar />

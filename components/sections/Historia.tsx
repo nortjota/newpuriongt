@@ -69,32 +69,40 @@ export default function Historia() {
   }, []);
 
   return (
-    <section id="historia" className="relative m-[10px] rounded-[var(--radius-lg)] bg-paper-100 px-6 py-[var(--section-y)]">
+    <section
+      id="historia"
+      className="relative m-[10px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 px-6 py-[var(--section-y)] text-paper-0"
+    >
+      <div
+        aria-hidden
+        className="pointer-events-none absolute -left-[10%] top-0 select-none font-display text-[clamp(200px,32vw,480px)] font-medium leading-none tracking-[-0.07em] text-paper-0/[0.03]"
+        style={{ fontVariationSettings: "'wdth' 88" }}
+      >
+        01
+      </div>
+
       {/* Mobile/tablet: barra de progresso SEM sticky (position:sticky empilhado
           com os capítulos abaixo se comportou de forma instável — ficava
           "grudado" no lugar errado). Rola normalmente junto com a página,
           mas o número e a barra continuam animando conforme o `active` muda. */}
-      <div className="mb-6 flex items-center gap-3 lg:hidden">
-        <span
-          className="font-display text-2xl font-medium leading-none tracking-[-0.05em]"
-          style={{ fontVariationSettings: "'wdth' 88" }}
-        >
+      <div className="relative mb-10 flex items-center gap-4 lg:hidden">
+        <span className="flex h-11 w-11 flex-none items-center justify-center rounded-full bg-signal-400 font-mono text-sm font-medium text-ink-950">
           {["01", "02", "03"][active]}
         </span>
         <div className="flex flex-1 gap-1.5">
           {CHAPTERS.map((_, i) => (
             <span
               key={i}
-              className={`h-[3px] flex-1 rounded transition-colors duration-500 ${i <= active ? "bg-ink-950" : "bg-[var(--border-strong)]"}`}
+              className={`h-[3px] flex-1 rounded transition-colors duration-500 ${i <= active ? "bg-signal-400" : "bg-[var(--border-inverse)]"}`}
             />
           ))}
         </div>
-        <span className="font-mono text-xs text-[var(--text-muted)]">/ 03</span>
+        <span className="font-mono text-xs text-[var(--text-inverse-muted)]">/ 03</span>
       </div>
 
-      <div className="mx-auto flex max-w-[var(--content-max)] flex-col items-start gap-12 lg:flex-row lg:flex-wrap">
+      <div className="relative mx-auto flex max-w-[var(--content-max)] flex-col items-start gap-12 lg:flex-row lg:flex-wrap">
         <div className="hidden flex-1 basis-[380px] flex-col gap-7 lg:sticky lg:top-[110px] lg:flex">
-          <span className="text-[11px] uppercase text-[var(--text-muted)] tracking-[var(--ls-caps)]">
+          <span className="text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
             A história por trás do melhor cheiro que seu carro já teve
           </span>
           <div className="flex items-end gap-4.5">
@@ -108,7 +116,7 @@ export default function Historia() {
                 {["01", "02", "03"].map((n) => (
                   <div
                     key={n}
-                    className="font-display font-medium leading-none tracking-[-0.07em]"
+                    className="font-display font-medium leading-none tracking-[-0.07em] text-signal-400"
                     style={{ height: CHAPTER_HEIGHT, fontSize: CHAPTER_HEIGHT, fontVariationSettings: "'wdth' 88" }}
                   >
                     {n}
@@ -116,51 +124,73 @@ export default function Historia() {
                 ))}
               </div>
             </div>
-            <span className="pb-4.5 font-mono text-[13px] text-[var(--text-muted)]">/ 03</span>
+            <span className="pb-4.5 font-mono text-[13px] text-[var(--text-inverse-muted)]">/ 03</span>
           </div>
           <div className="flex gap-1.5">
             {CHAPTERS.map((_, i) => (
               <span
                 key={i}
-                className={`h-[3px] flex-1 rounded transition-colors duration-500 ${i <= active ? "bg-ink-950" : "bg-[var(--border-strong)]"}`}
+                className={`h-[3px] flex-1 rounded transition-colors duration-500 ${i <= active ? "bg-signal-400" : "bg-[var(--border-inverse)]"}`}
               />
             ))}
           </div>
         </div>
 
-        <div className="flex flex-1 basis-[480px] flex-col">
+        <div className="relative flex flex-1 basis-[480px] flex-col">
+          <div
+            aria-hidden
+            className="absolute bottom-10 left-5 top-10 hidden w-px bg-[var(--border-inverse)] sm:block"
+          />
           {CHAPTERS.map((chapter, i) => (
             <article
               key={chapter.n}
               ref={(el) => {
                 articleRefs.current[i] = el;
               }}
-              className="flex min-h-[60vh] flex-col justify-center py-8 lg:min-h-[72vh] lg:py-10"
+              className="relative flex min-h-0 flex-col justify-center py-8 sm:pl-14 lg:min-h-[72vh] lg:py-10"
             >
               <Reveal className="flex flex-col gap-6">
-                <span className="font-mono text-xs text-[var(--text-muted)]">{chapter.n}</span>
+                <div className="flex items-center gap-4 sm:absolute sm:-left-14 sm:top-10">
+                  <span
+                    className={`flex h-10 w-10 flex-none items-center justify-center rounded-full font-mono text-sm transition-colors duration-500 ${
+                      i <= active ? "bg-signal-400 text-ink-950" : "bg-ink-800 text-[var(--text-inverse-muted)]"
+                    }`}
+                  >
+                    0{i + 1}
+                  </span>
+                  <span className="font-mono text-xs text-[var(--text-inverse-muted)] sm:hidden">{chapter.n}</span>
+                </div>
                 <h3
                   className="m-0 font-display text-[var(--fs-h1)] font-medium leading-[0.95] tracking-[-0.04em]"
                   style={{ fontVariationSettings: "'wdth' 88" }}
                 >
                   {chapter.title}
                 </h3>
-                <p className="m-0 max-w-[520px] text-[17px] leading-relaxed text-[var(--text-secondary)]">{chapter.body}</p>
+                <p className="m-0 max-w-[520px] text-[17px] leading-relaxed text-[var(--text-inverse-muted)]">{chapter.body}</p>
                 {chapter.image && (
-                  <div className="relative h-[220px] overflow-hidden rounded-[var(--radius-lg)] bg-paper-100 sm:h-[300px]">
+                  <div className="relative h-[220px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-900 sm:h-[300px]">
+                    {"fit" in chapter && chapter.fit === "contain" && (
+                      <div
+                        aria-hidden
+                        className="absolute left-1/2 top-1/2 h-[60%] w-[60%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-signal-400/20 blur-[50px]"
+                      />
+                    )}
                     <Image
                       src={chapter.image}
                       alt=""
                       fill
                       sizes="(min-width: 640px) 480px, 100vw"
-                      className={"fit" in chapter && chapter.fit === "contain" ? "object-contain p-8" : "object-cover"}
+                      className={"fit" in chapter && chapter.fit === "contain" ? "relative object-contain p-8" : "object-cover opacity-90"}
                     />
                   </div>
                 )}
                 {chapter.tags && (
                   <div className="flex flex-wrap gap-2">
                     {chapter.tags.map((tag) => (
-                      <span key={tag} className="rounded-[var(--radius-pill)] border border-[var(--border-subtle)] px-4 py-2 text-sm">
+                      <span
+                        key={tag}
+                        className="rounded-[var(--radius-pill)] border border-[var(--border-inverse)] px-4 py-2 text-sm text-[var(--text-inverse-muted)]"
+                      >
                         {tag}
                       </span>
                     ))}
