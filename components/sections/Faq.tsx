@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus } from "lucide-react";
+import { MessageCircle, Plus } from "lucide-react";
 import { FAQ } from "@/lib/content/faq";
 import { WHATSAPP_URL } from "@/lib/content/whatsapp";
 
@@ -9,24 +9,17 @@ export default function Faq() {
   const [open, setOpen] = useState(0);
 
   return (
-    <section
-      id="faq"
-      className="mx-auto grid max-w-[var(--content-max)] items-start gap-16 px-6 pb-[var(--section-y)] [grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr))]"
-    >
-      <div className="flex flex-col gap-6 sm:sticky sm:top-[110px]">
+    <section id="faq" className="mx-auto max-w-[var(--content-max)] px-6 pb-[var(--section-y)]">
+      <div className="mb-10 flex flex-wrap items-end justify-between gap-4 border-b border-[var(--border-subtle)] pb-6">
+        <h2
+          className="m-0 font-display text-[clamp(32px,5vw,56px)] font-medium leading-[0.95] tracking-[-0.03em] text-steel-300"
+          style={{ fontVariationSettings: "'wdth' 88" }}
+        >
+          Perguntas frequentes.
+        </h2>
         <span className="text-[11px] uppercase text-[var(--text-muted)] tracking-[var(--ls-caps)]">
-          FAQ · {String(FAQ.length).padStart(2, "0")} perguntas
+          {String(FAQ.length).padStart(2, "0")} perguntas
         </span>
-        <div className="font-display text-[var(--fs-display-l)] font-medium leading-[0.9] tracking-[var(--ls-display)] text-steel-300">
-          <div>Perguntas</div>
-          <div>frequentes.</div>
-        </div>
-        <p className="m-0 max-w-[360px] text-[15px] leading-relaxed text-[var(--text-secondary)]">
-          Não encontrou o que procura? A gente responde rápido no WhatsApp.
-        </p>
-        <a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="text-sm font-medium text-ink-950 underline">
-          Falar no WhatsApp
-        </a>
       </div>
 
       <div className="flex flex-col gap-2">
@@ -70,6 +63,21 @@ export default function Faq() {
             </div>
           );
         })}
+      </div>
+
+      <div className="mt-10 flex flex-col items-center gap-3 rounded-[var(--radius-lg)] bg-paper-100 px-6 py-8 text-center">
+        <p className="m-0 max-w-[360px] text-[15px] leading-relaxed text-[var(--text-secondary)]">
+          Não encontrou o que procura? A gente responde rápido no WhatsApp.
+        </p>
+        <a
+          href={WHATSAPP_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="flex items-center gap-2 rounded-[var(--radius-pill)] bg-ink-950 px-5.5 py-3 text-sm font-medium text-paper-0"
+        >
+          <MessageCircle size={16} />
+          Falar no WhatsApp
+        </a>
       </div>
     </section>
   );

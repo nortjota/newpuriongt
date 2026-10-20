@@ -1,11 +1,14 @@
 import Image from "next/image";
 import { WHATSAPP_URL } from "@/lib/content/whatsapp";
 
+const PARTNER_URL = `${WHATSAPP_URL}?text=${encodeURIComponent(
+  "Olá! Quero saber mais sobre me tornar parceiro/revendedor do Purion GT."
+)}`;
+
 const INSTITUCIONAL = [
   { href: "#historia", label: "Nossa história" },
   { href: "#fragrancia", label: "Fragrância" },
   { href: "#avaliacoes", label: "Avaliações" },
-  { href: "#parceiros", label: "Seja um parceiro" },
   { href: "/privacy", label: "Política de Privacidade" },
   { href: "/terms", label: "Termos de Uso" },
 ];
@@ -57,7 +60,18 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mx-auto mt-10 flex max-w-[var(--content-max)] flex-wrap justify-between gap-3 border-t border-[var(--border-inverse)] pt-[18px] text-xs text-[var(--text-inverse-muted)]">
+      <div className="mx-auto mt-10 flex max-w-[var(--content-max)] justify-center">
+        <a
+          href={PARTNER_URL}
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-[var(--radius-pill)] bg-signal-400 px-6 py-3 text-sm font-medium text-ink-950 transition-transform hover:-translate-y-0.5"
+        >
+          Quer revender o Purion GT? Seja um parceiro
+        </a>
+      </div>
+
+      <div className="mx-auto mt-8 flex max-w-[var(--content-max)] flex-wrap justify-between gap-3 border-t border-[var(--border-inverse)] pt-[18px] text-xs text-[var(--text-inverse-muted)]">
         <span>© 2026 Purion GT. Todos os direitos reservados.</span>
         <span className="font-mono">Feito no Brasil</span>
       </div>

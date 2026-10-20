@@ -23,7 +23,16 @@ export default function Hero() {
           transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
           className="absolute inset-0"
         >
-          <Image src="/hero-banner.png" alt="" fill priority className="object-cover" sizes="100vw" />
+          {/* No mobile a foto cortava o lado esquerdo - desloca o enquadramento
+              pra direita (sem mexer na secao/bordas, só na posição da imagem). */}
+          <Image
+            src="/hero-banner.png"
+            alt=""
+            fill
+            priority
+            className="object-cover object-[30%_center] sm:object-center"
+            sizes="100vw"
+          />
         </motion.div>
       </motion.div>
       <div className="absolute inset-0" style={{ background: "var(--scrim-top)" }} />

@@ -13,11 +13,10 @@ export default function QuickBuy() {
     <section id="comprar-topo" className="mx-auto max-w-[var(--content-max)] px-6">
       <div className="grid gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))]">
         {/* Foto do produto */}
-        <div
-          className="relative overflow-hidden rounded-[var(--radius-xl)] bg-paper-100"
-          style={{ minHeight: "clamp(300px,52vw,680px)" }}
-        >
-          <Image src="/product-studio.png" alt="Purion GT 60 ml" fill className="object-cover" />
+        <div className="relative aspect-square max-h-[680px] overflow-hidden rounded-[var(--radius-xl)] bg-paper-100">
+          {/* product-studio.png é quadrada (1254x1254) - aspect-square faz a
+              caixa bater exatamente com a proporção da foto, sem cortar nada. */}
+          <Image src="/product-studio.png" alt="Purion GT 60 ml" fill className="object-contain" />
           <div className="absolute left-5 top-5 flex gap-2">
             <span className="rounded-full bg-ink-950 px-3.5 py-1.5 text-xs font-medium text-paper-0">35% off</span>
             <span className="flex items-center gap-1.5 rounded-full bg-signal-400 px-3.5 py-1.5 text-xs font-medium text-ink-950">
