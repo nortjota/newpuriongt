@@ -36,10 +36,10 @@ export default function Home() {
         <QuickBuy />
         <FragrancePyramid />
         <VideoGallery />
-        <Manifesto />
         <Benefits />
         <SprayJourney />
         <Comparativo />
+        <Manifesto />
         <Quiz />
         <Historia />
         <Reviews />

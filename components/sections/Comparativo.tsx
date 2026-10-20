@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Check, X } from "lucide-react";
+import { Check, MousePointerClick, X } from "lucide-react";
 import { COMPARATIVO_TILES } from "@/lib/content/comparativo";
 
 type Side = "a" | "b";
@@ -78,25 +78,38 @@ export default function Comparativo() {
       </div>
 
       <div className="mb-7 flex flex-col items-center gap-3">
-        <div className="flex gap-1 rounded-[var(--radius-pill)] bg-paper-200 p-1.5">
+        <div className="flex gap-2 rounded-[var(--radius-pill)] bg-paper-200 p-2">
           <button
             onClick={() => pick("a")}
-            className={`rounded-[var(--radius-pill)] px-6 py-3.5 text-[15px] font-medium transition-colors ${
-              side === "a" ? "bg-ink-950 text-paper-0" : "text-ink-600"
+            className={`relative rounded-[var(--radius-pill)] px-6 py-3.5 text-[15px] font-medium transition-all duration-300 active:scale-95 ${
+              side === "a"
+                ? "bg-ink-950 text-paper-0 shadow-[var(--shadow-md)]"
+                : "bg-paper-0 text-ink-600 hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
             }`}
           >
             Cheirinho comum
+            {side !== "a" && (
+              <span className="absolute -right-1 -top-1 h-3 w-3 animate-ping rounded-full bg-[var(--danger-500)]" />
+            )}
           </button>
           <button
             onClick={() => pick("b")}
-            className={`rounded-[var(--radius-pill)] px-6 py-3.5 text-[15px] font-medium transition-colors ${
-              side === "b" ? "bg-ink-950 text-paper-0" : "text-ink-600"
+            className={`relative rounded-[var(--radius-pill)] px-6 py-3.5 text-[15px] font-medium transition-all duration-300 active:scale-95 ${
+              side === "b"
+                ? "bg-ink-950 text-paper-0 shadow-[var(--shadow-md)]"
+                : "bg-paper-0 text-ink-600 hover:-translate-y-0.5 hover:shadow-[var(--shadow-sm)]"
             }`}
           >
             Purion GT
+            {side !== "b" && (
+              <span className="absolute -right-1 -top-1 h-3 w-3 animate-ping rounded-full bg-signal-400" />
+            )}
           </button>
         </div>
-        <span className="text-[13px] text-[var(--text-muted)]">Toque e veja a diferença</span>
+        <span className="flex items-center gap-1.5 text-[13px] text-[var(--text-muted)]">
+          <MousePointerClick size={14} className="animate-bounce" />
+          Toque e veja a diferença
+        </span>
       </div>
 
       <div

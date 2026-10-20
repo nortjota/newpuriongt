@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import { ArrowLeft, ArrowRight, Play, Video } from "lucide-react";
+import { ArrowLeft, ArrowRight, Hand, Play, Video } from "lucide-react";
 import { VIDEOS_SEED, VIDEO_TABS } from "@/lib/content/videos.seed";
 import Dialog from "@/components/ui/Dialog";
 
@@ -12,6 +12,7 @@ import Dialog from "@/components/ui/Dialog";
 export default function VideoGallery() {
   const [tab, setTab] = useState<(typeof VIDEO_TABS)[number]>("Todos");
   const [openIndex, setOpenIndex] = useState(-1);
+  const [showSwipeHint, setShowSwipeHint] = useState(true);
   const railRef = useRef<HTMLDivElement>(null);
 
   const visible = VIDEOS_SEED.filter((v) => tab === "Todos" || v.tab === tab);
@@ -20,6 +21,18 @@ export default function VideoGallery() {
   function scrollRail(dir: 1 | -1) {
     railRef.current?.scrollBy({ left: dir * 312, behavior: "smooth" });
   }
+
+  useEffect(() => {
+    const el = railRef.current;
+    if (!el) return;
+    const hide = () => setShowSwipeHint(false);
+    el.addEventListener("scroll", hide, { once: true, passive: true });
+    const t = setTimeout(hide, 4500);
+    return () => {
+      el.removeEventListener("scroll", hide);
+      clearTimeout(t);
+    };
+  }, []);
 
   return (
     <section id="videos" className="pl-6 pt-[var(--section-y)]">
@@ -61,7 +74,16 @@ export default function VideoGallery() {
         </div>
       </div>
 
-      <div ref={railRef} className="grid auto-cols-[min(300px,72vw)] grid-flow-col gap-3 overflow-x-auto pr-6 [scroll-snap-type:x_mandatory]">
+      <div className="relative">
+        {showSwipeHint && (
+          <div className="pointer-events-none absolute inset-x-0 bottom-4 z-10 flex justify-center lg:hidden">
+            <span className="flex animate-[swipe-hint_1.6s_ease-in-out_infinite] items-center gap-2 rounded-[var(--radius-pill)] bg-ink-950/85 px-4 py-2 text-xs text-paper-0 backdrop-blur-md">
+              <Hand size={14} />
+              Arraste para o lado
+            </span>
+          </div>
+        )}
+        <div ref={railRef} className="grid auto-cols-[min(300px,72vw)] grid-flow-col gap-3 overflow-x-auto pr-6 [scroll-snap-type:x_mandatory]">
         {visible.map((video) => {
           const idx = VIDEOS_SEED.indexOf(video);
           return (
@@ -90,6 +112,7 @@ export default function VideoGallery() {
             </button>
           );
         })}
+        </div>
       </div>
 
       <Dialog open={!!current} onClose={() => setOpenIndex(-1)} width={420}>

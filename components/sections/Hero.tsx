@@ -13,7 +13,7 @@ export default function Hero() {
   return (
     <section
       ref={ref}
-      className="relative mx-2 mt-2 overflow-hidden rounded-[var(--radius-md)] bg-ink-900 sm:m-[10px] sm:rounded-[var(--radius-lg)]"
+      className="relative mx-2 mt-2 w-[calc(100%-16px)] overflow-hidden rounded-[var(--radius-md)] bg-ink-900 sm:m-[10px] sm:w-[calc(100%-20px)] sm:rounded-[var(--radius-lg)]"
       style={{ aspectRatio: "1672/941", minHeight: "clamp(280px,68vw,420px)" }}
     >
       <motion.div style={{ y }} className="absolute inset-0 will-change-transform">

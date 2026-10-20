@@ -15,7 +15,7 @@ export default function QuickBuy() {
         {/* Foto do produto */}
         <div
           className="relative overflow-hidden rounded-[var(--radius-xl)] bg-paper-100"
-          style={{ minHeight: "clamp(420px,52vw,680px)" }}
+          style={{ minHeight: "clamp(300px,52vw,680px)" }}
         >
           <Image src="/product-studio.png" alt="Purion GT 60 ml" fill className="object-cover" />
           <div className="absolute left-5 top-5 flex gap-2">
@@ -37,7 +37,7 @@ export default function QuickBuy() {
         </div>
 
         {/* Painel de compra */}
-        <div className="flex flex-col gap-5 rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-paper-0 p-6 sm:p-10">
+        <div className="flex flex-col gap-4 rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-paper-0 p-5 sm:gap-5 sm:p-10">
           <div className="flex flex-col gap-2.5">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <span className="text-[11px] uppercase text-[var(--text-muted)] tracking-[var(--ls-caps)]">
@@ -56,7 +56,7 @@ export default function QuickBuy() {
               </span>
             </div>
             <h2
-              className="m-0 font-display text-[clamp(56px,6vw,96px)] font-medium leading-[0.86] tracking-[-0.055em]"
+              className="m-0 font-display text-[clamp(40px,6vw,96px)] font-medium leading-[0.86] tracking-[-0.055em]"
               style={{ fontVariationSettings: "'wdth' 88" }}
             >
               Purion GT
@@ -98,7 +98,9 @@ export default function QuickBuy() {
                         </span>
                       )}
                     </div>
-                    <span className="font-mono text-2xl leading-none tracking-[-0.03em]">{p.price}</span>
+                    <span className="font-mono text-xl leading-none tracking-[-0.03em] sm:text-2xl">
+                      {p.price.replace("/entrega", "")}
+                    </span>
                     <span className="text-xs leading-snug text-[var(--text-muted)]">{p.perQuickBuy}</span>
                     {selected && (
                       <span className="absolute bottom-3.5 right-3.5 flex h-[22px] w-[22px] items-center justify-center rounded-full bg-signal-400 text-ink-950">

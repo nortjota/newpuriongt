@@ -95,7 +95,7 @@ export default function Offer() {
                   </span>
                   <span className="text-[13px] text-[var(--text-muted)]">{p.description}</span>
                 </span>
-                <span className="font-mono text-[15px]">{p.price}</span>
+                <span className="flex-none whitespace-nowrap text-right font-mono text-[13px] sm:text-[15px]">{p.price}</span>
               </button>
             );
           })}
