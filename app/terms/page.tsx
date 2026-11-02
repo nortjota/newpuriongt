@@ -1,12 +1,14 @@
 import LegalLayout from "@/components/legal/LegalLayout";
+import { COMPANY } from "@/lib/config/company";
 
 export default function TermsPage() {
   return (
     <LegalLayout title="Termos de Uso" updatedAt="14 de outubro de 2026">
       <section>
         <p>
-          Estes Termos de Uso regem o acesso e o uso do site puriongt.com.br e a compra dos produtos PURION GT. Ao
-          usar o site ou fazer um pedido, você concorda com estas condições. Leia também nossa{" "}
+          Estes Termos de Uso regem o acesso e o uso do site puriongt.com.br e a compra dos produtos PURION GT,
+          operado por {COMPANY.razaoSocial}, inscrita no CNPJ sob o nº {COMPANY.cnpj}, com sede em {COMPANY.endereco}
+          . Ao usar o site ou fazer um pedido, você concorda com estas condições. Leia também nossa{" "}
           <a href="/privacy" className="underline">
             Política de Privacidade
           </a>
@@ -68,9 +70,8 @@ export default function TermsPage() {
       <section>
         <h2 className="font-display text-xl font-medium text-ink-950">6. Assinatura (recorrência)</h2>
         <p className="mt-3">
-          Se você escolher o plano de assinatura, seu frasco é enviado automaticamente na frequência selecionada
-          (30, 60 ou 90 dias) com o desconto vigente. Você pode pausar ou cancelar a assinatura quando quiser, falando
-          com a gente pelo WhatsApp.
+          Se você escolher o plano de assinatura, seu frasco é enviado automaticamente a cada 60 dias com o
+          desconto vigente. Cancele quando quiser pelo WhatsApp.
         </p>
       </section>
 

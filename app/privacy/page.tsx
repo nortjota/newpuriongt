@@ -1,14 +1,17 @@
 import LegalLayout from "@/components/legal/LegalLayout";
+import { COMPANY } from "@/lib/config/company";
 
 export default function PrivacyPage() {
   return (
     <LegalLayout title="Política de Privacidade" updatedAt="14 de outubro de 2026">
       <section>
         <p>
-          Esta Política de Privacidade descreve como a PURION GT (&ldquo;nós&rdquo;) coleta, usa, compartilha e
-          protege as informações pessoais de quem visita puriongt.com.br, faz uma compra ou entra em contato com a
-          gente pelos nossos canais. Ao usar nosso site, você concorda com o que está descrito aqui. Tratamos seus
-          dados de acordo com a Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018).
+          Esta Política de Privacidade descreve como a PURION GT (&ldquo;nós&rdquo;), operada por{" "}
+          {COMPANY.razaoSocial}, inscrita no CNPJ sob o nº {COMPANY.cnpj}, com sede em {COMPANY.endereco}, coleta,
+          usa, compartilha e protege as informações pessoais de quem visita puriongt.com.br, faz uma compra ou
+          entra em contato com a gente pelos nossos canais. Ao usar nosso site, você concorda com o que está
+          descrito aqui. Tratamos seus dados de acordo com a Lei Geral de Proteção de Dados (LGPD — Lei nº
+          13.709/2018).
         </p>
       </section>
 

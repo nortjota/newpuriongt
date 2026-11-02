@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Calendar, Flower2, Gauge, Layers, Leaf, Moon, Snowflake, Sun, SunMedium } from "lucide-react";
-import { ACCORDS, FRAGRANCE_LAYERS, NOTE_COLORS, PERFORMANCE, SEASONS } from "@/lib/content/fragrance";
+import { ACCORDS, FRAGRANCE_FAMILY, FRAGRANCE_LAYERS, NOTE_COLORS, PERFORMANCE, SEASONS } from "@/lib/content/fragrance";
 import RevealBar from "@/components/ui/RevealBar";
 import { usePurion } from "@/lib/store/PurionProvider";
 
@@ -101,7 +101,7 @@ export default function FragrancePyramid() {
             ))}
           </div>
           <p className="m-0 min-h-[50px] text-[17px] leading-snug text-[var(--text-inverse-muted)]">
-            {isAll ? "A pirâmide inteira: da abertura frutada ao fundo de couro e âmbar." : active!.text}
+            {isAll ? "A pirâmide inteira: da abertura frutada ao fundo de couro e ambergris." : active!.text}
           </p>
           {isAll ? (
             <div className="flex flex-col gap-5">
@@ -228,7 +228,7 @@ export default function FragrancePyramid() {
           <div className="mt-auto flex items-baseline justify-between gap-3 border-t border-[var(--border-inverse)] pt-4.5">
             <span className="text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">Família</span>
             <span className="font-display text-[26px] font-medium tracking-[-0.03em]" style={{ fontVariationSettings: "'wdth' 88" }}>
-              Amadeirado frutado
+              {FRAGRANCE_FAMILY}
             </span>
           </div>
         </div>

@@ -15,8 +15,8 @@ import Offer from "@/components/sections/Offer";
 import Guarantee from "@/components/sections/Guarantee";
 import Faq from "@/components/sections/Faq";
 import FinalCta from "@/components/sections/FinalCta";
-import Marquee from "@/components/ui/Marquee";
 import StickyBuyBar from "@/components/widgets/StickyBuyBar";
+import TaglineMarquee from "@/components/widgets/TaglineMarquee";
 
 const MARQUEE_ITEMS = ["Exala presença", "Deixa memória", "Luxo em cada detalhe", "A diferença que você pode cheirar"];
 
@@ -27,11 +27,7 @@ export default function Home() {
       <main id="topo">
         <Hero />
         <div className="py-6.5">
-          <Marquee
-            items={MARQUEE_ITEMS}
-            itemClassName="whitespace-nowrap font-mono text-sm"
-            renderItem={(item, i) => <span key={i}>{item}</span>}
-          />
+          <TaglineMarquee items={MARQUEE_ITEMS} />
         </div>
         <QuickBuy />
         <FragrancePyramid />

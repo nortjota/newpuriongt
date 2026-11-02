@@ -8,6 +8,12 @@ export const NOTE_COLORS: Record<string, string> = {
   Musk: "oklch(0.84 0.02 300)",
   Couro: "oklch(0.5 0.07 45)",
   Patchouli: "oklch(0.54 0.08 70)",
+  // Nomes atuais (pedido do usuário). As chaves antigas "Âmbar"/"Musgo de
+  // carvalho" continuam abaixo só porque lib/content/quiz.ts ainda referencia
+  // esses nomes num bloco fora do escopo desta troca — não remover sem
+  // atualizar quiz.ts junto.
+  Ambergris: "oklch(0.74 0.15 65)",
+  "Musgo de Carvalho": "oklch(0.54 0.08 135)",
   Âmbar: "oklch(0.74 0.15 65)",
   "Musgo de carvalho": "oklch(0.54 0.08 135)",
 };
@@ -32,20 +38,21 @@ export const FRAGRANCE_LAYERS = [
     band: "oklch(0.6 0.1 55 / .28)",
     glow: "oklch(0.66 0.13 60)",
     text: "Base amadeirada, intensa e marcante, que fixa e deixa rastro.",
-    notes: ["Musk", "Couro", "Patchouli", "Âmbar", "Musgo de carvalho"],
+    notes: ["Musk", "Couro", "Patchouli", "Ambergris", "Musgo de Carvalho"],
   },
 ];
 
 export const ACCORDS = [
-  { key: "frutado", pct: 96, color: "oklch(0.66 0.19 35)", dark: true },
-  { key: "amadeirado", pct: 90, color: "oklch(0.45 0.08 55)", dark: false },
-  { key: "couro", pct: 84, color: "oklch(0.4 0.05 40)", dark: false },
-  { key: "doce", pct: 78, color: "oklch(0.58 0.17 20)", dark: false },
-  { key: "floral", pct: 72, color: "oklch(0.74 0.12 350)", dark: true },
-  { key: "âmbar", pct: 68, color: "oklch(0.72 0.14 70)", dark: true },
-  { key: "cítrico", pct: 62, color: "oklch(0.82 0.15 110)", dark: true },
-  { key: "almiscarado", pct: 58, color: "oklch(0.72 0.03 300)", dark: true },
-  { key: "musgo", pct: 50, color: "oklch(0.45 0.07 135)", dark: false },
+  { key: "Frutado", pct: 100, color: "oklch(0.66 0.19 35)", dark: true },
+  { key: "Doce", pct: 68, color: "oklch(0.58 0.17 20)", dark: false },
+  { key: "Amadeirado", pct: 68, color: "oklch(0.45 0.08 55)", dark: false },
+  { key: "Couro", pct: 63, color: "oklch(0.4 0.05 40)", dark: false },
+  { key: "Cítrico", pct: 59, color: "oklch(0.82 0.15 110)", dark: true },
+  { key: "Esfumaçado", pct: 57, color: "oklch(0.4 0.02 260)", dark: false },
+  { key: "Almiscarado", pct: 55, color: "oklch(0.72 0.03 300)", dark: true },
+  { key: "Fresco", pct: 52, color: "oklch(0.82 0.1 190)", dark: true },
+  { key: "Tropical", pct: 52, color: "oklch(0.78 0.16 75)", dark: true },
+  { key: "Musgoso", pct: 47, color: "oklch(0.45 0.07 135)", dark: false },
 ];
 
 export const SEASONS = [
@@ -63,3 +70,5 @@ export const PERFORMANCE = [
   { key: "Rastro", label: "Presente", segments: 4 },
   { key: "Doçura", label: "Equilibrada", segments: 3 },
 ];
+
+export const FRAGRANCE_FAMILY = "Amadeirada Couro";

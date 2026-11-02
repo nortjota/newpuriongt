@@ -5,7 +5,7 @@ export const FAQ = [
   },
   {
     q: "Onde coloco o frasco no carro?",
-    a: "Borrife de 2 a 3 vezes no carpete, nos bancos de tecido ou no ar do habitáculo. Guarde o frasco no porta-luvas ou no console, longe do sol direto.",
+    a: "Aplique uma média de 3 a 5 borrifadas por uso no carpete, nos bancos de tecido ou no ar do habitáculo. Guarde o frasco no porta-luvas ou no console, longe do sol direto.",
   },
   {
     q: "Mancha o interior do carro?",
@@ -21,7 +21,7 @@ export const FAQ = [
   },
   {
     q: "Como funciona a assinatura?",
-    a: "Você escolhe a frequência (30, 60 ou 90 dias) e recebe com 15% de desconto em toda entrega. Pause ou cancele quando quiser pelo WhatsApp.",
+    a: "Você recebe a cada 60 dias com 15% de desconto em toda entrega. Cancele quando quiser pelo WhatsApp.",
   },
   {
     q: "Vale a pena comprar o kit?",

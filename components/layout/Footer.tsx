@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { WHATSAPP_URL } from "@/lib/content/whatsapp";
+import { COMPANY } from "@/lib/config/company";
 
 const PARTNER_URL = `${WHATSAPP_URL}?text=${encodeURIComponent(
   "Olá! Quero saber mais sobre me tornar parceiro/revendedor do Purion GT."
@@ -72,7 +73,9 @@ export default function Footer() {
       </div>
 
       <div className="mx-auto mt-8 flex max-w-[var(--content-max)] flex-wrap justify-between gap-3 border-t border-[var(--border-inverse)] pt-[18px] text-xs text-[var(--text-inverse-muted)]">
-        <span>© 2026 Purion GT. Todos os direitos reservados.</span>
+        <span>
+          © 2026 Purion GT. Todos os direitos reservados. · CNPJ: {COMPANY.cnpj}
+        </span>
         <span className="font-mono">Feito no Brasil</span>
       </div>
 

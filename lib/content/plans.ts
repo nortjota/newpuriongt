@@ -20,7 +20,7 @@ export const PLANS: Plan[] = [
     title: "Unidade",
     description: "1 frasco · 60 ml",
     price: fmt(97.9),
-    perQuickBuy: "Preço de lançamento · 35% off",
+    perQuickBuy: "Preço de lançamento",
   },
   {
     id: "k2",
@@ -43,7 +43,7 @@ export const PLANS: Plan[] = [
   {
     id: "sub",
     title: "Assinatura",
-    description: "15% off em toda entrega · cancele quando quiser",
+    description: "15% off em toda entrega · cancele quando quiser pelo WhatsApp",
     price: `${fmt(83.22)}/entrega`,
     perQuickBuy: "a cada 60 dias · 15% off em toda entrega",
     badge: "Recorrente",
@@ -52,11 +52,8 @@ export const PLANS: Plan[] = [
   },
 ];
 
-export const SUBSCRIPTION_FREQUENCIES = [30, 60, 90];
-
 // Estado inicial do protótipo: plano "Unidade", quantidade 1.
 export const DEFAULT_TOTAL = fmt(97.9);
-export const DEFAULT_OLD_PRICE = fmt(149.9);
 export const DEFAULT_INSTALLMENT = fmt(97.9 / 3);
 
 // Trocado por pedido do usuário em 2026-10-15: tirou "compra segura" e "nota

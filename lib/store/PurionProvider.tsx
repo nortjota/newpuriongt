@@ -1,12 +1,11 @@
 "use client";
 
 import { createContext, useContext, useMemo, useReducer, type ReactNode } from "react";
-import { PLANS, SUBSCRIPTION_FREQUENCIES, type Plan } from "@/lib/content/plans";
+import { PLANS, type Plan } from "@/lib/content/plans";
 
 type State = {
   planId: Plan["id"];
   qty: number;
-  freq: number;
   cart: number;
   toast: string;
   // 0 = "Completo" (todas as camadas). Fica no contexto só porque o resultado
@@ -18,12 +17,11 @@ type State = {
 type Action =
   | { type: "SET_PLAN"; id: Plan["id"] }
   | { type: "SET_QTY"; qty: number }
-  | { type: "SET_FREQ"; freq: number }
   | { type: "ADD_TO_CART" }
   | { type: "CLEAR_TOAST" }
   | { type: "SET_PYRAMID_LEVEL"; level: 0 | 1 | 2 | 3 };
 
-const initialState: State = { planId: "un", qty: 1, freq: 60, cart: 0, toast: "", pyramidLevel: 0 };
+const initialState: State = { planId: "un", qty: 1, cart: 0, toast: "", pyramidLevel: 0 };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -31,8 +29,6 @@ function reducer(state: State, action: Action): State {
       return { ...state, planId: action.id };
     case "SET_QTY":
       return { ...state, qty: Math.min(10, Math.max(1, action.qty)) };
-    case "SET_FREQ":
-      return { ...state, freq: action.freq };
     case "ADD_TO_CART": {
       const plan = PLANS.find((p) => p.id === state.planId)!;
       const units = plan.isSubscription || plan.id === "un" ? state.qty : unitsForPlan(plan.id);
@@ -62,20 +58,17 @@ function fmt(v: number) {
 }
 
 const UNIT_PRICE: Record<Plan["id"], number> = { un: 97.9, k2: 176.22, k3: 249.65, sub: 83.22 };
-const BASE_REFERENCE_PRICE = 149.9;
 
 type Ctx = {
   state: State;
   plan: Plan;
   units: number;
   total: string;
-  oldPrice: string;
   installment: string;
   ctaLabel: string;
   showQty: boolean;
   setPlan: (id: Plan["id"]) => void;
   setQty: (qty: number) => void;
-  setFreq: (freq: number) => void;
   addToCart: () => void;
   clearToast: () => void;
   setPyramidLevel: (level: 0 | 1 | 2 | 3) => void;
@@ -97,13 +90,11 @@ export function PurionProvider({ children }: { children: ReactNode }) {
       plan,
       units,
       total: fmt(total),
-      oldPrice: fmt(BASE_REFERENCE_PRICE * units),
       installment: fmt(total / 3),
       ctaLabel: plan.isSubscription ? "Assinar agora" : "Adicionar ao carrinho",
       showQty: !isFixedKit,
       setPlan: (id) => dispatch({ type: "SET_PLAN", id }),
       setQty: (qty) => dispatch({ type: "SET_QTY", qty }),
-      setFreq: (freq) => dispatch({ type: "SET_FREQ", freq }),
       addToCart: () => dispatch({ type: "ADD_TO_CART" }),
       clearToast: () => dispatch({ type: "CLEAR_TOAST" }),
       setPyramidLevel: (level) => dispatch({ type: "SET_PYRAMID_LEVEL", level }),
@@ -118,5 +109,3 @@ export function usePurion() {
   if (!ctx) throw new Error("usePurion must be used within PurionProvider");
   return ctx;
 }
-
-export { SUBSCRIPTION_FREQUENCIES };

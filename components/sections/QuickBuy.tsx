@@ -7,7 +7,7 @@ import { CHECKOUT_URL } from "@/lib/content/checkout";
 import { usePurion } from "@/lib/store/PurionProvider";
 
 export default function QuickBuy() {
-  const { state, plan, total, oldPrice, installment, ctaLabel, showQty, setPlan, setQty, addToCart } = usePurion();
+  const { state, plan, total, installment, ctaLabel, showQty, setPlan, setQty, addToCart } = usePurion();
 
   return (
     <section id="comprar-topo" className="mx-auto max-w-[var(--content-max)] px-6">
@@ -18,7 +18,6 @@ export default function QuickBuy() {
               caixa bater exatamente com a proporção da foto, sem cortar nada. */}
           <Image src="/product-studio.png" alt="Purion GT 60 ml" fill className="object-contain" />
           <div className="absolute left-5 top-5 flex gap-2">
-            <span className="rounded-full bg-ink-950 px-3.5 py-1.5 text-xs font-medium text-paper-0">35% off</span>
             <span className="flex items-center gap-1.5 rounded-full bg-signal-400 px-3.5 py-1.5 text-xs font-medium text-ink-950">
               <span className="h-1.5 w-1.5 rounded-full bg-ink-950" />
               Envio hoje
@@ -117,7 +116,6 @@ export default function QuickBuy() {
               <span className="text-[11px] font-semibold uppercase text-ink-950 tracking-[var(--ls-caps)]">2 · Total</span>
               <div className="flex flex-wrap items-baseline gap-3">
                 <span className="font-mono text-[clamp(36px,3.6vw,48px)] leading-none tracking-[-0.04em]">{total}</span>
-                <span className="font-mono text-sm text-[var(--text-muted)] line-through">{oldPrice}</span>
               </div>
               <span className="text-sm text-[var(--text-secondary)]">
                 ou 3× de <span className="font-mono">{installment}</span> sem juros

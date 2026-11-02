@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Minus, Plus, MapPin, RotateCcw, Sparkles, Star, Truck } from "lucide-react";
-import { PLANS, SUBSCRIPTION_FREQUENCIES, TRUST_SEALS } from "@/lib/content/plans";
+import { PLANS, TRUST_SEALS } from "@/lib/content/plans";
 import { CHECKOUT_URL } from "@/lib/content/checkout";
 import { usePurion } from "@/lib/store/PurionProvider";
 
@@ -14,8 +14,7 @@ const SEAL_ICONS = {
 } as const;
 
 export default function Offer() {
-  const { state, plan, total, oldPrice, installment, ctaLabel, showQty, setPlan, setQty, setFreq, addToCart } =
-    usePurion();
+  const { state, plan, total, installment, ctaLabel, showQty, setPlan, setQty, addToCart } = usePurion();
 
   return (
     <section
@@ -27,9 +26,6 @@ export default function Offer() {
         style={{ height: "clamp(480px,62vw,720px)" }}
       >
         <Image src="/product-studio.png" alt="Purion GT 60 ml" fill className="object-cover" />
-        <div className="absolute left-5.5 top-5.5">
-          <span className="rounded-full bg-ink-950 px-4 py-1.5 text-xs font-medium text-paper-0">35% off</span>
-        </div>
         <div className="absolute inset-x-5.5 bottom-5.5 flex items-end justify-between gap-4 text-ink-600">
           <span className="text-[13px] leading-snug">
             Toque no frasco
@@ -101,19 +97,10 @@ export default function Offer() {
           })}
           {plan.isSubscription && (
             <div className="flex flex-wrap items-center gap-2.5 pt-1.5">
-              <span className="text-[13px] text-[var(--text-secondary)]">Receber a cada</span>
-              {SUBSCRIPTION_FREQUENCIES.map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setFreq(f)}
-                  className={`rounded-[var(--radius-pill)] px-4 py-2 text-sm ${
-                    state.freq === f ? "bg-ink-950 text-paper-0" : "border border-[var(--border-strong)] text-ink-950"
-                  }`}
-                >
-                  {f} dias
-                </button>
-              ))}
-              <span className="text-xs text-[var(--text-muted)]">Pause ou cancele quando quiser.</span>
+              <span className="rounded-[var(--radius-pill)] bg-ink-950 px-4 py-2 text-sm text-paper-0">
+                Receber a cada 60 dias
+              </span>
+              <span className="text-xs text-[var(--text-muted)]">Cancele quando quiser pelo WhatsApp.</span>
             </div>
           )}
         </div>
@@ -121,7 +108,6 @@ export default function Offer() {
         <div className="flex flex-col gap-1.5 border-y border-[var(--border-subtle)] py-5">
           <div className="flex flex-wrap items-baseline gap-3.5">
             <span className="font-mono text-[44px] tracking-[-0.04em]">{total}</span>
-            <span className="font-mono text-[15px] text-[var(--text-muted)] line-through">{oldPrice}</span>
           </div>
           <span className="text-sm text-[var(--text-secondary)]">
             ou até 3× de <span className="font-mono">{installment}</span> sem juros

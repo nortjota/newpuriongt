@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { PenLine, Star } from "lucide-react";
-import { REVIEWS_SEED } from "@/lib/content/reviews.seed";
+import { Handshake, PenLine, Star, User } from "lucide-react";
+import { TESTIMONIALS } from "@/lib/content/testimonials";
 import Marquee from "@/components/ui/Marquee";
 import ReviewSubmitModal from "@/components/widgets/ReviewSubmitModal";
 
@@ -31,7 +31,7 @@ export default function Reviews() {
 
   function startTimer() {
     if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => setSpot((s) => (s + 1) % REVIEWS_SEED.length), SPOTLIGHT_INTERVAL);
+    timerRef.current = setInterval(() => setSpot((s) => (s + 1) % TESTIMONIALS.length), SPOTLIGHT_INTERVAL);
   }
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function Reviews() {
     startTimer();
   }
 
-  const spotlight = REVIEWS_SEED[spot];
+  const spotlight = TESTIMONIALS[spot];
 
   return (
     <section id="avaliacoes" className="py-[var(--section-y)]">
@@ -76,10 +76,12 @@ export default function Reviews() {
           </div>
           <div className="grid grid-cols-2 gap-3.5">
             <div className="flex flex-col gap-1.5 border-t border-[var(--border-strong)] pt-3.5">
-              <span className="font-display text-[56px] font-medium leading-[0.9] tracking-[-0.05em]" style={{ fontVariationSettings: "'wdth' 88" }}>
-                92%
+              <span
+                className="font-display text-xl font-medium leading-snug tracking-[-0.02em]"
+                style={{ fontVariationSettings: "'wdth' 88" }}
+              >
+                Alta taxa de recompra e feedbacks positivos
               </span>
-              <span className="text-[13px] text-[var(--text-secondary)]">taxa de recompra</span>
             </div>
             <div className="flex flex-col gap-1.5 border-t border-[var(--border-strong)] pt-3.5">
               <span className="font-display text-[56px] font-medium leading-[0.9] tracking-[-0.05em]" style={{ fontVariationSettings: "'wdth' 88" }}>
@@ -111,7 +113,7 @@ export default function Reviews() {
               ))}
             </div>
             <span className="font-mono text-xs text-[var(--text-inverse-muted)]">
-              {String(spot + 1).padStart(2, "0")} / {String(REVIEWS_SEED.length).padStart(2, "0")}
+              {String(spot + 1).padStart(2, "0")} / {String(TESTIMONIALS.length).padStart(2, "0")}
             </span>
           </div>
           <figure className="relative m-0 flex flex-col gap-7">
@@ -119,7 +121,7 @@ export default function Reviews() {
               className="m-0 font-display text-[clamp(24px,2.4vw,34px)] font-medium leading-[1.18] tracking-[-0.025em]"
               style={{ fontVariationSettings: "'wdth' 100" }}
             >
-              &ldquo;{spotlight.quote}&rdquo;
+              &ldquo;{spotlight.text}&rdquo;
             </blockquote>
             <figcaption className="flex items-center gap-3">
               <span className="flex h-11 w-11 items-center justify-center rounded-full bg-signal-400 font-semibold text-ink-950">
@@ -134,7 +136,7 @@ export default function Reviews() {
             </figcaption>
           </figure>
           <div className="relative flex gap-1.5">
-            {REVIEWS_SEED.map((r, i) => (
+            {TESTIMONIALS.map((r, i) => (
               <button key={r.name} onClick={() => jumpTo(i)} aria-label="Ver depoimento" className="h-[18px] flex-1 py-[7px]">
                 <span className="block h-1 overflow-hidden rounded bg-white/16">
                   {i < spot ? (
@@ -151,8 +153,8 @@ export default function Reviews() {
 
       <div className="mt-16 flex flex-col gap-3">
         {[
-          { items: REVIEWS_SEED, duration: "70s", reverse: false },
-          { items: [...REVIEWS_SEED].reverse(), duration: "80s", reverse: true },
+          { items: TESTIMONIALS, duration: "70s", reverse: false },
+          { items: [...TESTIMONIALS].reverse(), duration: "80s", reverse: true },
         ].map((row, rowIdx) => (
           <Marquee
             key={rowIdx}
@@ -160,9 +162,9 @@ export default function Reviews() {
             duration={row.duration}
             reverse={row.reverse}
             className="pl-6"
-            renderItem={(review) => (
+            renderItem={(review, i) => (
               <div
-                key={review.name}
+                key={`${review.name}-${i}`}
                 className="flex w-[340px] flex-none flex-col gap-3.5 rounded-[var(--radius-md)] border border-[var(--border-subtle)] bg-paper-0 p-5"
               >
                 <div className="flex items-center justify-between">
@@ -171,9 +173,12 @@ export default function Reviews() {
                       <Star key={i} size={12} fill="currentColor" />
                     ))}
                   </div>
-                  <span className="font-mono text-[11px] text-[var(--text-muted)]">{review.tag}</span>
+                  <span className="flex items-center gap-1 font-mono text-[11px] text-[var(--text-muted)]">
+                    {review.origin === "parceiro" ? <Handshake size={11} /> : <User size={11} />}
+                    {review.origin === "parceiro" ? "Parceiro" : "Cliente"}
+                  </span>
                 </div>
-                <p className="m-0 text-sm leading-relaxed text-ink-800">&ldquo;{review.quote}&rdquo;</p>
+                <p className="m-0 text-sm leading-relaxed text-ink-800">&ldquo;{review.text}&rdquo;</p>
                 <div className="mt-auto flex items-center gap-2.5">
                   <span className="flex h-7.5 w-7.5 items-center justify-center rounded-full bg-paper-100 text-xs font-semibold">
                     {review.name[0]}
