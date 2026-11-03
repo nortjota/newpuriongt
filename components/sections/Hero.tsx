@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
+import { Car } from "lucide-react";
 
 const SLIDE_INTERVAL_MS = 6000;
 
@@ -139,6 +140,16 @@ export default function Hero() {
         ))}
       </motion.div>
       <div className="absolute inset-0" style={{ background: "var(--scrim-top)" }} />
+
+      <motion.div
+        initial={reduceMotion ? false : { opacity: 0, y: -16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 1.1 }}
+        className="absolute left-6 top-20 flex items-center gap-1.5 rounded-full px-4 py-2 text-[13px] text-paper-0 backdrop-blur-md border border-[var(--border-glass)] bg-[var(--surface-glass-dark)]"
+      >
+        <Car size={14} />
+        <span className="opacity-90">Perfume automotivo</span>
+      </motion.div>
 
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, y: 24 }}
