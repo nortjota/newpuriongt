@@ -11,12 +11,21 @@ export default function FinalCta() {
   const y = useTransform(scrollYProgress, [0, 1], reduceMotion ? ["0%", "0%"] : ["-10%", "10%"]);
 
   return (
-    <section ref={ref} className="relative m-[10px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-900 px-6 py-24 text-center text-paper-0 sm:py-36">
-      <motion.div className="absolute -inset-y-[15%] inset-x-0 opacity-42 will-change-transform" style={{ y }}>
-        <Image src="/hero-street.png" alt="" fill className="object-cover" style={{ objectPosition: "center 70%" }} />
+    <section ref={ref} className="relative w-full overflow-hidden bg-ink-900 px-6 py-24 text-center text-paper-0 sm:py-36">
+      <motion.div className="absolute -inset-y-[15%] inset-x-0 will-change-transform" style={{ y }}>
+        <picture>
+          <source media="(max-width: 767px)" srcSet="/images/cenas/cena-estrada-noite-mobile.webp" />
+          <img
+            src="/images/cenas/cena-estrada-noite.webp"
+            alt="Frasco PURION GT em estrada à noite"
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+        </picture>
       </motion.div>
+      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,10,12,.55), rgba(10,10,12,.72))" }} />
       <div className="relative flex flex-col items-center gap-7">
-        <Image src="/logo-white.png" alt="" width={150} height={37} className="h-7 w-auto" />
+        <Image src="/logo-white.png" alt="Purion GT" width={150} height={37} className="h-7 w-auto" />
         <div
           className="font-display text-[var(--fs-display-l)] font-medium leading-[0.9] tracking-[var(--ls-display)]"
           style={{ fontVariationSettings: "'wdth' 88" }}

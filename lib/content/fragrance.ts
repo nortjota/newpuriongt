@@ -25,6 +25,7 @@ export const FRAGRANCE_LAYERS = [
     glow: "oklch(0.8 0.16 95)",
     text: "Abertura fresca e frutada que desperta os sentidos.",
     notes: ["Maçã", "Abacaxi", "Tangerina"],
+    image: { src: "/images/piramide/piramide-saida.webp", alt: "Maçã, abacaxi e tangerina — notas de saída" },
   },
   {
     key: "Corpo",
@@ -32,6 +33,7 @@ export const FRAGRANCE_LAYERS = [
     glow: "oklch(0.72 0.15 0)",
     text: "Coração floral, sofisticado e elegante, que revela personalidade.",
     notes: ["Rosa", "Jasmim", "Baunilha"],
+    image: { src: "/images/piramide/piramide-corpo.webp", alt: "Rosa, jasmim e baunilha — notas de corpo" },
   },
   {
     key: "Fundo",
@@ -39,6 +41,7 @@ export const FRAGRANCE_LAYERS = [
     glow: "oklch(0.66 0.13 60)",
     text: "Base amadeirada, intensa e marcante, que fixa e deixa rastro.",
     notes: ["Musk", "Couro", "Patchouli", "Ambergris", "Musgo de Carvalho"],
+    image: { src: "/images/piramide/piramide-fundo.webp", alt: "Couro, musgo de carvalho e patchouli — notas de fundo" },
   },
 ];
 

@@ -1,17 +1,24 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 
 const SLIDE_INTERVAL_MS = 6000;
 
-// Segunda opção de banner pedida pelo usuário — reaproveita um asset real já
-// aprovado (hero-street.png, já usado em outras seções) em vez de inventar
-// uma imagem nova. Trocar por um banner dedicado quando houver um.
+// Os 2 banners do carrossel já têm o texto embutido na própria imagem — por
+// isso não há headline/CTA sobreposto aqui, só o badge de avaliação (chrome
+// de UI, não copy de marketing) e os indicadores de slide.
 const SLIDES = [
-  { src: "/hero-banner.png", position: "object-[62%_32%] lg:object-center" },
-  { src: "/hero-street.png", position: "object-[center_55%]" },
+  {
+    desktop: "/images/slideshow/slideshow-1.webp",
+    mobile: "/images/slideshow/slideshow-1-mobile.webp",
+    alt: 'Homem segura o frasco Purion GT cercado de frutas e flores, carro branco ao fundo — "Seu carro também tem assinatura."',
+  },
+  {
+    desktop: "/images/slideshow/slideshow-2.webp",
+    mobile: "/images/slideshow/slideshow-2-mobile.webp",
+    alt: 'Frasco Purion GT sobre o console de um carro premium — "O perfume automotivo premium do Brasil."',
+  },
 ];
 
 export default function Hero() {
@@ -49,7 +56,7 @@ export default function Hero() {
       <motion.div style={{ y }} className="absolute inset-0 will-change-transform">
         {SLIDES.map((s, i) => (
           <motion.div
-            key={s.src}
+            key={s.desktop}
             className="absolute inset-0"
             initial={false}
             animate={{ x: `${(i - slide) * 100}%` }}
@@ -61,28 +68,21 @@ export default function Hero() {
               transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
               className="absolute inset-0"
             >
-              <Image
-                src={s.src}
-                alt=""
-                fill
-                priority={i === 0}
-                className={`object-cover ${s.position}`}
-                sizes="100vw"
-              />
+              <picture>
+                <source media="(max-width: 767px)" srcSet={s.mobile} />
+                <img
+                  src={s.desktop}
+                  alt={s.alt}
+                  loading={i === 0 ? "eager" : "lazy"}
+                  fetchPriority={i === 0 ? "high" : "auto"}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              </picture>
             </motion.div>
           </motion.div>
         ))}
       </motion.div>
       <div className="absolute inset-0" style={{ background: "var(--scrim-top)" }} />
-
-      {slide === 0 && (
-        <a
-          href="#comprar"
-          aria-label="Conheça o Purion GT"
-          className="absolute rounded-full"
-          style={{ left: "5.2%", top: "56.6%", width: "16.8%", height: "7%" }}
-        />
-      )}
 
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, y: 24 }}

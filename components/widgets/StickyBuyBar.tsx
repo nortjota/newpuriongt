@@ -41,7 +41,7 @@ export default function StickyBuyBar() {
     >
       <div className="flex items-center gap-3">
         <div className="relative h-11 w-11 flex-none overflow-hidden rounded-xl bg-paper-100">
-          <Image src="/product-studio.png" alt="" fill className="object-cover" />
+          <Image src="/product-studio.png" alt="Purion GT 60 ml" fill className="object-cover" />
         </div>
         <div className="flex flex-1 flex-col">
           <span className="text-xs font-medium">{plan.title}</span>

@@ -11,12 +11,15 @@ const CHAPTERS = [
     body:
       "Você investe R$ 80 mil, R$ 150 mil, R$ 300 mil num carro. Polimento cerâmico, bancos de couro, som premium. E no retrovisor, um papelão em forma de árvore. A Purion GT nasceu da raiva saudável de quem ama carros demais para aceitar isso.",
     image: "/hero-street.png",
+    imageAlt: "Rua à noite vista de dentro do carro",
   },
   {
     n: "Capítulo 2",
     title: "Dois anos de obsessão.",
     body:
       "Estudamos as notas olfativas de casas como Creed, Tom Ford e Maison Margiela. A ciência da fixação, da difusão e da memória olfativa. Testamos e reformulamos dezenas de vezes, até chegar numa fragrância que cria uma atmosfera.",
+    image: "/images/cenas/cena-laboratorio.webp",
+    imageAlt: "Bancada de perfumaria",
     tags: ["Fixação", "Difusão", "Memória olfativa"],
   },
   {
@@ -24,6 +27,7 @@ const CHAPTERS = [
     title: "O interior, enfim, combina com o exterior.",
     body: "Um frasco de vidro que você vai querer exibir. Até 700 borrifadas. Um produto à altura do carro que você escolheu.",
     image: "/bottle.png",
+    imageAlt: "Frasco PURION GT 60 ml",
     // bottle.png é uma foto de produto vertical — "cover" cortava o gargalo e a
     // base do frasco. "contain" mostra o frasco inteiro.
     fit: "contain" as const,
@@ -177,7 +181,7 @@ export default function Historia() {
                     )}
                     <Image
                       src={chapter.image}
-                      alt=""
+                      alt={"imageAlt" in chapter ? chapter.imageAlt : ""}
                       fill
                       sizes="(min-width: 640px) 480px, 100vw"
                       className={"fit" in chapter && chapter.fit === "contain" ? "relative object-contain p-8" : "object-cover opacity-90"}

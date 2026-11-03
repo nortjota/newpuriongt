@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { Check, X } from "lucide-react";
 import { COMPARATIVO_TILES } from "@/lib/content/comparativo";
 import RevealBar from "@/components/ui/RevealBar";
@@ -18,6 +19,9 @@ export default function Comparativo() {
       <div className="overflow-hidden rounded-[var(--radius-xl)] bg-ink-950 text-paper-0">
         <div className="grid grid-cols-2">
           <div className="flex flex-col gap-2.5 border-r border-[var(--border-inverse)] p-5 sm:p-10">
+            <div className="relative aspect-square w-16 overflow-hidden rounded-[var(--radius-md)] bg-ink-900">
+              <Image src="/images/comparativo/cheirinho-comum.webp" alt="Aromatizante de papelão comum" fill className="object-cover" sizes="64px" />
+            </div>
             <span className="flex items-center gap-2 text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
               <X size={12} />
               Cheirinho comum
@@ -33,6 +37,9 @@ export default function Comparativo() {
             </span>
           </div>
           <div className="flex flex-col gap-2.5 p-5 sm:p-10">
+            <div className="relative aspect-square w-16 overflow-hidden rounded-[var(--radius-md)] bg-ink-900">
+              <Image src="/images/comparativo/purion-certo.webp" alt="Frasco PURION GT" fill className="object-cover" sizes="64px" />
+            </div>
             <span className="flex items-center gap-2 text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
               <Check size={12} className="text-signal-400" />
               Purion GT

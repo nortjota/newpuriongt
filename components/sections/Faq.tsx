@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { MessageCircle, Plus } from "lucide-react";
 import { FAQ } from "@/lib/content/faq";
 import { WHATSAPP_URL } from "@/lib/content/whatsapp";
@@ -57,7 +58,14 @@ export default function Faq() {
                 style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
               >
                 <div className="overflow-hidden">
-                  <p className="m-0 px-14 pb-6 text-[15px] leading-relaxed">{item.a}</p>
+                  <div className="flex flex-col gap-4 px-14 pb-6 sm:flex-row sm:items-start">
+                    <p className="m-0 flex-1 text-[15px] leading-relaxed">{item.a}</p>
+                    {"image" in item && item.image && (
+                      <div className="relative aspect-square w-full flex-none overflow-hidden rounded-[var(--radius-md)] sm:w-[140px]">
+                        <Image src={item.image.src} alt={item.image.alt} fill className="object-cover" sizes="140px" />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

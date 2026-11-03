@@ -133,7 +133,10 @@ export default function FragrancePyramid() {
               ))}
             </div>
           ) : (
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-5">
+              <div className="relative aspect-square w-full max-w-[280px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-900">
+                <Image src={active!.image.src} alt={active!.image.alt} fill className="object-cover" sizes="280px" />
+              </div>
               {active!.notes.map((note, i) => (
                 <div key={note} className="flex items-baseline justify-between border-b border-[var(--border-inverse)] py-3">
                   <span className="flex items-center gap-3.5">

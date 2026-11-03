@@ -75,7 +75,7 @@ export default function SprayJourney() {
           Abaixo de lg, troca pra uma lista simples que rola normalmente. */}
       <section className="m-[10px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 text-paper-0 lg:hidden">
         <div className="relative h-[220px] sm:h-[280px]">
-          <Image src="/hero-street.png" alt="" fill className="object-cover" style={{ objectPosition: "center 55%" }} sizes="100vw" />
+          <Image src="/hero-street.png" alt="Estrada à noite vista de dentro do carro" fill className="object-cover" style={{ objectPosition: "center 55%" }} sizes="100vw" />
           <div
             className="absolute inset-0"
             style={{ background: "linear-gradient(0deg,rgba(11,12,14,.85) 0%,rgba(11,12,14,.25) 60%,rgba(11,12,14,.1) 100%)" }}
@@ -111,7 +111,7 @@ export default function SprayJourney() {
       <div className="sticky top-0 p-[10px]" style={{ height: "100dvh" }}>
         <div className="relative h-full overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 text-paper-0">
           <motion.div className="absolute inset-0 will-change-transform" style={{ scale: imageScale, x: imageX }}>
-            <Image src="/hero-street.png" alt="" fill className="object-cover" style={{ objectPosition: "center 55%" }} sizes="100vw" />
+            <Image src="/hero-street.png" alt="Estrada à noite vista de dentro do carro" fill className="object-cover" style={{ objectPosition: "center 55%" }} sizes="100vw" />
           </motion.div>
           <div
             className="absolute inset-0"

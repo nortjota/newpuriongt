@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
 import { Check, Minus, Plus, RotateCcw, ShieldCheck, Star, Truck } from "lucide-react";
 import { PLANS } from "@/lib/content/plans";
 import { CHECKOUT_URL } from "@/lib/content/checkout";
 import { usePurion } from "@/lib/store/PurionProvider";
+import ProductGallery from "@/components/widgets/ProductGallery";
 
 export default function QuickBuy() {
   const { state, plan, total, installment, ctaLabel, showQty, setPlan, setQty, addToCart } = usePurion();
@@ -12,11 +12,8 @@ export default function QuickBuy() {
   return (
     <section id="comprar-topo" className="mx-auto max-w-[var(--content-max)] px-6">
       <div className="grid gap-3.5 [grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr))]">
-        {/* Foto do produto */}
-        <div className="relative aspect-square max-h-[680px] overflow-hidden rounded-[var(--radius-xl)] bg-paper-100">
-          {/* product-studio.png é quadrada (1254x1254) - aspect-square faz a
-              caixa bater exatamente com a proporção da foto, sem cortar nada. */}
-          <Image src="/product-studio.png" alt="Purion GT 60 ml" fill className="object-contain" />
+        {/* Galeria do produto */}
+        <ProductGallery planId={plan.id}>
           <div className="absolute left-5 top-5 flex gap-2">
             <span className="flex items-center gap-1.5 rounded-full bg-signal-400 px-3.5 py-1.5 text-xs font-medium text-ink-950">
               <span className="h-1.5 w-1.5 rounded-full bg-ink-950" />
@@ -32,7 +29,7 @@ export default function QuickBuy() {
               Ver notas olfativas
             </a>
           </div>
-        </div>
+        </ProductGallery>
 
         {/* Painel de compra */}
         <div className="flex flex-col gap-4 rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-paper-0 p-5 sm:gap-5 sm:p-10">

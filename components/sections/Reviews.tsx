@@ -5,6 +5,7 @@ import { Handshake, PenLine, Star, User } from "lucide-react";
 import { TESTIMONIALS } from "@/lib/content/testimonials";
 import Marquee from "@/components/ui/Marquee";
 import ReviewSubmitModal from "@/components/widgets/ReviewSubmitModal";
+import FeedbackGallery from "@/components/widgets/FeedbackGallery";
 
 const SPOTLIGHT_INTERVAL = 6000;
 
@@ -190,6 +191,10 @@ export default function Reviews() {
             )}
           />
         ))}
+      </div>
+
+      <div className="mx-auto max-w-[var(--content-max)] px-6">
+        <FeedbackGallery />
       </div>
 
       <ReviewSubmitModal open={reviewOpen} onClose={() => setReviewOpen(false)} />

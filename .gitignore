@@ -43,3 +43,6 @@ next-env.d.ts
 
 .vercel
 .env*
+
+# originais em alta resolução (não versionados — ver assets-originais/)
+/assets-originais

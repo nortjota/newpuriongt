@@ -6,6 +6,7 @@ export const FAQ = [
   {
     q: "Onde coloco o frasco no carro?",
     a: "Aplique uma média de 3 a 5 borrifadas por uso no carpete, nos bancos de tecido ou no ar do habitáculo. Guarde o frasco no porta-luvas ou no console, longe do sol direto.",
+    image: { src: "/images/cenas/cena-interior-carro.webp", alt: "Aplicação do PURION GT no interior do carro" },
   },
   {
     q: "Mancha o interior do carro?",
