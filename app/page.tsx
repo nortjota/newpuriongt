@@ -18,6 +18,7 @@ import Faq from "@/components/sections/Faq";
 import FinalCta from "@/components/sections/FinalCta";
 import StickyBuyBar from "@/components/widgets/StickyBuyBar";
 import TaglineMarquee from "@/components/widgets/TaglineMarquee";
+import RoadDivider from "@/components/ui/RoadDivider";
 
 const MARQUEE_ITEMS = ["Exala presença", "Deixa memória", "Luxo em cada detalhe", "A diferença que você pode cheirar"];
 
@@ -34,7 +35,9 @@ export default function Home() {
         <Clientes />
         <FragrancePyramid />
         <VideoGallery />
+        <RoadDivider />
         <Benefits />
+        <RoadDivider flip />
         <Comparativo />
         <Reviews />
         <Historia />
