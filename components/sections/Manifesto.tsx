@@ -32,7 +32,6 @@ export default function Manifesto() {
   const { scrollYProgress: wordsProgress } = useScroll({ target: wordsRef, offset: ["start 0.85", "start 0.3"] });
   const tileY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [40, -40]);
   const tileRotate = useTransform(scrollYProgress, [0, 1], reduceMotion ? [-6, -6] : [-9, -3]);
-  const bottleY = useTransform(scrollYProgress, [0, 1], reduceMotion ? [0, 0] : [50, -50]);
 
   return (
     <section
@@ -81,28 +80,8 @@ export default function Manifesto() {
             />
             <motion.div
               style={{ y: tileY, rotate: tileRotate }}
-              className="relative flex aspect-[380/500] w-[min(340px,78%)] items-center justify-center rounded-[var(--radius-xl)] bg-paper-0 shadow-[var(--shadow-lg)] will-change-transform sm:w-[min(380px,80%)]"
+              className="relative flex aspect-[380/500] w-[min(340px,78%)] items-center justify-center overflow-hidden rounded-[var(--radius-xl)] bg-paper-0 shadow-[var(--shadow-lg)] will-change-transform sm:w-[min(380px,80%)]"
             >
-              <motion.div style={{ y: bottleY }} className="will-change-transform">
-                <Image
-                  src="/bottle.png"
-                  alt="Frasco Purion GT"
-                  width={260}
-                  height={430}
-                  className="h-[320px] w-auto drop-shadow-[0_30px_30px_rgba(11,12,14,0.25)] sm:h-[380px]"
-                />
-              </motion.div>
-            </motion.div>
-            <div className="absolute bottom-4 left-0 flex h-[130px] w-[130px] flex-col items-center justify-center gap-0.5 rounded-full bg-ink-950 p-4 text-center text-paper-0 sm:bottom-6 sm:h-[168px] sm:w-[168px]">
-              <span
-                className="font-display text-3xl font-medium leading-none tracking-[-0.05em] sm:text-[44px]"
-                style={{ fontVariationSettings: "'wdth' 88" }}
-              >
-                0%
-              </span>
-              <span className="text-[11px] text-[var(--text-inverse-muted)] sm:text-xs">resíduo no retrovisor</span>
-            </div>
-            <div className="absolute -top-3 right-0 z-10 h-[96px] w-[72px] overflow-hidden rounded-[var(--radius-md)] shadow-[var(--shadow-lg)] sm:-top-4 sm:right-2 sm:h-[150px] sm:w-[112px] sm:rounded-[var(--radius-lg)]">
               <video
                 src="/videos/comercial.mp4"
                 poster="/images/videos/comercial-poster.webp"
@@ -113,6 +92,24 @@ export default function Manifesto() {
                 preload="none"
                 aria-hidden
                 className="h-full w-full object-cover"
+              />
+            </motion.div>
+            <div className="absolute bottom-4 left-0 flex h-[130px] w-[130px] flex-col items-center justify-center gap-0.5 rounded-full bg-ink-950 p-4 text-center text-paper-0 sm:bottom-6 sm:h-[168px] sm:w-[168px]">
+              <span
+                className="font-display text-3xl font-medium leading-none tracking-[-0.05em] sm:text-[44px]"
+                style={{ fontVariationSettings: "'wdth' 88" }}
+              >
+                0%
+              </span>
+              <span className="text-[11px] text-[var(--text-inverse-muted)] sm:text-xs">resíduo no retrovisor</span>
+            </div>
+            <div className="absolute -top-3 right-0 z-10 flex h-[96px] w-[72px] items-center justify-center overflow-hidden rounded-[var(--radius-md)] bg-paper-0 shadow-[var(--shadow-lg)] sm:-top-4 sm:right-2 sm:h-[150px] sm:w-[112px] sm:rounded-[var(--radius-lg)]">
+              <Image
+                src="/bottle.png"
+                alt="Frasco Purion GT"
+                width={260}
+                height={430}
+                className="h-[80%] w-auto object-contain"
               />
             </div>
           </div>

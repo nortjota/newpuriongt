@@ -16,9 +16,9 @@ const OCCASION_ICONS: Record<string, typeof SunMedium> = {
   clock: Clock,
 };
 
-function OccasionIcon({ name }: { name: string }) {
+function OccasionIcon({ name, size = 16 }: { name: string; size?: number }) {
   const Icon = OCCASION_ICONS[name] ?? SunMedium;
-  return <Icon size={16} />;
+  return <Icon size={size} />;
 }
 
 export default function FragrancePyramid() {
@@ -49,7 +49,7 @@ export default function FragrancePyramid() {
           </p>
         </div>
 
-        <div className="relative flex h-[280px] justify-center sm:h-[340px]">
+        <div className="relative flex h-[340px] justify-center sm:h-[420px]">
           <div className="relative aspect-[300/540] h-full overflow-hidden rounded-[var(--radius-xl)] bg-ink-800">
             <div className="absolute inset-0 z-[1] flex flex-col">
               {FRAGRANCE_LAYERS.map((layer, i) => {
@@ -76,7 +76,7 @@ export default function FragrancePyramid() {
               alt="Frasco Purion GT"
               width={200}
               height={360}
-              className="absolute left-1/2 top-1/2 z-[3] h-[72%] w-auto -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_30px_24px_rgba(0,0,0,0.45)]"
+              className="absolute left-1/2 top-1/2 z-[3] h-[84%] w-auto -translate-x-1/2 -translate-y-1/2 drop-shadow-[0_30px_24px_rgba(0,0,0,0.45)]"
             />
           </div>
         </div>
@@ -160,14 +160,35 @@ export default function FragrancePyramid() {
         </div>
       </div>
 
-      <div className="mx-auto mt-8 grid max-w-[var(--content-max)] grid-cols-2 gap-2 sm:gap-3">
-        <div className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-3 sm:gap-4 sm:p-6">
+      <div className="mx-auto mt-8 flex max-w-[var(--content-max)] flex-col gap-2 sm:gap-3">
+        <div className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-4 sm:gap-4 sm:p-6">
+          <div className="flex items-center gap-3 text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
+            <Layers size={14} />
+            <span>Acordes principais</span>
+            <span className="h-px flex-1 bg-[var(--border-inverse)]" />
+          </div>
+          <div className="flex flex-col gap-1">
+            {ACCORDS.map((a) => (
+              <div key={a.key} className="flex h-[22px] sm:h-[26px]">
+                <RevealBar
+                  targetWidth={`${a.pct}%`}
+                  className="flex items-center justify-center overflow-hidden whitespace-nowrap rounded-r-lg text-[10px] font-medium sm:text-xs"
+                  style={{ background: a.color, color: a.dark ? "var(--ink-950)" : "var(--paper-0)", minWidth: 58 }}
+                >
+                  {a.key}
+                </RevealBar>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-4 sm:gap-4 sm:p-6">
           <div className="flex items-center gap-3 text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
             <Gauge size={14} />
             <span>Performance</span>
             <span className="h-px flex-1 bg-[var(--border-inverse)]" />
           </div>
-          <div className="flex flex-col gap-2.5 sm:gap-3.5">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-3 sm:gap-y-3.5">
             {PERFORMANCE.map((p) => (
               <div key={p.key} className="flex flex-col gap-1.5">
                 <div className="flex items-baseline justify-between">
@@ -186,7 +207,7 @@ export default function FragrancePyramid() {
               </div>
             ))}
           </div>
-          <div className="mt-auto flex items-baseline justify-between gap-3 border-t border-[var(--border-inverse)] pt-3">
+          <div className="flex items-baseline justify-between gap-3 border-t border-[var(--border-inverse)] pt-3">
             <span className="text-[10px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">Família</span>
             <span className="font-display text-base font-medium tracking-[-0.03em] sm:text-xl" style={{ fontVariationSettings: "'wdth' 88" }}>
               {FRAGRANCE_FAMILY}
@@ -194,47 +215,26 @@ export default function FragrancePyramid() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-3 sm:gap-4 sm:p-6">
-          <div className="flex items-center gap-3 text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
-            <Layers size={14} />
-            <span>Acordes principais</span>
-            <span className="h-px flex-1 bg-[var(--border-inverse)]" />
-          </div>
-          <div className="flex flex-col gap-1">
-            {ACCORDS.map((a) => (
-              <div key={a.key} className="flex h-[20px] sm:h-[26px]">
-                <RevealBar
-                  targetWidth={`${a.pct}%`}
-                  className="flex items-center justify-center overflow-hidden whitespace-nowrap rounded-r-lg text-[10px] font-medium sm:text-xs"
-                  style={{ background: a.color, color: a.dark ? "var(--ink-950)" : "var(--paper-0)", minWidth: 58 }}
-                >
-                  {a.key}
-                </RevealBar>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="col-span-2 flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-4 sm:flex-row sm:items-center sm:gap-6 sm:p-6">
-          <div className="flex items-center gap-3 text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)] sm:flex-none">
-            <Calendar size={14} />
+        <div className="flex flex-col gap-2 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-3 sm:flex-row sm:items-center sm:gap-4 sm:p-4">
+          <div className="flex items-center gap-2 text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)] sm:flex-none">
+            <Calendar size={13} />
             <span className="whitespace-nowrap">Quando usar</span>
           </div>
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-1.5">
             {OCCASIONS.map((o) => (
               <span
                 key={o.key}
-                className="flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--border-inverse)] bg-white/6 py-1 pl-1 pr-3 text-xs"
+                className="flex items-center gap-1.5 rounded-[var(--radius-pill)] border border-[var(--border-inverse)] bg-white/6 py-0.5 pl-0.5 pr-2.5 text-[11px]"
               >
-                <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-signal-400/15 text-signal-400">
-                  <OccasionIcon name={o.icon} />
+                <span className="flex h-4.5 w-4.5 flex-none items-center justify-center rounded-full bg-signal-400/15 text-signal-400">
+                  <OccasionIcon name={o.icon} size={11} />
                 </span>
                 {o.key}
               </span>
             ))}
           </div>
-          <span className="text-xs text-[var(--text-inverse-muted)] sm:ml-auto">
-            Perfume de carro: pode usar sempre, em qualquer ocasião.
+          <span className="text-[11px] text-[var(--text-inverse-muted)] sm:ml-auto">
+            Pode usar sempre, em qualquer ocasião.
           </span>
         </div>
       </div>

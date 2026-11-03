@@ -64,9 +64,13 @@ export default function VideoGallery() {
   return (
     <section id="videos" className="pl-6 pt-10 pb-[var(--section-y)] sm:pt-14">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-6 pr-6">
-        <div className="font-display text-[clamp(48px,11vw,80px)] font-medium leading-[0.9] tracking-[var(--ls-display)] text-ink-950">
-          <div>Quem usa,</div>
-          <div>mostra.</div>
+        <div className="relative font-display text-[clamp(48px,11vw,80px)] font-medium leading-[0.9] tracking-[var(--ls-display)] text-ink-950">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute left-0 top-1/2 h-[80%] w-[55%] -translate-y-1/2 rounded-full bg-signal-400/25 blur-[70px]"
+          />
+          <div className="relative">Quem usa,</div>
+          <div className="relative">mostra.</div>
         </div>
         <div className="flex gap-1 rounded-[var(--radius-pill)] bg-paper-200 p-1 text-sm">
           {TABS.map((t) => (
@@ -84,7 +88,7 @@ export default function VideoGallery() {
       </div>
 
       <div className="relative">
-        <div ref={railRef} className="grid auto-cols-[min(300px,72vw)] grid-flow-col gap-3 overflow-x-auto pr-6 [scroll-snap-type:x_mandatory]">
+        <div ref={railRef} className="grid auto-cols-[min(260px,66vw)] grid-flow-col gap-3 overflow-x-auto pr-6 [scroll-snap-type:x_mandatory]">
         {visible.map((video) => {
           const idx = VIDEOS.indexOf(video);
           return (

@@ -10,10 +10,14 @@ import Reveal from "@/components/ui/Reveal";
 // um toggle clicável entre dois estados.
 export default function Comparativo() {
   return (
-    <section id="comparativo" className="mx-auto max-w-[var(--content-max)] px-6 py-[var(--section-y)]">
-      <div className="mb-10 text-center font-display text-[clamp(44px,12vw,88px)] font-medium leading-[0.95] tracking-[var(--ls-display)] text-ink-950">
-        <div>Seu carro diz quem você é.</div>
-        <div>Qual dos dois quer ser?</div>
+    <section id="comparativo" className="mx-auto max-w-[var(--content-max)] px-6 py-12 sm:py-16">
+      <div className="relative mb-10 text-center font-display text-[clamp(44px,12vw,88px)] font-medium leading-[0.95] tracking-[var(--ls-display)] text-ink-950">
+        <div
+          aria-hidden
+          className="pointer-events-none absolute left-1/2 top-1/2 h-[70%] w-[60%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-signal-400/25 blur-[70px]"
+        />
+        <div className="relative">Seu carro diz quem você é.</div>
+        <div className="relative">Qual dos dois quer ser?</div>
       </div>
 
       <div className="overflow-hidden rounded-[var(--radius-xl)] bg-ink-950 text-paper-0">
@@ -73,10 +77,7 @@ export default function Comparativo() {
           ))}
         </div>
 
-        <div className="flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border-inverse)] p-5 sm:p-10">
-          <span className="text-sm text-[var(--text-inverse-muted)]">
-            Junte-se a mais de 100 motoristas que elevaram o padrão.
-          </span>
+        <div className="flex items-center justify-center border-t border-[var(--border-inverse)] p-5 sm:p-10">
           <a
             href="#comprar"
             className="rounded-[var(--radius-pill)] bg-signal-400 px-6 py-4 text-sm font-medium text-ink-950"

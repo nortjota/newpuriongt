@@ -47,21 +47,24 @@ export default function QuickBuy() {
                 </a>
               </span>
             </div>
-            <h2
-              className="m-0 font-display text-[clamp(40px,6vw,96px)] font-medium leading-[0.86] tracking-[-0.055em]"
-              style={{ fontVariationSettings: "'wdth' 88" }}
-            >
-              Purion GT
-            </h2>
-            <a
-              href="#fragrancia"
-              className="group inline-flex w-fit items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--border-subtle)] bg-paper-50 py-2 pl-3 pr-3.5 text-sm text-ink-950 transition-transform hover:-translate-y-0.5"
-              style={{ animation: "pg-bounce-hint 2.6s ease-in-out infinite" }}
-            >
-              <Sparkles size={14} className="text-signal-500" />
-              Descubra as notas olfativas
-              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
-            </a>
+            <div className="flex flex-wrap items-center gap-3">
+              <h2
+                className="m-0 font-display text-[clamp(40px,6vw,96px)] font-medium leading-[0.86] tracking-[-0.055em]"
+                style={{ fontVariationSettings: "'wdth' 88" }}
+              >
+                Purion GT
+              </h2>
+              <a
+                href="#fragrancia"
+                aria-label="Descubra as notas olfativas"
+                className="group inline-flex w-fit flex-none items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--border-subtle)] bg-paper-50 p-2 text-sm text-ink-950 transition-transform hover:-translate-y-0.5 sm:pl-3 sm:pr-3.5"
+                style={{ animation: "pg-bounce-hint 2.6s ease-in-out infinite" }}
+              >
+                <Sparkles size={14} className="text-signal-500" />
+                <span className="hidden sm:inline">Descubra as notas olfativas</span>
+                <ArrowRight size={14} className="hidden transition-transform group-hover:translate-x-1 sm:inline" />
+              </a>
+            </div>
           </div>
 
           <div className="flex flex-col gap-2.5">

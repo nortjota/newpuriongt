@@ -50,7 +50,7 @@ export default function Reviews() {
   const spotlight = TESTIMONIALS[spot];
 
   return (
-    <section id="avaliacoes" className="py-[var(--section-y)]">
+    <section id="avaliacoes" className="pt-12 pb-[var(--section-y)] sm:pt-16">
       <div className="mx-auto grid max-w-[var(--content-max)] items-stretch gap-16 px-6 [grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr))]">
         <div className="flex flex-col justify-between gap-7">
           <div className="flex flex-col gap-4">
