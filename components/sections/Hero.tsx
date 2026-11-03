@@ -5,19 +5,31 @@ import { motion, useReducedMotion, useScroll, useTransform } from "motion/react"
 
 const SLIDE_INTERVAL_MS = 6000;
 
-// Os 2 banners do carrossel já têm o texto embutido na própria imagem — por
+type Slide =
+  | { type: "image"; desktop: string; mobile: string; alt: string }
+  | { type: "video"; src: string; poster: string; alt: string };
+
+// Os 2 banners de imagem já têm o texto embutido na própria imagem — por
 // isso não há headline/CTA sobreposto aqui, só o badge de avaliação (chrome
 // de UI, não copy de marketing) e os indicadores de slide.
-const SLIDES = [
+const SLIDES: Slide[] = [
   {
+    type: "image",
     desktop: "/images/slideshow/slideshow-1.webp",
     mobile: "/images/slideshow/slideshow-1-mobile.webp",
     alt: 'Homem segura o frasco Purion GT cercado de frutas e flores, carro branco ao fundo — "Seu carro também tem assinatura."',
   },
   {
+    type: "image",
     desktop: "/images/slideshow/slideshow-2.webp",
     mobile: "/images/slideshow/slideshow-2-mobile.webp",
     alt: 'Frasco Purion GT sobre o console de um carro premium — "O perfume automotivo premium do Brasil."',
+  },
+  {
+    type: "video",
+    src: "/videos/comercial.mp4",
+    poster: "/images/videos/comercial-poster.webp",
+    alt: "Vídeo comercial Purion GT",
   },
 ];
 
@@ -42,6 +54,19 @@ export default function Hero() {
 
   const [slide, setSlide] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+
+  // Dá play só no vídeo do slide ativo (e pausa os demais) assim que o
+  // carrossel chega nele — sem precisar de clique, igual à galeria do produto.
+  useEffect(() => {
+    SLIDES.forEach((s, i) => {
+      if (s.type !== "video") return;
+      const el = videoRefs.current[i];
+      if (!el) return;
+      if (i === slide) el.play().catch(() => {});
+      else el.pause();
+    });
+  }, [slide]);
 
   function startTimer() {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -69,7 +94,7 @@ export default function Hero() {
       <motion.div style={{ y }} className="absolute inset-0 will-change-transform">
         {SLIDES.map((s, i) => (
           <motion.div
-            key={s.desktop}
+            key={s.type === "video" ? s.src : s.desktop}
             className="absolute inset-0"
             initial={false}
             animate={{ x: `${(i - slide) * 100}%` }}
@@ -81,16 +106,32 @@ export default function Hero() {
               transition={{ duration: 2.2, ease: [0.16, 1, 0.3, 1] }}
               className="absolute inset-0"
             >
-              <picture>
-                <source media="(max-width: 767px)" srcSet={s.mobile} />
-                <img
-                  src={s.desktop}
-                  alt={s.alt}
-                  loading={i === 0 ? "eager" : "lazy"}
-                  fetchPriority={i === 0 ? "high" : "auto"}
+              {s.type === "video" ? (
+                <video
+                  ref={(el) => {
+                    videoRefs.current[i] = el;
+                  }}
+                  src={s.src}
+                  poster={s.poster}
+                  aria-label={s.alt}
+                  muted
+                  loop
+                  playsInline
+                  preload="none"
                   className="absolute inset-0 h-full w-full object-cover"
                 />
-              </picture>
+              ) : (
+                <picture>
+                  <source media="(max-width: 767px)" srcSet={s.mobile} />
+                  <img
+                    src={s.desktop}
+                    alt={s.alt}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    fetchPriority={i === 0 ? "high" : "auto"}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                </picture>
+              )}
             </motion.div>
           </motion.div>
         ))}
