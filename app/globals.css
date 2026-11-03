@@ -75,27 +75,6 @@ body {
   animation-play-state: paused;
 }
 
-.rd-dash {
-  animation: pg-road-dash 1.4s linear infinite;
-}
-
-.rd-car-bob {
-  animation: pg-car-bob 2.6s ease-in-out infinite;
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-@keyframes pg-road-dash {
-  to {
-    stroke-dashoffset: -84;
-  }
-}
-
-@keyframes pg-car-bob {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
-}
-
 @keyframes swipe-hint {
   0%, 100% { transform: translateX(0); }
   50% { transform: translateX(10px); }
