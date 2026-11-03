@@ -127,19 +127,18 @@ export default function Hero() {
                       na própria arte; o vídeo não, então é o único slide que
                       precisa dessa camada de texto pra deixar a proposta
                       "perfume automotivo" clara no 1o impacto. */}
-                  <div className="absolute inset-x-0 top-[28%] px-6 sm:top-[24%] sm:px-10">
+                  <div className="absolute left-6 top-24 max-w-[170px] sm:left-10 sm:top-28 sm:max-w-[230px]">
                     <motion.div
-                      initial={reduceMotion ? false : { opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      initial={reduceMotion ? false : { opacity: 0, x: -16 }}
+                      animate={{ opacity: 1, x: 0 }}
                       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
-                      className="max-w-[560px]"
                     >
-                      <h1 className="m-0 font-display text-[clamp(28px,5.5vw,52px)] font-medium leading-[0.95] tracking-[-0.03em] text-paper-0">
+                      <h1 className="m-0 font-display text-[21px] font-medium leading-[1.08] tracking-[-0.02em] text-paper-0 sm:text-[26px]">
                         O perfume <span className="text-signal-400">automotivo</span> premium do Brasil.
                       </h1>
                       <a
                         href="#comprar-topo"
-                        className="mt-4 inline-block rounded-[var(--radius-pill)] bg-signal-400 px-5 py-2.5 text-sm font-medium text-ink-950 transition-transform hover:-translate-y-0.5"
+                        className="mt-3 inline-block rounded-[var(--radius-pill)] bg-signal-400 px-4 py-2 text-[13px] font-medium text-ink-950 transition-transform hover:-translate-y-0.5"
                       >
                         Turbinar meu carro
                       </a>
