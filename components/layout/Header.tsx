@@ -39,7 +39,7 @@ export default function Header() {
     <header
       className={`fixed top-0 inset-x-0 z-50 grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-6 py-3 transition-colors duration-500 ${
         scrolled
-          ? "bg-paper-0/85 text-ink-950 border-b border-[var(--border-subtle)] backdrop-blur-xl"
+          ? "bg-paper-0/35 text-ink-950 border-b border-white/25 backdrop-blur-2xl backdrop-saturate-150"
           : "bg-transparent text-paper-0 border-b border-transparent"
       }`}
     >

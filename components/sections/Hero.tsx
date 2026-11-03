@@ -14,6 +14,12 @@ type Slide =
 // de UI, não copy de marketing) e os indicadores de slide.
 const SLIDES: Slide[] = [
   {
+    type: "video",
+    src: "/videos/comercial.mp4",
+    poster: "/images/videos/comercial-poster.webp",
+    alt: "Vídeo comercial Purion GT",
+  },
+  {
     type: "image",
     desktop: "/images/slideshow/slideshow-1.webp",
     mobile: "/images/slideshow/slideshow-1-mobile.webp",
@@ -24,12 +30,6 @@ const SLIDES: Slide[] = [
     desktop: "/images/slideshow/slideshow-2.webp",
     mobile: "/images/slideshow/slideshow-2-mobile.webp",
     alt: 'Frasco Purion GT sobre o console de um carro premium — "O perfume automotivo premium do Brasil."',
-  },
-  {
-    type: "video",
-    src: "/videos/comercial.mp4",
-    poster: "/images/videos/comercial-poster.webp",
-    alt: "Vídeo comercial Purion GT",
   },
 ];
 
@@ -68,22 +68,24 @@ export default function Hero() {
     });
   }, [slide]);
 
-  function startTimer() {
-    if (timerRef.current) clearInterval(timerRef.current);
-    timerRef.current = setInterval(() => setSlide((s) => (s + 1) % SLIDES.length), SLIDE_INTERVAL_MS);
+  function next() {
+    setSlide((s) => (s + 1) % SLIDES.length);
   }
 
+  // Slides de imagem avançam no timer de sempre. O slide de vídeo não usa
+  // timer — ele avança sozinho quando o vídeo termina (onEnded), pra deixar
+  // o comercial rodar até o fim antes de trocar.
   useEffect(() => {
-    startTimer();
+    if (timerRef.current) clearInterval(timerRef.current);
+    if (SLIDES[slide].type === "video") return;
+    timerRef.current = setInterval(next, SLIDE_INTERVAL_MS);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [slide]);
 
   function goTo(i: number) {
     setSlide(i);
-    startTimer();
   }
 
   return (
@@ -115,9 +117,9 @@ export default function Hero() {
                   poster={s.poster}
                   aria-label={s.alt}
                   muted
-                  loop
                   playsInline
-                  preload="none"
+                  preload={i === 0 ? "auto" : "none"}
+                  onEnded={next}
                   className="absolute inset-0 h-full w-full object-cover"
                 />
               ) : (
@@ -126,8 +128,8 @@ export default function Hero() {
                   <img
                     src={s.desktop}
                     alt={s.alt}
-                    loading={i === 0 ? "eager" : "lazy"}
-                    fetchPriority={i === 0 ? "high" : "auto"}
+                    loading={i === 1 ? "eager" : "lazy"}
+                    fetchPriority={i === 1 ? "high" : "auto"}
                     className="absolute inset-0 h-full w-full object-cover"
                   />
                 </picture>
