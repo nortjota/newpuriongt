@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { FEEDBACKS } from "@/lib/content/feedbacks";
 import Dialog from "@/components/ui/Dialog";
+import Marquee from "@/components/ui/Marquee";
 
 export default function FeedbackGallery() {
   const [openIndex, setOpenIndex] = useState(-1);
@@ -12,19 +13,23 @@ export default function FeedbackGallery() {
   return (
     <div className="mt-16">
       <span className="mb-4 block text-[11px] uppercase text-[var(--text-muted)] tracking-[var(--ls-caps)]">
-        Prints de clientes reais
+        Clientes
       </span>
-      <div className="grid auto-cols-[min(220px,56vw)] grid-flow-col gap-3 overflow-x-auto pb-1 sm:grid-flow-row sm:auto-cols-auto sm:grid-cols-4 sm:overflow-visible lg:grid-cols-6 [scroll-snap-type:x_mandatory]">
-        {FEEDBACKS.map((fb, i) => (
+      <Marquee
+        items={FEEDBACKS}
+        duration="46s"
+        itemClassName="gap-3"
+        className="gap-3"
+        renderItem={(fb, i) => (
           <button
-            key={fb.src}
-            onClick={() => setOpenIndex(i)}
-            className="relative aspect-[3/4] overflow-hidden rounded-[var(--radius-md)] bg-paper-100 [scroll-snap-align:start]"
+            key={`${fb.src}-${i}`}
+            onClick={() => setOpenIndex(FEEDBACKS.indexOf(fb))}
+            className="relative aspect-[3/4] w-[132px] flex-none overflow-hidden rounded-[var(--radius-md)] bg-paper-100 transition-transform hover:-translate-y-0.5"
           >
-            <Image src={fb.src} alt={fb.alt} fill className="object-cover" sizes="(min-width: 1024px) 220px, (min-width: 640px) 25vw, 56vw" />
+            <Image src={fb.src} alt={fb.alt} fill className="object-cover" sizes="132px" />
           </button>
-        ))}
-      </div>
+        )}
+      />
 
       <Dialog open={!!current} onClose={() => setOpenIndex(-1)} width={480}>
         {current && (

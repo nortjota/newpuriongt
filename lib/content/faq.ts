@@ -13,8 +13,8 @@ export const FAQ = [
     a: "Não. Zero resíduo no retrovisor, no painel e no estofado.",
   },
   {
-    q: "Qual a política de devolução?",
-    a: "Garantia de 7 dias: 100% do dinheiro de volta, sem perguntas.",
+    q: "Posso devolver se não gostar?",
+    a: "Sim. Você pode experimentar com tranquilidade e solicitar a devolução em até 7 dias após o recebimento. Após a conferência do produto devolvido, realizamos o reembolso.",
   },
   {
     q: "O envio é imediato?",

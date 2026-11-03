@@ -10,8 +10,8 @@ const CHAPTERS = [
     title: "O problema que ninguém queria resolver.",
     body:
       "Você investe R$ 80 mil, R$ 150 mil, R$ 300 mil num carro. Polimento cerâmico, bancos de couro, som premium. E no retrovisor, um papelão em forma de árvore. A Purion GT nasceu da raiva saudável de quem ama carros demais para aceitar isso.",
-    image: "/hero-street.png",
-    imageAlt: "Rua à noite vista de dentro do carro",
+    image: "/images/cenas/dentro-da-porsche.webp",
+    imageAlt: "Vista de dentro de um Porsche",
   },
   {
     n: "Capítulo 2",

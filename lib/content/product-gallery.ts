@@ -1,10 +1,12 @@
 import type { Plan } from "./plans";
 
 export const PRODUCT_GALLERY = [
+  { src: "/product-studio.png", alt: "Frasco PURION GT 60 ml em estúdio" },
   { src: "/images/produto/produto-frente.webp", alt: "Frasco PURION GT 60 ml de frente" },
   { src: "/images/produto/produto-detalhe.webp", alt: "Detalhe da tampa do frasco PURION GT" },
-  { src: "/images/produto/produto-frasco-caixa.webp", alt: "Frasco PURION GT com a caixa" },
-  { src: "/images/produto/produto-caixa-aberta.webp", alt: "Caixa PURION GT aberta com o frasco" },
+  { src: "/images/produto/produto-carros-atras.webp", alt: "Frasco PURION GT com carros ao fundo" },
+  { src: "/images/produto/produto-borrifando.webp", alt: "Borrifando o PURION GT no carro" },
+  { src: "/images/produto/produto-ugc-segurando-frasco.webp", alt: "Cliente segurando o frasco PURION GT" },
 ];
 
 // Kit 2 e Kit 3 trocam a imagem principal da galeria por uma foto própria do

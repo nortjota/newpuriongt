@@ -4,7 +4,7 @@ export type TestimonialOrigin = "cliente" | "parceiro";
 
 export type Testimonial = {
   name: string;
-  city: string;
+  city?: string;
   text: string;
   origin: TestimonialOrigin;
   photo?: string;
@@ -40,6 +40,26 @@ export const TESTIMONIALS: Testimonial[] = [
     name: "Rodrigo",
     city: "São Paulo/SP",
     text: "Muito bom, superou minha expectativa. O carro fica com um cheiro discreto e agradável, nada enjoativo.",
+    origin: "cliente",
+  },
+  {
+    name: "Felipe R.",
+    text: "Todo mundo que entra no carro pergunta que perfume é esse.",
+    origin: "cliente",
+  },
+  {
+    name: "Marcus V.",
+    text: "Aroma elegante e duradouro, com sensação de carro de luxo.",
+    origin: "cliente",
+  },
+  {
+    name: "Thiago P.",
+    text: "Entrega rápida e um produto diferente de tudo que já comprei.",
+    origin: "cliente",
+  },
+  {
+    name: "Rodrigo M.",
+    text: "Parece perfume importado, o aroma fica por dias, com certeza irei comprar mais vezes.",
     origin: "cliente",
   },
 ];

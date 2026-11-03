@@ -39,7 +39,7 @@ export default function FragrancePyramid() {
           <span className="text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
             Pirâmide olfativa
           </span>
-          <div className="font-display text-[var(--fs-display-l)] font-medium leading-[0.9] tracking-[var(--ls-display)] text-steel-300">
+          <div className="font-display text-[var(--fs-display-l)] font-medium leading-[0.9] tracking-[var(--ls-display)] text-ink-950">
             <div>Construído</div>
             <div>em três tempos.</div>
           </div>

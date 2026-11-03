@@ -131,7 +131,7 @@ export default function Reviews() {
               <span className="flex flex-col gap-0.5">
                 <span className="font-medium">{spotlight.name}</span>
                 <span className="font-mono text-xs text-[var(--text-inverse-muted)]">
-                  {spotlight.city} · foto enviada pelo cliente
+                  {spotlight.city ? `${spotlight.city} · ` : ""}cliente verificado
                 </span>
               </span>
             </figcaption>
@@ -185,7 +185,7 @@ export default function Reviews() {
                     {review.name[0]}
                   </span>
                   <span className="text-[13px] font-medium">{review.name}</span>
-                  <span className="font-mono text-[11px] text-[var(--text-muted)]">{review.city}</span>
+                  {review.city && <span className="font-mono text-[11px] text-[var(--text-muted)]">{review.city}</span>}
                 </div>
               </div>
             )}

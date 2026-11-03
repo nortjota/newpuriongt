@@ -11,7 +11,7 @@ import Reveal from "@/components/ui/Reveal";
 export default function Comparativo() {
   return (
     <section id="comparativo" className="mx-auto max-w-[var(--content-max)] px-6 py-[var(--section-y)]">
-      <div className="mb-10 text-center font-display text-[var(--fs-display-l)] font-medium leading-[0.9] tracking-[var(--ls-display)] text-steel-300">
+      <div className="mb-10 text-center font-display text-[var(--fs-display-l)] font-medium leading-[0.9] tracking-[var(--ls-display)] text-ink-950">
         <div>Seu carro diz quem você é.</div>
         <div>Qual dos dois quer ser?</div>
       </div>

@@ -12,8 +12,8 @@ export default function Guarantee() {
     <section className="mx-auto max-w-[var(--content-max)] px-6 pb-[var(--section-y)]">
       <Reveal className="relative flex flex-col items-center gap-8 overflow-hidden rounded-[var(--radius-xl)] px-6 py-14 text-center text-paper-0 sm:py-20">
         <Image
-          src="/images/cenas/cena-mesa-expedicao.webp"
-          alt="Caixa PURION GT sendo embalada para envio"
+          src="/images/cenas/foto-somente-carro.webp"
+          alt="Carro à noite"
           fill
           className="absolute inset-0 object-cover"
           sizes="(min-width: 1024px) 1152px, 100vw"
@@ -36,10 +36,6 @@ export default function Guarantee() {
           >
             7 dias pra se apaixonar pelo cheiro. Ou seu dinheiro de volta.
           </h2>
-          <p className="m-0 text-[15px] leading-relaxed text-[var(--text-inverse-muted)]">
-            Borrife no seu carro, viva com ele por uma semana. Se não for a presença que você esperava, devolvemos
-            100% do valor — sem formulário, sem letra miúda, só uma mensagem no WhatsApp.
-          </p>
         </div>
 
         <div className="relative grid w-full max-w-[480px] grid-cols-3 gap-4 border-t border-[var(--border-inverse)] pt-8">

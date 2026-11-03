@@ -25,7 +25,20 @@ export default function Hero() {
   const ref = useRef<HTMLDivElement>(null);
   const reduceMotion = useReducedMotion();
   const { scrollY } = useScroll();
-  const y = useTransform(scrollY, [0, 1200], [0, reduceMotion ? 0 : 240]);
+
+  // Os banners mobile são quadrados (1:1) — numa seção alta tipo "min-h-80svh"
+  // o object-cover cortava boa parte da imagem (e do texto embutido nela).
+  // Em telas <768px a seção vira aspect-square (mostra a imagem inteira) e o
+  // parallax de scroll fica desligado, já que não sobra margem de corte.
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  const y = useTransform(scrollY, [0, 1200], [0, reduceMotion || isMobile ? 0 : 240]);
 
   const [slide, setSlide] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -51,7 +64,7 @@ export default function Hero() {
   return (
     <section
       ref={ref}
-      className="relative w-full overflow-hidden bg-ink-900 min-h-[80svh] lg:min-h-[90svh]"
+      className="relative w-full overflow-hidden bg-ink-900 aspect-square md:aspect-auto md:min-h-[90svh]"
     >
       <motion.div style={{ y }} className="absolute inset-0 will-change-transform">
         {SLIDES.map((s, i) => (

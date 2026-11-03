@@ -23,26 +23,20 @@ export default function FinalCta() {
           />
         </picture>
       </motion.div>
-      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,10,12,.55), rgba(10,10,12,.72))" }} />
-      <div className="relative flex flex-col items-center gap-7">
-        <Image src="/logo-white.png" alt="Purion GT" width={150} height={37} className="h-7 w-auto" />
-        <div
-          className="font-display text-[var(--fs-display-l)] font-medium leading-[0.9] tracking-[var(--ls-display)]"
-          style={{ fontVariationSettings: "'wdth' 88" }}
-        >
-          <div className="text-white/62">Seu carro nunca mais</div>
-          <div>vai cheirar ao mesmo.</div>
-        </div>
-        <p className="m-0 max-w-[440px] text-[15px] leading-relaxed text-[var(--text-inverse-muted)]">
-          Junte-se a mais de 100 motoristas que elevaram o padrão.
-        </p>
+      <div className="absolute inset-0" style={{ background: "linear-gradient(180deg, rgba(10,10,12,.35), rgba(10,10,12,.78))" }} />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[55vw] w-[55vw] max-h-[420px] max-w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-signal-400/18 blur-[90px]"
+      />
+      <div className="relative flex flex-col items-center gap-10">
+        <Image src="/logo-white.png" alt="Purion GT" width={260} height={64} className="h-12 w-auto sm:h-16" />
         <div className="flex flex-wrap justify-center gap-3">
-          <a href="#comprar" className="rounded-[var(--radius-pill)] bg-signal-400 px-6 py-4 text-sm font-medium text-ink-950">
+          <a href="#comprar" className="rounded-[var(--radius-pill)] bg-signal-400 px-7 py-4 text-sm font-medium text-ink-950 transition-transform hover:-translate-y-0.5">
             Quero o meu Purion GT
           </a>
           <a
             href="#quiz"
-            className="rounded-[var(--radius-pill)] border border-[var(--border-glass)] bg-white/14 px-6 py-4 text-sm font-medium text-paper-0 backdrop-blur-md"
+            className="rounded-[var(--radius-pill)] border border-[var(--border-glass)] bg-white/14 px-7 py-4 text-sm font-medium text-paper-0 backdrop-blur-md transition-transform hover:-translate-y-0.5"
           >
             Descobrir meu perfil
           </a>
