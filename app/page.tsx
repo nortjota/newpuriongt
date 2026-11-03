@@ -37,7 +37,7 @@ export default function Home() {
         <VideoGallery />
         <RoadDivider />
         <Benefits />
-        <RoadDivider flip />
+        <RoadDivider mirror />
         <Comparativo />
         <Reviews />
         <Historia />
