@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
-import { Car } from "lucide-react";
 
 const SLIDE_INTERVAL_MS = 6000;
 
@@ -110,19 +109,40 @@ export default function Hero() {
               className="absolute inset-0"
             >
               {s.type === "video" ? (
-                <video
-                  ref={(el) => {
-                    videoRefs.current[i] = el;
-                  }}
-                  src={s.src}
-                  poster={s.poster}
-                  aria-label={s.alt}
-                  muted
-                  playsInline
-                  preload={i === 0 ? "auto" : "none"}
-                  onEnded={next}
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
+                <>
+                  <video
+                    ref={(el) => {
+                      videoRefs.current[i] = el;
+                    }}
+                    src={s.src}
+                    poster={s.poster}
+                    aria-label={s.alt}
+                    muted
+                    playsInline
+                    preload={i === 0 ? "auto" : "none"}
+                    onEnded={next}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                  {/* As duas imagens do slideshow já têm a headline embutida
+                      na própria arte; o vídeo não, então é o único slide que
+                      precisa dessa camada de texto pra deixar a proposta
+                      "perfume automotivo" clara no 1o impacto. */}
+                  <div className="absolute inset-x-0 bottom-14 px-6 sm:bottom-20 sm:px-10">
+                    <motion.div
+                      initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
+                      className="max-w-[560px]"
+                    >
+                      <span className="mb-2 block text-[11px] font-medium uppercase tracking-[0.18em] text-signal-400">
+                        PURION GT
+                      </span>
+                      <h1 className="m-0 font-display text-[clamp(28px,5.5vw,52px)] font-medium leading-[0.95] tracking-[-0.03em] text-paper-0">
+                        O perfume <span className="text-signal-400">automotivo</span> premium do Brasil.
+                      </h1>
+                    </motion.div>
+                  </div>
+                </>
               ) : (
                 <picture>
                   <source media="(max-width: 767px)" srcSet={s.mobile} />
@@ -140,16 +160,6 @@ export default function Hero() {
         ))}
       </motion.div>
       <div className="absolute inset-0" style={{ background: "var(--scrim-top)" }} />
-
-      <motion.div
-        initial={reduceMotion ? false : { opacity: 0, y: -16 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 1.1 }}
-        className="absolute left-6 top-20 flex items-center gap-1.5 rounded-full px-4 py-2 text-[13px] text-paper-0 backdrop-blur-md border border-[var(--border-glass)] bg-[var(--surface-glass-dark)]"
-      >
-        <Car size={14} />
-        <span className="opacity-90">Perfume automotivo</span>
-      </motion.div>
 
       <motion.div
         initial={reduceMotion ? false : { opacity: 0, y: 24 }}
