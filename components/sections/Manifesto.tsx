@@ -83,8 +83,8 @@ export default function Manifesto() {
               className="relative flex aspect-[380/500] w-[min(340px,78%)] items-center justify-center overflow-hidden rounded-[var(--radius-xl)] bg-paper-0 shadow-[var(--shadow-lg)] will-change-transform sm:w-[min(380px,80%)]"
             >
               <video
-                src="/videos/comercial.mp4"
-                poster="/images/videos/comercial-poster.webp"
+                src="/videos/ugc-asmr-homem.mp4"
+                poster="/images/videos/ugc-asmr-homem-poster.webp"
                 muted
                 autoPlay
                 loop
