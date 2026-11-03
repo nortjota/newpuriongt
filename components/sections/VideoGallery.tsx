@@ -65,9 +65,15 @@ export default function VideoGallery() {
     <section id="videos" className="pl-6 pt-10 pb-[var(--section-y)] sm:pt-14">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-6 pr-6">
         <div className="relative font-display text-[clamp(48px,11vw,80px)] font-medium leading-[0.9] tracking-[var(--ls-display)] text-ink-950">
-          <div
+          <span
             aria-hidden
-            className="pointer-events-none absolute left-0 top-1/2 h-[80%] w-[55%] -translate-y-1/2 rounded-full bg-signal-400/25 blur-[70px]"
+            className="pointer-events-none absolute -left-4 top-2 h-14 w-14 rounded-full bg-signal-400/60 blur-xl sm:h-20 sm:w-20"
+            style={{ animation: "pg-float-orb 5s ease-in-out infinite" }}
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute left-[38%] bottom-0 h-9 w-9 rounded-full bg-signal-400/45 blur-lg sm:h-12 sm:w-12"
+            style={{ animation: "pg-float-orb 6.5s ease-in-out .7s infinite" }}
           />
           <div className="relative">Quem usa,</div>
           <div className="relative">mostra.</div>

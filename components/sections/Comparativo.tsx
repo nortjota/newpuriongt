@@ -12,9 +12,15 @@ export default function Comparativo() {
   return (
     <section id="comparativo" className="mx-auto max-w-[var(--content-max)] px-6 py-12 sm:py-16">
       <div className="relative mb-10 text-center font-display text-[clamp(44px,12vw,88px)] font-medium leading-[0.95] tracking-[var(--ls-display)] text-ink-950">
-        <div
+        <span
           aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 h-[70%] w-[60%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-signal-400/25 blur-[70px]"
+          className="pointer-events-none absolute left-[20%] top-0 h-14 w-14 rounded-full bg-signal-400/55 blur-xl sm:h-20 sm:w-20"
+          style={{ animation: "pg-float-orb 5.5s ease-in-out infinite" }}
+        />
+        <span
+          aria-hidden
+          className="pointer-events-none absolute right-[18%] bottom-2 h-10 w-10 rounded-full bg-signal-400/45 blur-lg sm:h-14 sm:w-14"
+          style={{ animation: "pg-float-orb 7s ease-in-out .5s infinite" }}
         />
         <div className="relative">Seu carro diz quem você é.</div>
         <div className="relative">Qual dos dois quer ser?</div>
