@@ -4,7 +4,7 @@
 // da pirâmide.
 export default function SectionDivider() {
   return (
-    <div aria-hidden className="mx-auto flex max-w-[var(--content-max)] items-center gap-4 px-6 py-8 sm:py-10">
+    <div aria-hidden className="mx-auto flex max-w-[var(--content-max)] items-center gap-4 px-6 py-3 sm:py-4">
       <span className="h-px flex-1 bg-[var(--border-strong)]" />
       <span className="h-1.5 w-1.5 flex-none rounded-full bg-signal-400" />
       <span className="h-px flex-1 bg-[var(--border-strong)]" />
