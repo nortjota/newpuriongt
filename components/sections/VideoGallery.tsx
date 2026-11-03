@@ -3,27 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import { Play, Volume2, VolumeX } from "lucide-react";
-import { VIDEOS, type VideoCategoria } from "@/lib/content/videos";
+import { VIDEOS } from "@/lib/content/videos";
 import Dialog from "@/components/ui/Dialog";
 
-const TABS = ["Todos", "Parceiros", "Clientes"] as const;
-type Tab = (typeof TABS)[number];
-
-function tabToCategoria(tab: Tab): VideoCategoria | null {
-  if (tab === "Parceiros") return "parceiro";
-  if (tab === "Clientes") return "cliente";
-  return null;
-}
-
 export default function VideoGallery() {
-  const [tab, setTab] = useState<Tab>("Todos");
   const [openIndex, setOpenIndex] = useState(-1);
   const [muted, setMuted] = useState(true);
   const railRef = useRef<HTMLDivElement>(null);
   const playedRef = useRef(false);
 
-  const categoria = tabToCategoria(tab);
-  const visible = VIDEOS.filter((v) => !categoria || v.categoria === categoria);
   const current = openIndex >= 0 ? VIDEOS[openIndex] : null;
 
   useEffect(() => {
@@ -78,25 +66,11 @@ export default function VideoGallery() {
           <div className="relative">Quem usa,</div>
           <div className="relative">mostra.</div>
         </div>
-        <div className="flex gap-1 rounded-[var(--radius-pill)] bg-paper-200 p-1 text-sm">
-          {TABS.map((t) => (
-            <button
-              key={t}
-              onClick={() => setTab(t)}
-              className={`rounded-[var(--radius-pill)] px-4 py-2 transition-colors ${
-                tab === t ? "bg-ink-950 text-paper-0" : "text-ink-600"
-              }`}
-            >
-              {t}
-            </button>
-          ))}
-        </div>
       </div>
 
       <div className="relative">
         <div ref={railRef} className="grid auto-cols-[min(260px,66vw)] grid-flow-col gap-3 overflow-x-auto pr-6 [scroll-snap-type:x_mandatory]">
-        {visible.map((video) => {
-          const idx = VIDEOS.indexOf(video);
+        {VIDEOS.map((video, idx) => {
           return (
             <button
               key={video.arquivo}
