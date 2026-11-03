@@ -85,25 +85,6 @@ export default function Historia() {
         01
       </div>
 
-      {/* Mobile/tablet: barra de progresso SEM sticky (position:sticky empilhado
-          com os capítulos abaixo se comportou de forma instável — ficava
-          "grudado" no lugar errado). Rola normalmente junto com a página,
-          mas o número e a barra continuam animando conforme o `active` muda. */}
-      <div className="relative mb-10 flex items-center gap-4 lg:hidden">
-        <span className="flex h-11 w-11 flex-none items-center justify-center rounded-full bg-signal-400 font-mono text-sm font-medium text-ink-950">
-          {["01", "02", "03"][active]}
-        </span>
-        <div className="flex flex-1 gap-1.5">
-          {CHAPTERS.map((_, i) => (
-            <span
-              key={i}
-              className={`h-[3px] flex-1 rounded transition-colors duration-500 ${i <= active ? "bg-signal-400" : "bg-[var(--border-inverse)]"}`}
-            />
-          ))}
-        </div>
-        <span className="font-mono text-xs text-[var(--text-inverse-muted)]">/ 03</span>
-      </div>
-
       <div className="relative mx-auto flex max-w-[var(--content-max)] flex-col items-start gap-12 lg:flex-row lg:flex-wrap">
         <div className="hidden flex-1 basis-[380px] flex-col gap-7 lg:sticky lg:top-[110px] lg:flex">
           <span className="text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
@@ -140,10 +121,12 @@ export default function Historia() {
           </div>
         </div>
 
-        <div className="relative flex flex-1 basis-[480px] flex-col">
+        <div className="relative flex flex-1 basis-[480px] flex-col pl-14">
+          <div aria-hidden className="absolute bottom-10 left-5 top-10 w-px bg-[var(--border-inverse)]" />
           <div
             aria-hidden
-            className="absolute bottom-10 left-5 top-10 hidden w-px bg-[var(--border-inverse)] sm:block"
+            className="absolute left-5 top-10 w-px bg-signal-400 transition-[height] duration-500"
+            style={{ height: `calc((100% - 80px) * ${(active + 1) / CHAPTERS.length})` }}
           />
           {CHAPTERS.map((chapter, i) => (
             <article
@@ -151,10 +134,10 @@ export default function Historia() {
               ref={(el) => {
                 articleRefs.current[i] = el;
               }}
-              className="relative flex min-h-0 flex-col justify-center py-8 sm:pl-14 lg:min-h-[72vh] lg:py-10"
+              className="relative flex min-h-0 flex-col justify-center py-8 lg:min-h-[72vh] lg:py-10"
             >
               <Reveal className="flex flex-col gap-6">
-                <div className="flex items-center gap-4 sm:absolute sm:-left-14 sm:top-10">
+                <div className="absolute -left-14 top-10 flex items-center gap-4">
                   <span
                     className={`flex h-10 w-10 flex-none items-center justify-center rounded-full font-mono text-sm transition-colors duration-500 ${
                       i <= active ? "bg-signal-400 text-ink-950" : "bg-ink-800 text-[var(--text-inverse-muted)]"
@@ -162,7 +145,6 @@ export default function Historia() {
                   >
                     0{i + 1}
                   </span>
-                  <span className="font-mono text-xs text-[var(--text-inverse-muted)] sm:hidden">{chapter.n}</span>
                 </div>
                 <h3
                   className="m-0 font-display text-[var(--fs-h1)] font-medium leading-[0.95] tracking-[-0.04em]"

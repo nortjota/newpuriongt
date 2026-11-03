@@ -1,6 +1,6 @@
 "use client";
 
-import { Check, Minus, Plus, RotateCcw, ShieldCheck, Star, Truck } from "lucide-react";
+import { ArrowRight, Check, Minus, Plus, RotateCcw, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
 import { PLANS } from "@/lib/content/plans";
 import { CHECKOUT_URL } from "@/lib/content/checkout";
 import { usePurion } from "@/lib/store/PurionProvider";
@@ -20,12 +20,12 @@ export default function QuickBuy() {
               Envio hoje
             </span>
           </div>
-          <div className="absolute inset-x-5 bottom-5 flex flex-wrap items-end justify-between gap-3">
-            <div className="flex flex-wrap gap-2">
-              <span className="rounded-full bg-white/72 px-3.5 py-2 font-mono text-xs backdrop-blur-md">60 ml · 2.0 fl oz</span>
-              <span className="rounded-full bg-white/72 px-3.5 py-2 font-mono text-xs backdrop-blur-md">700 borrifadas</span>
+          <div className="absolute inset-x-5 bottom-2.5 flex flex-wrap items-end justify-between gap-2">
+            <div className="flex flex-wrap gap-1.5">
+              <span className="rounded-full bg-white/72 px-3 py-1.5 font-mono text-[11px] backdrop-blur-md">60 ml · 2.0 fl oz</span>
+              <span className="rounded-full bg-white/72 px-3 py-1.5 font-mono text-[11px] backdrop-blur-md">700 borrifadas</span>
             </div>
-            <a href="#fragrancia" className="rounded-full bg-ink-950 px-3.5 py-2 text-xs font-medium text-paper-0">
+            <a href="#fragrancia" className="rounded-full bg-ink-950 px-3 py-1.5 text-[11px] font-medium text-paper-0">
               Ver notas olfativas
             </a>
           </div>
@@ -56,9 +56,15 @@ export default function QuickBuy() {
             >
               Purion GT
             </h2>
-            <p className="m-0 max-w-[440px] text-[15px] leading-relaxed text-[var(--text-secondary)]">
-              Fragrância de assinatura para quem vive a estrada. Saída frutada, corpo floral, fundo de couro e âmbar.
-            </p>
+            <a
+              href="#fragrancia"
+              className="group inline-flex w-fit items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--border-subtle)] bg-paper-50 py-2 pl-3 pr-3.5 text-sm text-ink-950 transition-transform hover:-translate-y-0.5"
+              style={{ animation: "pg-bounce-hint 2.6s ease-in-out infinite" }}
+            >
+              <Sparkles size={14} className="text-signal-500" />
+              Descubra as notas olfativas
+              <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
+            </a>
           </div>
 
           <div className="flex flex-col gap-2.5">

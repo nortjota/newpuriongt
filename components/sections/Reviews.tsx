@@ -52,6 +52,10 @@ export default function Reviews() {
 
   return (
     <section id="avaliacoes" className="py-[var(--section-y)]">
+      <div className="mx-auto mb-12 max-w-[var(--content-max)] px-6">
+        <FeedbackGallery />
+      </div>
+
       <div className="mx-auto grid max-w-[var(--content-max)] items-stretch gap-16 px-6 [grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr))]">
         <div className="flex flex-col justify-between gap-7">
           <div className="flex flex-col gap-4">
@@ -191,10 +195,6 @@ export default function Reviews() {
             )}
           />
         ))}
-      </div>
-
-      <div className="mx-auto max-w-[var(--content-max)] px-6">
-        <FeedbackGallery />
       </div>
 
       <ReviewSubmitModal open={reviewOpen} onClose={() => setReviewOpen(false)} />

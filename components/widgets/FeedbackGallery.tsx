@@ -11,22 +11,22 @@ export default function FeedbackGallery() {
   const current = openIndex >= 0 ? FEEDBACKS[openIndex] : null;
 
   return (
-    <div className="mt-16">
-      <span className="mb-4 block text-[11px] uppercase text-[var(--text-muted)] tracking-[var(--ls-caps)]">
+    <div>
+      <span className="mb-3 block text-[11px] uppercase text-[var(--text-muted)] tracking-[var(--ls-caps)]">
         Clientes
       </span>
       <Marquee
         items={FEEDBACKS}
         duration="46s"
-        itemClassName="gap-3"
-        className="gap-3"
+        itemClassName="gap-1.5"
+        className="gap-1.5"
         renderItem={(fb, i) => (
           <button
             key={`${fb.src}-${i}`}
             onClick={() => setOpenIndex(FEEDBACKS.indexOf(fb))}
-            className="relative aspect-[3/4] w-[132px] flex-none overflow-hidden rounded-[var(--radius-md)] bg-paper-100 transition-transform hover:-translate-y-0.5"
+            className="relative aspect-[3/4] w-[76px] flex-none overflow-hidden rounded-[var(--radius-sm)] bg-paper-100 transition-transform hover:-translate-y-0.5"
           >
-            <Image src={fb.src} alt={fb.alt} fill className="object-cover" sizes="132px" />
+            <Image src={fb.src} alt={fb.alt} fill className="object-cover" sizes="76px" />
           </button>
         )}
       />

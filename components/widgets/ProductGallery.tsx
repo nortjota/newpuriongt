@@ -35,7 +35,7 @@ export default function ProductGallery({ planId, children }: { planId: Plan["id"
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
       >
-        <Image key={current.src} src={current.src} alt={current.alt} fill className="object-contain" sizes="(min-width: 640px) 460px, 100vw" />
+        <Image key={current.src} src={current.src} alt={current.alt} fill className="object-cover" sizes="(min-width: 640px) 460px, 100vw" />
         {children}
       </div>
       {!kitImage && (

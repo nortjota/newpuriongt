@@ -33,12 +33,12 @@ export default function Home() {
         <FragrancePyramid />
         <VideoGallery />
         <Benefits />
+        <Reviews />
+        <Historia />
         <SprayJourney />
         <Comparativo />
-        <Manifesto />
         <Quiz />
-        <Historia />
-        <Reviews />
+        <Manifesto />
         <Offer />
         <Guarantee />
         <Faq />

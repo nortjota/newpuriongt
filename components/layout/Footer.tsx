@@ -69,17 +69,6 @@ export default function Footer() {
           <span className="max-w-[260px] text-sm leading-relaxed text-[var(--text-inverse-muted)]">
             Exala presença. Deixa memória.
           </span>
-          <video
-            src="/videos/comercial.mp4"
-            poster="/images/videos/comercial-poster.webp"
-            muted
-            autoPlay
-            loop
-            playsInline
-            preload="none"
-            aria-hidden
-            className="h-[190px] w-[140px] flex-none rounded-[var(--radius-md)] object-cover"
-          />
         </div>
 
         <div className="flex flex-col divide-y divide-[var(--border-inverse)] border-t border-[var(--border-inverse)]">

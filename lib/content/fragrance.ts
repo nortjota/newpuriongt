@@ -47,31 +47,33 @@ export const FRAGRANCE_LAYERS = [
 
 export const ACCORDS = [
   { key: "Frutado", pct: 100, color: "oklch(0.66 0.19 35)", dark: true },
-  { key: "Doce", pct: 68, color: "oklch(0.58 0.17 20)", dark: false },
-  { key: "Amadeirado", pct: 68, color: "oklch(0.45 0.08 55)", dark: false },
-  { key: "Couro", pct: 63, color: "oklch(0.4 0.05 40)", dark: false },
-  { key: "Cítrico", pct: 59, color: "oklch(0.82 0.15 110)", dark: true },
-  { key: "Esfumaçado", pct: 57, color: "oklch(0.4 0.02 260)", dark: false },
-  { key: "Almiscarado", pct: 55, color: "oklch(0.72 0.03 300)", dark: true },
+  { key: "Amadeirado", pct: 100, color: "oklch(0.45 0.08 55)", dark: false },
+  { key: "Couro", pct: 72, color: "oklch(0.4 0.05 40)", dark: false },
+  { key: "Cítrico", pct: 64, color: "oklch(0.82 0.15 110)", dark: true },
+  { key: "Esfumaçado", pct: 58, color: "oklch(0.4 0.02 260)", dark: false },
   { key: "Fresco", pct: 52, color: "oklch(0.82 0.1 190)", dark: true },
-  { key: "Tropical", pct: 52, color: "oklch(0.78 0.16 75)", dark: true },
-  { key: "Musgoso", pct: 47, color: "oklch(0.45 0.07 135)", dark: false },
+  { key: "Almiscarado", pct: 46, color: "oklch(0.72 0.03 300)", dark: true },
+  { key: "Tropical", pct: 40, color: "oklch(0.78 0.16 75)", dark: true },
+  { key: "Doce", pct: 34, color: "oklch(0.58 0.17 20)", dark: false },
+  { key: "Musgoso", pct: 28, color: "oklch(0.45 0.07 135)", dark: false },
 ];
 
-export const SEASONS = [
-  { key: "Inverno", icon: "snowflake", pct: 82, color: "var(--ice-400)" },
-  { key: "Primavera", icon: "flower-2", pct: 70, color: "oklch(0.78 0.14 140)" },
-  { key: "Verão", icon: "sun", pct: 56, color: "var(--sun-400)" },
-  { key: "Outono", icon: "leaf", pct: 90, color: "oklch(0.7 0.13 55)" },
-  { key: "Dia", icon: "sun-medium", pct: 68, color: "var(--sun-600)" },
-  { key: "Noite", icon: "moon", pct: 94, color: "var(--ice-600)" },
+// Perfume automotivo: não tem estação certa, é pra usar sempre — por isso
+// "quando usar" virou ocasião, não sazonalidade.
+export const OCCASIONS = [
+  { key: "Dia a dia", icon: "sun-medium" },
+  { key: "Trabalho", icon: "briefcase" },
+  { key: "Estrada", icon: "map-pin" },
+  { key: "Encontros", icon: "heart" },
+  { key: "Qualquer clima", icon: "cloud" },
+  { key: "A qualquer hora", icon: "clock" },
 ];
 
 export const PERFORMANCE = [
-  { key: "Fixação", label: "Alta", segments: 5 },
+  { key: "Fixação", label: "Alta", segments: 4 },
   { key: "Projeção", label: "Marcante", segments: 4 },
-  { key: "Rastro", label: "Presente", segments: 4 },
-  { key: "Doçura", label: "Equilibrada", segments: 3 },
+  { key: "Difusão", label: "Rápida", segments: 5 },
+  { key: "Resistência ao calor", label: "Alta", segments: 4 },
 ];
 
 export const FRAGRANCE_FAMILY = "Amadeirada Couro";

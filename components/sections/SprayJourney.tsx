@@ -24,7 +24,7 @@ const PARTICLES = Array.from({ length: 16 }, (_, i) => {
   };
 });
 
-function Particle({ p, progress }: { p: (typeof PARTICLES)[number]; progress: MotionValue<number> }) {
+function Particle({ p, progress, i }: { p: (typeof PARTICLES)[number]; progress: MotionValue<number>; i: number }) {
   const y = useTransform(progress, (v) => -v * p.drift * 220);
   return (
     <motion.span
@@ -36,12 +36,18 @@ function Particle({ p, progress }: { p: (typeof PARTICLES)[number]; progress: Mo
         height: p.size,
         marginLeft: -p.size / 2,
         marginTop: -p.size / 2,
-        borderRadius: "50%",
-        background: "rgba(214,255,61,.5)",
-        filter: `blur(${p.blur}px)`,
         y,
       }}
-    />
+    >
+      <span
+        className="block h-full w-full rounded-full"
+        style={{
+          background: "rgba(214,255,61,.5)",
+          filter: `blur(${p.blur}px)`,
+          animation: `pg-sway ${4 + p.drift * 2}s ease-in-out ${i * 0.2}s infinite`,
+        }}
+      />
+    </motion.span>
   );
 }
 
@@ -119,7 +125,7 @@ export default function SprayJourney() {
           />
           <div className="absolute inset-0 overflow-hidden pointer-events-none">
             {PARTICLES.map((p, i) => (
-              <Particle key={i} p={p} progress={scrollYProgress} />
+              <Particle key={i} p={p} progress={scrollYProgress} i={i} />
             ))}
           </div>
 
@@ -152,6 +158,11 @@ export default function SprayJourney() {
           </div>
 
           <div className="absolute right-4 top-1/2 hidden aspect-square w-[clamp(90px,14vw,180px)] -translate-y-1/2 items-center justify-center sm:right-6 sm:flex">
+            <div
+              aria-hidden
+              className="absolute inset-[-18%] rounded-full bg-signal-400/18 blur-[22px]"
+              style={{ animation: "pg-pulse 3.2s ease-in-out infinite" }}
+            />
             <svg viewBox="0 0 120 120" className="absolute inset-0 h-full w-full -rotate-90">
               <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,.14)" strokeWidth="3" />
               <motion.circle

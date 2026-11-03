@@ -102,6 +102,19 @@ export default function Manifesto() {
               </span>
               <span className="text-[11px] text-[var(--text-inverse-muted)] sm:text-xs">resíduo no retrovisor</span>
             </div>
+            <div className="absolute -top-2 right-0 hidden h-[150px] w-[112px] overflow-hidden rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] sm:-top-4 sm:right-2 sm:block">
+              <video
+                src="/videos/comercial.mp4"
+                poster="/images/videos/comercial-poster.webp"
+                muted
+                autoPlay
+                loop
+                playsInline
+                preload="none"
+                aria-hidden
+                className="h-full w-full object-cover"
+              />
+            </div>
           </div>
         </div>
 

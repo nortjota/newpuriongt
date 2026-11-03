@@ -13,10 +13,10 @@ export default function Faq() {
     <section id="faq" className="mx-auto max-w-[var(--content-max)] px-6 pb-[var(--section-y)]">
       <div className="mb-10 flex flex-wrap items-end justify-between gap-4 border-b border-[var(--border-subtle)] pb-6">
         <h2
-          className="m-0 font-display text-[clamp(32px,5vw,56px)] font-medium leading-[0.95] tracking-[-0.03em] text-steel-300"
+          className="m-0 font-display text-[clamp(40px,6vw,64px)] font-medium leading-[0.95] tracking-[-0.03em] text-ink-950"
           style={{ fontVariationSettings: "'wdth' 88" }}
         >
-          Perguntas frequentes.
+          FAQ
         </h2>
         <span className="text-[11px] uppercase text-[var(--text-muted)] tracking-[var(--ls-caps)]">
           {String(FAQ.length).padStart(2, "0")} perguntas
