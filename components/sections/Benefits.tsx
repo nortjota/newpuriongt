@@ -42,7 +42,7 @@ const CARDS = [
 
 export default function Benefits() {
   return (
-    <section className="mx-auto grid max-w-[var(--content-max)] grid-cols-2 gap-2.5 px-6 pb-[var(--section-y)] sm:gap-3.5 lg:[grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))]">
+    <section className="mx-auto grid max-w-[var(--content-max)] grid-cols-2 gap-1.5 px-6 pb-[var(--section-y)] sm:gap-2.5 lg:[grid-template-columns:repeat(auto-fit,minmax(min(100%,270px),1fr))]">
       {CARDS.map((card, i) => {
         const Icon = card.icon;
         const signal = card.tone === "signal";

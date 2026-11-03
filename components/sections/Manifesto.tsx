@@ -102,7 +102,7 @@ export default function Manifesto() {
               </span>
               <span className="text-[11px] text-[var(--text-inverse-muted)] sm:text-xs">resíduo no retrovisor</span>
             </div>
-            <div className="absolute -top-2 right-0 hidden h-[150px] w-[112px] overflow-hidden rounded-[var(--radius-lg)] shadow-[var(--shadow-lg)] sm:-top-4 sm:right-2 sm:block">
+            <div className="absolute -top-3 right-0 z-10 h-[96px] w-[72px] overflow-hidden rounded-[var(--radius-md)] shadow-[var(--shadow-lg)] sm:-top-4 sm:right-2 sm:h-[150px] sm:w-[112px] sm:rounded-[var(--radius-lg)]">
               <video
                 src="/videos/comercial.mp4"
                 poster="/images/videos/comercial-poster.webp"

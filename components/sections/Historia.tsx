@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
+import { motion, useScroll, useTransform } from "motion/react";
 import Reveal from "@/components/ui/Reveal";
 
 const CHAPTERS = [
@@ -42,6 +43,15 @@ export default function Historia() {
   const [active, setActive] = useState(0);
   const articleRefs = useRef<(HTMLElement | null)[]>([]);
   const rafRef = useRef<number | null>(null);
+  const railRef = useRef<HTMLDivElement>(null);
+  // Trilho vertical ligado direto ao scroll (não ao estado `active`, que só
+  // muda em degraus por capítulo) — assim o preenchimento acompanha o dedo
+  // deslizando a tela, em vez de pular de capítulo em capítulo.
+  const { scrollYProgress: railProgress } = useScroll({
+    target: railRef,
+    offset: ["start center", "end center"],
+  });
+  const railFillHeight = useTransform(railProgress, [0, 1], ["0%", "100%"]);
 
   useEffect(() => {
     function recompute() {
@@ -121,12 +131,12 @@ export default function Historia() {
           </div>
         </div>
 
-        <div className="relative flex flex-1 basis-[480px] flex-col pl-14">
+        <div ref={railRef} className="relative flex flex-1 basis-[480px] flex-col pl-14">
           <div aria-hidden className="absolute bottom-10 left-5 top-10 w-px bg-[var(--border-inverse)]" />
-          <div
+          <motion.div
             aria-hidden
-            className="absolute left-5 top-10 w-px bg-signal-400 transition-[height] duration-500"
-            style={{ height: `calc((100% - 80px) * ${(active + 1) / CHAPTERS.length})` }}
+            className="absolute left-5 top-10 w-px bg-signal-400"
+            style={{ height: railFillHeight }}
           />
           {CHAPTERS.map((chapter, i) => (
             <article

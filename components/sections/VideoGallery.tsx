@@ -62,9 +62,9 @@ export default function VideoGallery() {
   }, []);
 
   return (
-    <section id="videos" className="pl-6 pt-[var(--section-y)] pb-[var(--section-y)]">
+    <section id="videos" className="pl-6 pt-10 pb-[var(--section-y)] sm:pt-14">
       <div className="mb-8 flex flex-wrap items-end justify-between gap-6 pr-6">
-        <div className="font-display text-[clamp(56px,13vw,88px)] font-medium leading-[0.9] tracking-[var(--ls-display)] text-ink-950">
+        <div className="font-display text-[clamp(48px,11vw,80px)] font-medium leading-[0.9] tracking-[var(--ls-display)] text-ink-950">
           <div>Quem usa,</div>
           <div>mostra.</div>
         </div>

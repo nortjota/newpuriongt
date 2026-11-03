@@ -33,10 +33,10 @@ export default function FragrancePyramid() {
   return (
     <section
       id="fragrancia"
-      className="m-[10px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 px-6 py-[var(--section-y)] text-paper-0"
+      className="m-[10px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 px-6 py-14 text-paper-0 sm:py-20"
     >
-      <div className="mx-auto grid max-w-[var(--content-max)] items-center gap-8 [grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))]">
-        <div className="flex flex-col gap-6">
+      <div className="mx-auto grid max-w-[var(--content-max)] items-center gap-6 [grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr))]">
+        <div className="flex flex-col items-center gap-2 text-center">
           <span className="text-base font-semibold uppercase text-paper-0 tracking-[var(--ls-caps)] sm:text-[11px] sm:font-normal sm:text-[var(--text-inverse-muted)]">
             Pirâmide olfativa
           </span>
@@ -49,7 +49,7 @@ export default function FragrancePyramid() {
           </p>
         </div>
 
-        <div className="relative flex h-[380px] justify-center sm:h-[440px]">
+        <div className="relative flex h-[280px] justify-center sm:h-[340px]">
           <div className="relative aspect-[300/540] h-full overflow-hidden rounded-[var(--radius-xl)] bg-ink-800">
             <div className="absolute inset-0 z-[1] flex flex-col">
               {FRAGRANCE_LAYERS.map((layer, i) => {
@@ -58,7 +58,7 @@ export default function FragrancePyramid() {
                   <button
                     key={layer.key}
                     onClick={() => setPyramidLevel(level === i + 1 ? 0 : ((i + 1) as 1 | 2 | 3))}
-                    className="flex flex-1 items-start justify-between border-t border-[var(--border-inverse)] px-4 py-3.5 text-left font-mono text-[11px] uppercase tracking-[.08em] transition-colors"
+                    className="flex flex-1 items-start justify-between border-t border-[var(--border-inverse)] px-3 py-2.5 text-left font-mono text-[10px] uppercase tracking-[.08em] transition-colors"
                     style={{ background: on ? layer.band : "transparent" }}
                   >
                     <span>{layer.key}</span>
@@ -110,7 +110,7 @@ export default function FragrancePyramid() {
                 <div key={layer.key} className="flex flex-col gap-2.5 border-b border-[var(--border-inverse)] pb-4.5">
                   <div className="flex items-center justify-between">
                     <span
-                      className="font-display text-2xl font-medium tracking-[-0.03em]"
+                      className="font-display text-lg font-medium tracking-[-0.03em]"
                       style={{ fontVariationSettings: "'wdth' 88" }}
                     >
                       {layer.key}
@@ -123,9 +123,9 @@ export default function FragrancePyramid() {
                     {layer.notes.map((note) => (
                       <span
                         key={note}
-                        className="flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--border-inverse)] bg-white/6 py-1.5 pl-2 pr-3.5 text-sm"
+                        className="flex items-center gap-1.5 rounded-[var(--radius-pill)] border border-[var(--border-inverse)] bg-white/6 py-1 pl-1.5 pr-3 text-xs"
                       >
-                        <span className="h-3 w-3 rounded-full" style={{ background: NOTE_COLORS[note] }} />
+                        <span className="h-2.5 w-2.5 rounded-full" style={{ background: NOTE_COLORS[note] }} />
                         {note}
                       </span>
                     ))}
@@ -135,18 +135,18 @@ export default function FragrancePyramid() {
             </div>
           ) : (
             <div className="flex flex-col gap-5">
-              <div className="relative aspect-square w-full max-w-[200px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-900">
-                <Image src={active!.image.src} alt={active!.image.alt} fill className="object-cover" sizes="200px" />
+              <div className="relative aspect-square w-full max-w-[160px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-900">
+                <Image src={active!.image.src} alt={active!.image.alt} fill className="object-cover" sizes="160px" />
               </div>
               {active!.notes.map((note, i) => (
-                <div key={note} className="flex items-baseline justify-between border-b border-[var(--border-inverse)] py-3">
-                  <span className="flex items-center gap-3.5">
+                <div key={note} className="flex items-baseline justify-between border-b border-[var(--border-inverse)] py-2.5">
+                  <span className="flex items-center gap-3">
                     <span
-                      className="h-3.5 w-3.5 flex-none rounded-full"
+                      className="h-3 w-3 flex-none rounded-full"
                       style={{ background: NOTE_COLORS[note], boxShadow: "0 0 0 4px rgba(255,255,255,.06)" }}
                     />
                     <span
-                      className="font-display text-[clamp(28px,3vw,40px)] font-medium leading-none tracking-[-0.04em]"
+                      className="font-display text-[clamp(18px,2vw,24px)] font-medium leading-none tracking-[-0.03em]"
                       style={{ fontVariationSettings: "'wdth' 88" }}
                     >
                       {note}
@@ -160,25 +160,25 @@ export default function FragrancePyramid() {
         </div>
       </div>
 
-      <div className="mx-auto mt-10 grid max-w-[var(--content-max)] gap-3 sm:grid-cols-2">
-        <div className="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-5 sm:p-6">
+      <div className="mx-auto mt-8 grid max-w-[var(--content-max)] grid-cols-2 gap-2 sm:gap-3">
+        <div className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-3 sm:gap-4 sm:p-6">
           <div className="flex items-center gap-3 text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
             <Gauge size={14} />
             <span>Performance</span>
             <span className="h-px flex-1 bg-[var(--border-inverse)]" />
           </div>
-          <div className="flex flex-col gap-3.5">
+          <div className="flex flex-col gap-2.5 sm:gap-3.5">
             {PERFORMANCE.map((p) => (
               <div key={p.key} className="flex flex-col gap-1.5">
                 <div className="flex items-baseline justify-between">
-                  <span className="text-sm">{p.key}</span>
-                  <span className="font-mono text-xs text-[var(--text-inverse-muted)]">{p.label}</span>
+                  <span className="text-xs sm:text-sm">{p.key}</span>
+                  <span className="font-mono text-[10px] text-[var(--text-inverse-muted)] sm:text-xs">{p.label}</span>
                 </div>
                 <div className="flex gap-1">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <span
                       key={i}
-                      className="h-2 flex-1 rounded"
+                      className="h-1.5 flex-1 rounded sm:h-2"
                       style={{ background: i < p.segments ? "var(--signal-400)" : "rgba(255,255,255,.1)" }}
                     />
                   ))}
@@ -186,15 +186,15 @@ export default function FragrancePyramid() {
               </div>
             ))}
           </div>
-          <div className="mt-auto flex items-baseline justify-between gap-3 border-t border-[var(--border-inverse)] pt-3.5">
-            <span className="text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">Família</span>
-            <span className="font-display text-xl font-medium tracking-[-0.03em]" style={{ fontVariationSettings: "'wdth' 88" }}>
+          <div className="mt-auto flex items-baseline justify-between gap-3 border-t border-[var(--border-inverse)] pt-3">
+            <span className="text-[10px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">Família</span>
+            <span className="font-display text-base font-medium tracking-[-0.03em] sm:text-xl" style={{ fontVariationSettings: "'wdth' 88" }}>
               {FRAGRANCE_FAMILY}
             </span>
           </div>
         </div>
 
-        <div className="flex flex-col gap-4 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-5 sm:p-6">
+        <div className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-3 sm:gap-4 sm:p-6">
           <div className="flex items-center gap-3 text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
             <Layers size={14} />
             <span>Acordes principais</span>
@@ -202,11 +202,11 @@ export default function FragrancePyramid() {
           </div>
           <div className="flex flex-col gap-1">
             {ACCORDS.map((a) => (
-              <div key={a.key} className="flex h-[26px]">
+              <div key={a.key} className="flex h-[20px] sm:h-[26px]">
                 <RevealBar
                   targetWidth={`${a.pct}%`}
-                  className="flex items-center justify-center overflow-hidden whitespace-nowrap rounded-r-lg text-xs font-medium"
-                  style={{ background: a.color, color: a.dark ? "var(--ink-950)" : "var(--paper-0)" }}
+                  className="flex items-center justify-center overflow-hidden whitespace-nowrap rounded-r-lg text-[10px] font-medium sm:text-xs"
+                  style={{ background: a.color, color: a.dark ? "var(--ink-950)" : "var(--paper-0)", minWidth: 58 }}
                 >
                   {a.key}
                 </RevealBar>
@@ -215,7 +215,7 @@ export default function FragrancePyramid() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-5 sm:col-span-2 sm:flex-row sm:items-center sm:gap-6 sm:p-6">
+        <div className="col-span-2 flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-4 sm:flex-row sm:items-center sm:gap-6 sm:p-6">
           <div className="flex items-center gap-3 text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)] sm:flex-none">
             <Calendar size={14} />
             <span className="whitespace-nowrap">Quando usar</span>
@@ -224,9 +224,11 @@ export default function FragrancePyramid() {
             {OCCASIONS.map((o) => (
               <span
                 key={o.key}
-                className="flex items-center gap-1.5 rounded-[var(--radius-pill)] border border-[var(--border-inverse)] bg-white/6 py-1.5 pl-2.5 pr-3 text-xs"
+                className="flex items-center gap-2 rounded-[var(--radius-pill)] border border-[var(--border-inverse)] bg-white/6 py-1 pl-1 pr-3 text-xs"
               >
-                <OccasionIcon name={o.icon} />
+                <span className="flex h-6 w-6 flex-none items-center justify-center rounded-full bg-signal-400/15 text-signal-400">
+                  <OccasionIcon name={o.icon} />
+                </span>
                 {o.key}
               </span>
             ))}

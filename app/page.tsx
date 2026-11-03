@@ -2,6 +2,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
 import QuickBuy from "@/components/sections/QuickBuy";
+import Clientes from "@/components/sections/Clientes";
 import Manifesto from "@/components/sections/Manifesto";
 import Benefits from "@/components/sections/Benefits";
 import SprayJourney from "@/components/sections/SprayJourney";
@@ -30,14 +31,15 @@ export default function Home() {
           <TaglineMarquee items={MARQUEE_ITEMS} />
         </div>
         <QuickBuy />
+        <Clientes />
         <FragrancePyramid />
         <VideoGallery />
         <Benefits />
+        <Comparativo />
         <Reviews />
         <Historia />
-        <SprayJourney />
-        <Comparativo />
         <Quiz />
+        <SprayJourney />
         <Manifesto />
         <Offer />
         <Guarantee />

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Menu, SprayCan, X } from "lucide-react";
+import { Menu, ShoppingBag, X } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/content/whatsapp";
 import { usePurion } from "@/lib/store/PurionProvider";
 
@@ -37,10 +37,10 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 inset-x-0 z-50 grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-6 py-3 backdrop-blur-xl transition-colors duration-500 ${
+      className={`fixed top-0 inset-x-0 z-50 grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-6 py-3 transition-colors duration-500 ${
         scrolled
-          ? "bg-paper-0/85 text-ink-950 border-b border-[var(--border-subtle)]"
-          : "bg-ink-950/35 text-paper-0 border-b border-white/10"
+          ? "bg-paper-0/85 text-ink-950 border-b border-[var(--border-subtle)] backdrop-blur-xl"
+          : "bg-transparent text-paper-0 border-b border-transparent"
       }`}
     >
       <div className="flex items-center">
@@ -83,16 +83,11 @@ export default function Header() {
         <a
           href="#comprar"
           aria-label={`Sacola, ${state.cart} ${state.cart === 1 ? "item" : "itens"}`}
-          className={`relative flex h-9 w-9 items-center justify-center rounded-full transition-colors ${
+          className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors ${
             scrolled ? "bg-ink-950 text-paper-0" : "bg-paper-0 text-ink-950"
           }`}
         >
-          <SprayCan size={16} />
-          {state.cart > 0 && (
-            <span className="absolute -right-1 -top-1 flex h-4.5 w-4.5 items-center justify-center rounded-full bg-signal-400 font-mono text-[10px] text-ink-950">
-              {state.cart}
-            </span>
-          )}
+          <ShoppingBag size={16} />
         </a>
       </div>
 

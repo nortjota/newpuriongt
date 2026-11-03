@@ -34,10 +34,7 @@ export default function QuickBuy() {
         {/* Painel de compra */}
         <div className="flex flex-col gap-4 rounded-[var(--radius-xl)] border border-[var(--border-subtle)] bg-paper-0 p-5 sm:gap-5 sm:p-10">
           <div className="flex flex-col gap-2.5">
-            <div className="flex flex-wrap items-center justify-between gap-3">
-              <span className="text-[11px] uppercase text-[var(--text-muted)] tracking-[var(--ls-caps)]">
-                Auto parfum de alta performance
-              </span>
+            <div className="flex flex-wrap items-center gap-3">
               <span className="flex items-center gap-1.5 text-sm text-[var(--text-secondary)]">
                 <span className="flex gap-0.5">
                   {Array.from({ length: 5 }).map((_, i) => (
