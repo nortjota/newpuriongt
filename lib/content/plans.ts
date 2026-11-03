@@ -62,5 +62,5 @@ export const TRUST_SEALS = [
   { icon: "rotate-ccw", title: "Garantia de 7 dias", desc: "Não curtiu o cheiro? Devolvemos 100%." },
   { icon: "truck", title: "Envio no mesmo dia", desc: "Rastreio liberado na hora." },
   { icon: "map-pin", title: "Chega em todo o Brasil", desc: "Frete calculado no checkout." },
-  { icon: "star", title: "+100 motoristas já trocaram", desc: "4.9 de nota em avaliações reais." },
+  { icon: "star", title: "+450 motoristas já trocaram", desc: "4.9 de nota em avaliações reais." },
 ] as const;

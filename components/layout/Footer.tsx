@@ -55,7 +55,7 @@ const BENEFITS = [
   { icon: Truck, title: "Envio no mesmo dia", desc: "Rastreio liberado na hora." },
   { icon: ShieldCheck, title: "Garantia de 7 dias", desc: "100% do dinheiro de volta." },
   { icon: BadgeCheck, title: "Compra segura", desc: "Dados protegidos, nota fiscal em todo pedido." },
-  { icon: Star, title: "+100 motoristas", desc: "4.9 de nota em avaliações reais." },
+  { icon: Star, title: "+450 motoristas", desc: "4.9 de nota em avaliações reais." },
 ];
 
 export default function Footer() {

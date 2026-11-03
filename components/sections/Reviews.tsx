@@ -70,7 +70,7 @@ export default function Reviews() {
                     <Star key={i} size={18} fill="currentColor" />
                   ))}
                 </div>
-                <span className="text-[13px] text-[var(--text-secondary)]">de 5 · mais de 100 avaliações</span>
+                <span className="text-[13px] text-[var(--text-secondary)]">de 5 · mais de 450 avaliações</span>
               </div>
             </div>
           </div>
@@ -85,7 +85,7 @@ export default function Reviews() {
             </div>
             <div className="flex flex-col gap-1.5 border-t border-[var(--border-strong)] pt-3.5">
               <span className="font-display text-[56px] font-medium leading-[0.9] tracking-[-0.05em]" style={{ fontVariationSettings: "'wdth' 88" }}>
-                100+
+                450+
               </span>
               <span className="text-[13px] text-[var(--text-secondary)]">motoristas satisfeitos</span>
             </div>

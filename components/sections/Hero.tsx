@@ -104,7 +104,7 @@ export default function Hero() {
         className="hidden sm:flex absolute right-6 bottom-6 items-center gap-2 rounded-full px-4 py-2 text-[13px] text-paper-0 backdrop-blur-md border border-[var(--border-glass)] bg-[var(--surface-glass-dark)]"
       >
         <span className="font-mono">4.9</span>
-        <span className="opacity-80">· 100+ avaliações verificadas</span>
+        <span className="opacity-80">· 450+ avaliações verificadas</span>
       </motion.div>
 
       {SLIDES.length > 1 && (

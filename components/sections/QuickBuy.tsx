@@ -20,14 +20,9 @@ export default function QuickBuy() {
               Envio hoje
             </span>
           </div>
-          <div className="absolute inset-x-5 bottom-2.5 flex flex-wrap items-end justify-between gap-2">
-            <div className="flex flex-wrap gap-1.5">
-              <span className="rounded-full bg-white/72 px-3 py-1.5 font-mono text-[11px] backdrop-blur-md">60 ml · 2.0 fl oz</span>
-              <span className="rounded-full bg-white/72 px-3 py-1.5 font-mono text-[11px] backdrop-blur-md">700 borrifadas</span>
-            </div>
-            <a href="#fragrancia" className="rounded-full bg-ink-950 px-3 py-1.5 text-[11px] font-medium text-paper-0">
-              Ver notas olfativas
-            </a>
+          <div className="absolute left-5 bottom-1.5 flex flex-col items-start gap-1">
+            <span className="w-fit rounded-full bg-white/72 px-2.5 py-1 font-mono text-[10px] backdrop-blur-md">60 ml · 2.0 fl oz</span>
+            <span className="w-fit rounded-full bg-white/72 px-2.5 py-1 font-mono text-[10px] backdrop-blur-md">700 borrifadas</span>
           </div>
         </ProductGallery>
 
@@ -43,7 +38,7 @@ export default function QuickBuy() {
                 </span>
                 <span className="font-mono text-ink-950">4.9</span>
                 <a href="#avaliacoes" className="underline underline-offset-[3px]">
-                  100+ avaliações
+                  450+ avaliações
                 </a>
               </span>
             </div>
