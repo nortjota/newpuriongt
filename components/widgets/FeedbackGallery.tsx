@@ -12,7 +12,8 @@ export default function FeedbackGallery() {
   const pausedRef = useRef(false);
 
   // Rola sozinho, sem duplicar as fotos (sem truque de marquee em loop) — ao
-  // chegar no fim, volta pro início. Pausa com hover/toque pra dar pra clicar.
+  // chegar no fim, volta pro início. Só pausa no toque (mobile), pra dar pra
+  // clicar; no mouse (desktop) fica rolando sempre, sem parar no hover.
   useEffect(() => {
     const el = railRef.current;
     if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
@@ -35,8 +36,6 @@ export default function FeedbackGallery() {
       </span>
       <div
         ref={railRef}
-        onMouseEnter={() => (pausedRef.current = true)}
-        onMouseLeave={() => (pausedRef.current = false)}
         onTouchStart={() => (pausedRef.current = true)}
         onTouchEnd={() => {
           setTimeout(() => (pausedRef.current = false), 2500);

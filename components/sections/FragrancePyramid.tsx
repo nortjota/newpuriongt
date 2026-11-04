@@ -162,7 +162,7 @@ export default function FragrancePyramid() {
       </div>
 
       <div className="mx-auto mt-8 flex max-w-[var(--content-max)] flex-col gap-2 sm:gap-3">
-        <div className="flex flex-col gap-2 sm:gap-3 lg:grid lg:grid-cols-2 lg:items-start lg:gap-4">
+        <div className="flex flex-col gap-2 sm:gap-3 lg:grid lg:grid-cols-2 lg:gap-4">
         <div className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-4 sm:gap-4 sm:p-6">
           <div className="flex items-center gap-3 text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
             <Layers size={14} />
@@ -184,7 +184,7 @@ export default function FragrancePyramid() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-4 sm:gap-4 sm:p-6">
+        <div className="flex flex-col gap-3 rounded-[var(--radius-lg)] border border-[var(--border-inverse)] bg-ink-900 p-4 sm:gap-4 sm:p-6 lg:justify-between">
           <div className="flex items-center gap-3 text-[11px] uppercase text-[var(--text-inverse-muted)] tracking-[var(--ls-caps)]">
             <Gauge size={14} />
             <span>Performance</span>

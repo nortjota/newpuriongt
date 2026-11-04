@@ -48,7 +48,12 @@
 html {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
+  /* "hidden" (em vez de "clip") transforma html/body num scroll container,
+     o que quebra position:sticky em filhos distantes com range de scroll
+     longo (ex: o pin de 340dvh da seção "A viagem de uma borrifada") —
+     "clip" corta o overflow horizontal do mesmo jeito sem esse efeito
+     colateral. */
+  overflow-x: clip;
 }
 
 body {
@@ -59,7 +64,7 @@ body {
   font-size: var(--fs-body);
   line-height: var(--lh-body);
   letter-spacing: var(--ls-body);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 ::selection {
