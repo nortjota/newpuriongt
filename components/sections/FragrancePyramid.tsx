@@ -190,7 +190,7 @@ export default function FragrancePyramid() {
             <span>Performance</span>
             <span className="h-px flex-1 bg-[var(--border-inverse)]" />
           </div>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-3 sm:gap-y-3.5">
+          <div className="grid grid-cols-2 gap-x-6 gap-y-3 sm:gap-y-3.5 lg:grid-cols-1">
             {PERFORMANCE.map((p) => (
               <div key={p.key} className="flex flex-col gap-1.5">
                 <div className="flex items-baseline justify-between">

@@ -74,6 +74,16 @@ export default function Hero() {
     setSlide((s) => (s + 1) % SLIDES.length);
   }
 
+  // O slide 0 (vídeo) não existe no desktop (ver JSX) — sempre que o
+  // carrossel cai nele por lá (no mount ou ao dar a volta), pula direto pro
+  // próximo. Checa a media query na hora, sem depender do estado `isMobile`
+  // (que só é setado um instante depois do mount), pra não ter o risco de
+  // pular um mobile de verdade antes da detecção real acontecer.
+  useEffect(() => {
+    if (slide !== 0) return;
+    if (!window.matchMedia("(max-width: 767px)").matches) setSlide(1);
+  }, [slide]);
+
   // Slides de imagem avançam no timer de sempre. No mobile, o slide de vídeo
   // não usa timer — ele avança sozinho quando o vídeo termina (onEnded), pra
   // deixar o comercial rodar até o fim antes de trocar. No desktop esse
@@ -115,10 +125,11 @@ export default function Hero() {
                 <>
                   {/* O vídeo fonte é vertical (9:16); num banner largo de
                       desktop ele precisava ser ampliado muito além da
-                      resolução original e ficava borrado/esticado demais —
-                      por pedido, o desktop não mostra vídeo nesse slide, só
-                      o poster estático. O mobile (aspect-square) continua
-                      com o vídeo tocando, igual sempre foi. */}
+                      resolução original e ficava borrado/esticado. Por
+                      pedido, esse slide inteiro some no desktop — nem vídeo
+                      nem imagem/poster (o useEffect acima pula ele direto
+                      pro próximo slide por lá). O mobile (aspect-square)
+                      continua com o vídeo tocando, igual sempre foi. */}
                   <video
                     ref={(el) => {
                       videoRefs.current[i] = el;
@@ -131,11 +142,6 @@ export default function Hero() {
                     preload={i === 0 && isMobile ? "auto" : "none"}
                     onEnded={next}
                     className="absolute inset-0 h-full w-full object-cover md:hidden"
-                  />
-                  <img
-                    src={s.poster}
-                    alt={s.alt}
-                    className="absolute inset-0 hidden h-full w-full object-cover md:block"
                   />
                 </>
               ) : (
@@ -168,12 +174,12 @@ export default function Hero() {
 
       {SLIDES.length > 1 && (
         <div className="absolute inset-x-0 bottom-6 flex justify-center gap-2">
-          {SLIDES.map((_, i) => (
+          {SLIDES.map((s, i) => (
             <button
               key={i}
               aria-label={`Banner ${i + 1}`}
               onClick={() => goTo(i)}
-              className="h-1.5 rounded-full transition-all"
+              className={`h-1.5 rounded-full transition-all ${s.type === "video" ? "md:hidden" : ""}`}
               style={{ width: i === slide ? 24 : 8, background: i === slide ? "var(--signal-400)" : "rgba(255,255,255,.4)" }}
             />
           ))}
