@@ -14,40 +14,42 @@ function InstagramIcon({ size = 16 }: { size?: number }) {
   );
 }
 import { WHATSAPP_URL } from "@/lib/content/whatsapp";
-import { CHECKOUT_URL } from "@/lib/content/checkout";
+import { useCheckoutUrl } from "@/lib/content/checkout";
 import { COMPANY } from "@/lib/config/company";
 
 const PARTNER_URL = `${WHATSAPP_URL}?text=${encodeURIComponent(
   "Olá! Quero saber mais sobre me tornar parceiro/revendedor do Purion GT."
 )}`;
 
-const CATEGORIES = [
-  {
-    title: "Comprar",
-    links: [
-      { href: "#comprar", label: "Produto e planos" },
-      { href: "#fragrancia", label: "Pirâmide olfativa" },
-      { href: CHECKOUT_URL, label: "Comprar agora", external: true },
-    ],
-  },
-  {
-    title: "Ajuda e Suporte",
-    links: [
-      { href: WHATSAPP_URL, label: "Falar no WhatsApp", external: true },
-      { href: "#faq", label: "Perguntas frequentes" },
-      { href: "mailto:puriongt@gmail.com", label: "puriongt@gmail.com" },
-    ],
-  },
-  {
-    title: "Institucional",
-    links: [
-      { href: "#historia", label: "Nossa história" },
-      { href: "#avaliacoes", label: "Avaliações" },
-      { href: "/privacy", label: "Política de Privacidade" },
-      { href: "/terms", label: "Termos de Uso" },
-    ],
-  },
-];
+function buildCategories(checkoutUrl: string) {
+  return [
+    {
+      title: "Comprar",
+      links: [
+        { href: "#comprar", label: "Produto e planos" },
+        { href: "#fragrancia", label: "Pirâmide olfativa" },
+        { href: checkoutUrl, label: "Comprar agora", external: true },
+      ],
+    },
+    {
+      title: "Ajuda e Suporte",
+      links: [
+        { href: WHATSAPP_URL, label: "Falar no WhatsApp", external: true },
+        { href: "#faq", label: "Perguntas frequentes" },
+        { href: "mailto:puriongt@gmail.com", label: "puriongt@gmail.com" },
+      ],
+    },
+    {
+      title: "Institucional",
+      links: [
+        { href: "#historia", label: "Nossa história" },
+        { href: "#avaliacoes", label: "Avaliações" },
+        { href: "/privacy", label: "Política de Privacidade" },
+        { href: "/terms", label: "Termos de Uso" },
+      ],
+    },
+  ];
+}
 
 const PAYMENTS = ["visa", "mastercard", "amex", "elo", "hipercard", "discover", "aura", "boleto", "pix"];
 
@@ -60,6 +62,8 @@ const BENEFITS = [
 
 export default function Footer() {
   const [open, setOpen] = useState(-1);
+  const checkoutUrl = useCheckoutUrl();
+  const categories = buildCategories(checkoutUrl);
 
   return (
     <footer className="m-[10px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 px-6 pt-14 text-paper-0">
@@ -72,7 +76,7 @@ export default function Footer() {
         </div>
 
         <div className="flex flex-col divide-y divide-[var(--border-inverse)] border-t border-[var(--border-inverse)]">
-          {CATEGORIES.map((cat, i) => {
+          {categories.map((cat, i) => {
             const isOpen = open === i;
             return (
               <div key={cat.title}>
