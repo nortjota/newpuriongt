@@ -5,11 +5,12 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { Minus, Plus, ShieldCheck, Truck, X } from "lucide-react";
 import { usePurion } from "@/lib/store/PurionProvider";
-import { CHECKOUT_URL } from "@/lib/content/checkout";
+import { useCheckoutUrl } from "@/lib/content/checkout";
 import CarIcon from "@/components/icons/CarIcon";
 
 export default function CartDrawer() {
   const { state, plan, total, installment, showQty, setQty, closeCart } = usePurion();
+  const checkoutUrl = useCheckoutUrl();
 
   useEffect(() => {
     if (!state.cartOpen) return;
@@ -131,7 +132,7 @@ export default function CartDrawer() {
                     ou 3× de <span className="font-mono">{installment}</span> sem juros
                   </span>
                   <a
-                    href={CHECKOUT_URL}
+                    href={checkoutUrl}
                     target="_blank"
                     rel="noreferrer"
                     className="mt-2 w-full rounded-[var(--radius-pill)] bg-ink-950 py-4 text-center text-sm font-medium text-paper-0 transition-transform hover:-translate-y-0.5"
