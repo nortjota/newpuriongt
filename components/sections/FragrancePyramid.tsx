@@ -198,13 +198,14 @@ export default function FragrancePyramid() {
                   <span className="font-mono text-[10px] text-[var(--text-inverse-muted)] sm:text-xs">{p.label}</span>
                 </div>
                 <div className="flex gap-1">
-                  {Array.from({ length: 5 }).map((_, i) => (
-                    <span
-                      key={i}
-                      className="h-1.5 flex-1 rounded sm:h-2"
-                      style={{ background: i < p.segments ? "var(--signal-400)" : "rgba(255,255,255,.1)" }}
-                    />
-                  ))}
+                  {Array.from({ length: 5 }).map((_, i) => {
+                    const fill = Math.max(0, Math.min(1, p.segments - i));
+                    return (
+                      <span key={i} className="h-1.5 flex-1 overflow-hidden rounded bg-white/10 sm:h-2">
+                        <span className="block h-full rounded bg-signal-400" style={{ width: `${fill * 100}%` }} />
+                      </span>
+                    );
+                  })}
                 </div>
               </div>
             ))}

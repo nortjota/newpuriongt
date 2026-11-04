@@ -72,8 +72,8 @@ export const OCCASIONS = [
 export const PERFORMANCE = [
   { key: "Fixação", label: "Alta", segments: 4 },
   { key: "Projeção", label: "Marcante", segments: 4 },
-  { key: "Difusão", label: "Rápida", segments: 5 },
-  { key: "Resistência ao calor", label: "Alta", segments: 4 },
+  { key: "Discrição", label: "Elegante", segments: 4 },
+  { key: "Resistência ao calor", label: "Média", segments: 2.5 },
 ];
 
 export const FRAGRANCE_FAMILY = "Amadeirada Couro";
