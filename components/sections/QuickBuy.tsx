@@ -2,12 +2,13 @@
 
 import { ArrowRight, Check, Minus, Plus, RotateCcw, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
 import { PLANS } from "@/lib/content/plans";
-import { CHECKOUT_URL } from "@/lib/content/checkout";
+import { useCheckoutUrl } from "@/lib/content/checkout";
 import { usePurion } from "@/lib/store/PurionProvider";
 import ProductGallery from "@/components/widgets/ProductGallery";
 
 export default function QuickBuy() {
   const { state, plan, total, installment, ctaLabel, showQty, setPlan, setQty, addToCart } = usePurion();
+  const checkoutUrl = useCheckoutUrl();
 
   return (
     <section id="comprar-topo" className="mx-auto max-w-[var(--content-max)] px-6">
@@ -140,7 +141,7 @@ export default function QuickBuy() {
               {ctaLabel}
             </button>
             <a
-              href={CHECKOUT_URL}
+              href={checkoutUrl}
               target="_blank"
               rel="noreferrer"
               className="w-full rounded-[var(--radius-pill)] bg-ink-950 py-4 text-center text-sm font-medium text-paper-0"
