@@ -50,8 +50,8 @@ export default function VideoGallery() {
   }, []);
 
   return (
-    <section id="videos" className="pl-6 pt-10 pb-10 sm:pt-14 sm:pb-14">
-      <div className="mb-8 flex flex-wrap items-end justify-between gap-6 pr-6">
+    <section id="videos" className="pl-6 pt-10 pb-10 sm:pt-14 sm:pb-14 lg:mx-auto lg:max-w-[var(--content-max)] lg:px-6">
+      <div className="mb-8 flex flex-wrap items-end justify-between gap-6 pr-6 lg:pr-0">
         <div className="relative font-display text-[clamp(48px,11vw,80px)] font-medium leading-[0.9] tracking-[var(--ls-display)] text-ink-950">
           <span
             aria-hidden
@@ -69,7 +69,10 @@ export default function VideoGallery() {
       </div>
 
       <div className="relative">
-        <div ref={railRef} className="grid auto-cols-[min(260px,66vw)] grid-flow-col gap-3 overflow-x-auto pr-6 [scroll-snap-type:x_mandatory]">
+        <div
+          ref={railRef}
+          className="grid auto-cols-[min(260px,66vw)] grid-flow-col gap-3 overflow-x-auto pr-6 [scroll-snap-type:x_mandatory] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-4 lg:gap-4 lg:overflow-visible lg:pr-0 lg:[scroll-snap-type:none]"
+        >
         {VIDEOS.map((video, idx) => {
           return (
             <button
