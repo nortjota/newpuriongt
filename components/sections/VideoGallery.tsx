@@ -71,7 +71,7 @@ export default function VideoGallery() {
       <div className="relative">
         <div
           ref={railRef}
-          className="grid auto-cols-[min(260px,66vw)] grid-flow-col gap-3 overflow-x-auto pr-6 [scroll-snap-type:x_mandatory] lg:grid-flow-row lg:auto-cols-auto lg:grid-cols-4 lg:gap-4 lg:overflow-visible lg:pr-0 lg:[scroll-snap-type:none]"
+          className="grid auto-cols-[min(260px,66vw)] grid-flow-col gap-3 overflow-x-auto pr-6 [scroll-snap-type:x_mandatory] lg:pr-0"
         >
         {VIDEOS.map((video, idx) => {
           return (

@@ -58,31 +58,34 @@ export default function Hero() {
 
   // Dá play só no vídeo do slide ativo (e pausa os demais) assim que o
   // carrossel chega nele — sem precisar de clique, igual à galeria do produto.
+  // No desktop o slide de vídeo mostra só o poster estático (ver JSX), então
+  // não tem vídeo rodando ali pra dar play.
   useEffect(() => {
     SLIDES.forEach((s, i) => {
       if (s.type !== "video") return;
       const el = videoRefs.current[i];
       if (!el) return;
-      if (i === slide) el.play().catch(() => {});
+      if (i === slide && isMobile) el.play().catch(() => {});
       else el.pause();
     });
-  }, [slide]);
+  }, [slide, isMobile]);
 
   function next() {
     setSlide((s) => (s + 1) % SLIDES.length);
   }
 
-  // Slides de imagem avançam no timer de sempre. O slide de vídeo não usa
-  // timer — ele avança sozinho quando o vídeo termina (onEnded), pra deixar
-  // o comercial rodar até o fim antes de trocar.
+  // Slides de imagem avançam no timer de sempre. No mobile, o slide de vídeo
+  // não usa timer — ele avança sozinho quando o vídeo termina (onEnded), pra
+  // deixar o comercial rodar até o fim antes de trocar. No desktop esse
+  // mesmo slide mostra só o poster estático, então avança no timer normal.
   useEffect(() => {
     if (timerRef.current) clearInterval(timerRef.current);
-    if (SLIDES[slide].type === "video") return;
+    if (SLIDES[slide].type === "video" && isMobile) return;
     timerRef.current = setInterval(next, SLIDE_INTERVAL_MS);
     return () => {
       if (timerRef.current) clearInterval(timerRef.current);
     };
-  }, [slide]);
+  }, [slide, isMobile]);
 
   function goTo(i: number) {
     setSlide(i);
@@ -110,19 +113,12 @@ export default function Hero() {
             >
               {s.type === "video" ? (
                 <>
-                  {/* O vídeo fonte é vertical (9:16) — em object-cover num
-                      banner largo ele precisa ser ampliado muito além da
-                      resolução original e fica borrado/esticado. No desktop
-                      trocamos pra object-contain (nítido, sem upscale forte)
-                      com esse fundo desfocado preenchendo as laterais; no
-                      mobile (aspect-square) o object-cover original já
-                      encaixa bem, então fica como estava. */}
-                  <img
-                    src={s.poster}
-                    alt=""
-                    aria-hidden
-                    className="absolute inset-0 hidden h-full w-full scale-110 object-cover object-top blur-2xl brightness-[0.6] md:block"
-                  />
+                  {/* O vídeo fonte é vertical (9:16); num banner largo de
+                      desktop ele precisava ser ampliado muito além da
+                      resolução original e ficava borrado/esticado demais —
+                      por pedido, o desktop não mostra vídeo nesse slide, só
+                      o poster estático. O mobile (aspect-square) continua
+                      com o vídeo tocando, igual sempre foi. */}
                   <video
                     ref={(el) => {
                       videoRefs.current[i] = el;
@@ -132,9 +128,14 @@ export default function Hero() {
                     aria-label={s.alt}
                     muted
                     playsInline
-                    preload={i === 0 ? "auto" : "none"}
+                    preload={i === 0 && isMobile ? "auto" : "none"}
                     onEnded={next}
-                    className="absolute inset-0 h-full w-full object-cover md:object-contain"
+                    className="absolute inset-0 h-full w-full object-cover md:hidden"
+                  />
+                  <img
+                    src={s.poster}
+                    alt={s.alt}
+                    className="absolute inset-0 hidden h-full w-full object-cover md:block"
                   />
                 </>
               ) : (
