@@ -85,7 +85,7 @@ export default function Header() {
           onClick={toggleCart}
           aria-label={`Carrinho, ${state.cart} ${state.cart === 1 ? "item" : "itens"}`}
           aria-expanded={state.cartOpen}
-          className={`relative flex h-9 w-9 items-center justify-center rounded-full border backdrop-blur-md transition-colors ${
+          className={`relative flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md transition-colors ${
             state.cartOpen
               ? "border-transparent bg-signal-400 text-ink-950"
               : scrolled
@@ -93,7 +93,7 @@ export default function Header() {
                 : "border-white/28 bg-white/14 text-paper-0"
           }`}
         >
-          <CarIcon size={16} />
+          <CarIcon size={22} />
           {state.cart > 0 && (
             <span
               className={`absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full px-1 font-mono text-[9px] ${
