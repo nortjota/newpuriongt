@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 
 const SLIDE_INTERVAL_MS = 6000;
@@ -124,16 +123,6 @@ export default function Hero() {
                     onEnded={next}
                     className="absolute inset-0 h-full w-full object-cover"
                   />
-                  <motion.a
-                    href="#comprar-topo"
-                    aria-label="Turbinar meu carro"
-                    initial={reduceMotion ? false : { opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.6 }}
-                    className="absolute left-6 top-24 block transition-transform hover:-translate-y-0.5 sm:left-10 sm:top-28"
-                  >
-                    <Image src="/images/icons/car-cta-glass.svg" alt="" width={56} height={56} className="h-12 w-12 sm:h-14 sm:w-14" />
-                  </motion.a>
                 </>
               ) : (
                 <picture>

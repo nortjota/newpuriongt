@@ -17,6 +17,7 @@ import Guarantee from "@/components/sections/Guarantee";
 import Faq from "@/components/sections/Faq";
 import FinalCta from "@/components/sections/FinalCta";
 import StickyBuyBar from "@/components/widgets/StickyBuyBar";
+import CartDrawer from "@/components/widgets/CartDrawer";
 import TaglineMarquee from "@/components/widgets/TaglineMarquee";
 import SectionDivider from "@/components/ui/SectionDivider";
 
@@ -51,6 +52,7 @@ export default function Home() {
       </main>
       <Footer />
       <StickyBuyBar />
+      <CartDrawer />
     </>
   );
 }

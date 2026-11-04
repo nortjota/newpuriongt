@@ -2,9 +2,10 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { Menu, ShoppingBag, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/content/whatsapp";
 import { usePurion } from "@/lib/store/PurionProvider";
+import CarIcon from "@/components/icons/CarIcon";
 
 const NAV_LINKS = [
   { href: "#fragrancia", label: "Fragrância" },
@@ -19,7 +20,7 @@ const NAV_LINKS = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const { state } = usePurion();
+  const { state, toggleCart } = usePurion();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -80,15 +81,29 @@ export default function Header() {
         >
           WhatsApp
         </a>
-        <a
-          href="#comprar"
-          aria-label={`Sacola, ${state.cart} ${state.cart === 1 ? "item" : "itens"}`}
-          className={`flex h-9 w-9 items-center justify-center rounded-full transition-colors ${
-            scrolled ? "bg-ink-950 text-paper-0" : "bg-paper-0 text-ink-950"
+        <button
+          onClick={toggleCart}
+          aria-label={`Carrinho, ${state.cart} ${state.cart === 1 ? "item" : "itens"}`}
+          aria-expanded={state.cartOpen}
+          className={`relative flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md transition-colors ${
+            state.cartOpen
+              ? "border-transparent bg-signal-400 text-ink-950"
+              : scrolled
+                ? "border-ink-950/15 bg-ink-950/8 text-ink-950"
+                : "border-white/28 bg-white/14 text-paper-0"
           }`}
         >
-          <ShoppingBag size={16} />
-        </a>
+          <CarIcon size={22} />
+          {state.cart > 0 && (
+            <span
+              className={`absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full px-1 font-mono text-[9px] ${
+                state.cartOpen ? "bg-ink-950 text-paper-0" : "bg-signal-400 text-ink-950"
+              }`}
+            >
+              {state.cart}
+            </span>
+          )}
+        </button>
       </div>
 
       {/* Menu rápido pra mobile/tablet — os links de texto do header somem

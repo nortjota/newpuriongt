@@ -7,6 +7,7 @@ type State = {
   planId: Plan["id"];
   qty: number;
   cart: number;
+  cartOpen: boolean;
   toast: string;
   // 0 = "Completo" (todas as camadas). Fica no contexto só porque o resultado
   // do Quiz precisa "empurrar" esse valor para a Pirâmide, que fica muito
@@ -18,10 +19,12 @@ type Action =
   | { type: "SET_PLAN"; id: Plan["id"] }
   | { type: "SET_QTY"; qty: number }
   | { type: "ADD_TO_CART" }
+  | { type: "TOGGLE_CART" }
+  | { type: "CLOSE_CART" }
   | { type: "CLEAR_TOAST" }
   | { type: "SET_PYRAMID_LEVEL"; level: 0 | 1 | 2 | 3 };
 
-const initialState: State = { planId: "un", qty: 1, cart: 0, toast: "", pyramidLevel: 0 };
+const initialState: State = { planId: "un", qty: 1, cart: 0, cartOpen: false, toast: "", pyramidLevel: 0 };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
@@ -38,6 +41,10 @@ function reducer(state: State, action: Action): State {
         toast: plan.isSubscription ? "Assinatura adicionada à sacola" : "Purion GT adicionado à sacola",
       };
     }
+    case "TOGGLE_CART":
+      return { ...state, cartOpen: !state.cartOpen };
+    case "CLOSE_CART":
+      return { ...state, cartOpen: false };
     case "CLEAR_TOAST":
       return { ...state, toast: "" };
     case "SET_PYRAMID_LEVEL":
@@ -70,6 +77,8 @@ type Ctx = {
   setPlan: (id: Plan["id"]) => void;
   setQty: (qty: number) => void;
   addToCart: () => void;
+  toggleCart: () => void;
+  closeCart: () => void;
   clearToast: () => void;
   setPyramidLevel: (level: 0 | 1 | 2 | 3) => void;
 };
@@ -96,6 +105,8 @@ export function PurionProvider({ children }: { children: ReactNode }) {
       setPlan: (id) => dispatch({ type: "SET_PLAN", id }),
       setQty: (qty) => dispatch({ type: "SET_QTY", qty }),
       addToCart: () => dispatch({ type: "ADD_TO_CART" }),
+      toggleCart: () => dispatch({ type: "TOGGLE_CART" }),
+      closeCart: () => dispatch({ type: "CLOSE_CART" }),
       clearToast: () => dispatch({ type: "CLEAR_TOAST" }),
       setPyramidLevel: (level) => dispatch({ type: "SET_PYRAMID_LEVEL", level }),
     };
