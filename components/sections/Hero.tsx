@@ -110,6 +110,19 @@ export default function Hero() {
             >
               {s.type === "video" ? (
                 <>
+                  {/* O vídeo fonte é vertical (9:16) — em object-cover num
+                      banner largo ele precisa ser ampliado muito além da
+                      resolução original e fica borrado/esticado. No desktop
+                      trocamos pra object-contain (nítido, sem upscale forte)
+                      com esse fundo desfocado preenchendo as laterais; no
+                      mobile (aspect-square) o object-cover original já
+                      encaixa bem, então fica como estava. */}
+                  <img
+                    src={s.poster}
+                    alt=""
+                    aria-hidden
+                    className="absolute inset-0 hidden h-full w-full scale-110 object-cover object-top blur-2xl brightness-[0.6] md:block"
+                  />
                   <video
                     ref={(el) => {
                       videoRefs.current[i] = el;
@@ -121,7 +134,7 @@ export default function Hero() {
                     playsInline
                     preload={i === 0 ? "auto" : "none"}
                     onEnded={next}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover md:object-contain"
                   />
                 </>
               ) : (
