@@ -26,7 +26,7 @@ export default function Offer() {
         className="relative overflow-hidden rounded-[var(--radius-xl)] bg-paper-100 sm:sticky sm:top-[84px]"
         style={{ height: "clamp(480px,62vw,720px)" }}
       >
-        <Image src="/product-studio.png" alt="Purion GT 60 ml" fill className="object-cover" />
+        <Image src="/product-studio.png" alt="Purion GT 60 ml" fill className="object-cover" sizes="(min-width: 900px) 660px, 100vw" />
         <div className="absolute inset-x-5.5 bottom-5.5 flex items-end justify-between gap-4 text-ink-600">
           <span className="text-[13px] leading-snug">
             Toque no frasco

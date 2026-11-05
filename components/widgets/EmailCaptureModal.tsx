@@ -8,6 +8,10 @@ import { supabase } from "@/lib/supabase/client";
 
 const SEEN_KEY = "purion_email_v1";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// O container nunca passa de ~500px (largura do Dialog); roteando pelo
+// otimizador de imagem do Next em vez do PNG de 1672px cru, o navegador
+// baixa um WebP/AVIF já no tamanho certo em vez do arquivo de origem inteiro.
+const HERO_BANNER_BG = "/_next/image?url=%2Fhero-banner.png&w=1200&q=75";
 
 export default function EmailCaptureModal() {
   const [open, setOpen] = useState(false);
@@ -48,7 +52,7 @@ export default function EmailCaptureModal() {
       <div className="flex flex-col gap-4.5">
         <div
           className="-mx-6 -mt-6 mb-1 h-[180px] bg-cover sm:-mx-8 sm:-mt-8"
-          style={{ backgroundImage: "url(/hero-banner.png)", backgroundPosition: "center 45%" }}
+          style={{ backgroundImage: `url(${HERO_BANNER_BG})`, backgroundPosition: "center 45%" }}
         />
         {!done ? (
           <div className="flex flex-col gap-4">
