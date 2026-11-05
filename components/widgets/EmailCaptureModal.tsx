@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { getImageProps } from "next/image";
 import Dialog from "@/components/ui/Dialog";
 import { useExitIntent } from "@/lib/hooks/useExitIntent";
 import { readFlag, setFlag } from "@/lib/hooks/useLocalStorageFlag";
@@ -8,10 +9,16 @@ import { supabase } from "@/lib/supabase/client";
 
 const SEEN_KEY = "purion_email_v1";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-// O container nunca passa de ~500px (largura do Dialog); roteando pelo
-// otimizador de imagem do Next em vez do PNG de 1672px cru, o navegador
-// baixa um WebP/AVIF já no tamanho certo em vez do arquivo de origem inteiro.
-const HERO_BANNER_BG = "/_next/image?url=%2Fhero-banner.png&w=1200&q=75";
+// O container nunca passa de ~600px (largura do Dialog). `getImageProps` usa
+// o mesmo otimizador/URL que o componente <Image> geraria — em vez do PNG de
+// 1672px cru, o navegador baixa um WebP/AVIF já no tamanho certo — mas sem
+// depender de montar a URL do endpoint na mão. `.src` (o fallback sem
+// srcset, o que um background-image via CSS consegue usar) é sempre a
+// variante 2x — por isso o `width` passado é o tamanho real de exibição
+// (~600px), não o tamanho final do arquivo (que sai em ~1200px, pra retina).
+const {
+  props: { src: HERO_BANNER_BG },
+} = getImageProps({ src: "/hero-banner.png", alt: "", width: 600, height: 338, quality: 75 });
 
 export default function EmailCaptureModal() {
   const [open, setOpen] = useState(false);
