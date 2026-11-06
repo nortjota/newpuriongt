@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { ShieldCheck } from "lucide-react";
 import Reveal from "@/components/ui/Reveal";
