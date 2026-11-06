@@ -28,18 +28,47 @@ export default function Reviews() {
   const [reviewOpen, setReviewOpen] = useState(false);
   const [spot, setSpot] = useState(0);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const spotlightRef = useRef<HTMLDivElement>(null);
 
   function startTimer() {
     if (timerRef.current) clearInterval(timerRef.current);
     timerRef.current = setInterval(() => setSpot((s) => (s + 1) % TESTIMONIALS.length), SPOTLIGHT_INTERVAL);
   }
 
+  function stopTimer() {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = null;
+  }
+
+  // Só gira o destaque enquanto o bloco está visível (e a aba em primeiro
+  // plano) — evita acumular trocas de depoimento em segundo plano. Pausar
+  // só interrompe o `setInterval`; não reseta `spot` nem reinicia do zero,
+  // então não há salto quando o usuário volta a ver a seção.
   useEffect(() => {
-    startTimer();
+    const el = spotlightRef.current;
+    if (!el) return;
+    let intersecting = false;
+
+    function sync() {
+      if (intersecting && document.visibilityState === "visible") startTimer();
+      else stopTimer();
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        intersecting = entry.isIntersecting;
+        sync();
+      },
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    document.addEventListener("visibilitychange", sync);
+
     return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
+      stopTimer();
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", sync);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   function jumpTo(i: number) {
@@ -99,7 +128,10 @@ export default function Reviews() {
           </button>
         </div>
 
-        <div className="relative flex min-h-[440px] flex-col justify-between gap-9 overflow-hidden rounded-[var(--radius-xl)] bg-ink-950 p-7 text-paper-0 sm:p-12">
+        <div
+          ref={spotlightRef}
+          className="relative flex min-h-[440px] flex-col justify-between gap-9 overflow-hidden rounded-[var(--radius-xl)] bg-ink-950 p-7 text-paper-0 sm:p-12"
+        >
           <span
             className="pointer-events-none absolute -top-7 right-6 font-display text-[280px] leading-none text-ink-800"
             style={{ fontVariationSettings: "'wdth' 88" }}

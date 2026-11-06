@@ -9,24 +9,60 @@ export default function FeedbackGallery() {
   const [openIndex, setOpenIndex] = useState(-1);
   const current = openIndex >= 0 ? FEEDBACKS[openIndex] : null;
   const railRef = useRef<HTMLDivElement>(null);
-  const pausedRef = useRef(false);
+  const touchPausedRef = useRef(false);
 
   // Rola sozinho, sem duplicar as fotos (sem truque de marquee em loop) — ao
   // chegar no fim, volta pro início. Só pausa no toque (mobile), pra dar pra
   // clicar; no mouse (desktop) fica rolando sempre, sem parar no hover.
+  // Fora da viewport ou com a aba em segundo plano, o requestAnimationFrame é
+  // cancelado por completo (não só a mutação) — sem isso ele rodava a 60fps
+  // pra sempre, mesmo com o usuário lendo o rodapé ou trocando de aba. A
+  // posição (scrollLeft) fica intacta entre pausa e retomada, sem salto.
   useEffect(() => {
     const el = railRef.current;
     if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    let raf: number;
+
+    let raf: number | null = null;
+    let visible = false;
+
     function step() {
-      if (el && !pausedRef.current) {
+      if (el && !touchPausedRef.current) {
         el.scrollLeft += 0.5;
         if (el.scrollLeft >= el.scrollWidth - el.clientWidth - 1) el.scrollLeft = 0;
       }
       raf = requestAnimationFrame(step);
     }
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
+
+    function start() {
+      if (raf !== null) return; // já rodando — evita loop duplicado
+      raf = requestAnimationFrame(step);
+    }
+
+    function stop() {
+      if (raf !== null) cancelAnimationFrame(raf);
+      raf = null;
+    }
+
+    function sync() {
+      if (visible && document.visibilityState === "visible") start();
+      else stop();
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting;
+        sync();
+      },
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    document.addEventListener("visibilitychange", sync);
+
+    return () => {
+      stop();
+      observer.disconnect();
+      document.removeEventListener("visibilitychange", sync);
+    };
   }, []);
 
   return (
@@ -36,9 +72,9 @@ export default function FeedbackGallery() {
       </span>
       <div
         ref={railRef}
-        onTouchStart={() => (pausedRef.current = true)}
+        onTouchStart={() => (touchPausedRef.current = true)}
         onTouchEnd={() => {
-          setTimeout(() => (pausedRef.current = false), 2500);
+          setTimeout(() => (touchPausedRef.current = false), 2500);
         }}
         className="flex gap-1 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
