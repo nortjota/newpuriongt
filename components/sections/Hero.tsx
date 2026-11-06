@@ -51,6 +51,20 @@ export default function Hero() {
   // uma primeira vez com isMobile ainda falso (não chamava play()), e só
   // tentava de verdade no SEGUNDO ciclo — exatamente a janela em que a
   // reprodução falhava silenciosamente na primeira visita.
+  //
+  // Importante: nada que o React renderiza como atributo/texto pode
+  // depender diretamente de `isMobile` nesse primeiro render — o servidor
+  // sempre computa `false` aqui (sem `window`), então qualquer atributo
+  // SSR-ado que lesse `isMobile` ficaria divergente entre servidor e
+  // cliente. Foi exatamente isso que aconteceu com `preload` antes dessa
+  // revisão (`preload={isMobile ? "auto" : "none"}`): confirmado via
+  // `next dev` que o React reporta erro de hidratação real nesse atributo
+  // ("this won't be patched up" — não é só aviso, o valor incorreto do
+  // servidor fica). Por isso `preload` abaixo é sempre "none" (idêntico
+  // nos dois lados) — quem garante o carregamento rápido no mobile é a
+  // chamada a play() no efeito abaixo, que força o carregamento
+  // independente do preload (fetch do vídeo começa no play(), não no
+  // valor de preload).
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
   );
@@ -75,15 +89,33 @@ export default function Hero() {
   // play() pode rejeitar por um motivo transitório (o elemento ainda não
   // tinha dados suficientes no instante exato da chamada) sem que seja
   // bloqueio real de política de autoplay — como é muted, a política em si
-  // não deveria barrar. Sem nenhum retry, essa rejeição ficava sem
-  // tratamento nenhum (catch vazio) e o vídeo só voltava a tentar tocar
-  // quando `slide`/`isMobile` mudassem de novo (ex: o usuário trocar de
-  // slide e voltar) — daí o sintoma relatado. Uma única retentativa,
-  // amarrada ao evento `canplay` do próprio elemento (não timer/polling),
-  // cobre esse caso. `NotAllowedError` é bloqueio real do navegador — nesse
-  // caso não insiste.
+  // não deveria barrar. `NotAllowedError` é bloqueio real do navegador —
+  // nesse caso não insiste. Qualquer outro erro dispara UMA retentativa
+  // amarrada ao evento `canplay` do próprio elemento (não timer/polling).
+  //
+  // A Promise resolver não é garantia de reprodução de verdade: é possível
+  // o navegador aceitar o play() (`paused` vira false, sem rejeição) e o
+  // `currentTime` nunca avançar (travado no frame inicial) — reproduzido
+  // de forma controlada sob CPU lenta o bastante. Por isso, depois que o
+  // evento `playing` dispara, uma ÚNICA checagem (um `setTimeout`, não um
+  // intervalo) confirma que `currentTime` realmente avançou; se não, UMA
+  // retentativa de play() e para por aí — sem loop, sem polling contínuo.
   useEffect(() => {
     const cleanups: Array<() => void> = [];
+
+    function verifyRealPlayback(el: HTMLVideoElement) {
+      const onPlaying = () => {
+        const t0 = el.currentTime;
+        const timer = setTimeout(() => {
+          if (!el.paused && el.currentTime <= t0 + 0.05) {
+            el.play().catch(() => {});
+          }
+        }, 700);
+        cleanups.push(() => clearTimeout(timer));
+      };
+      el.addEventListener("playing", onPlaying, { once: true });
+      cleanups.push(() => el.removeEventListener("playing", onPlaying));
+    }
 
     SLIDES.forEach((s, i) => {
       if (s.type !== "video") return;
@@ -97,6 +129,7 @@ export default function Hero() {
 
       if (!el.paused) return; // já tocando — evita play() redundante
 
+      verifyRealPlayback(el);
       el.play().catch((err: unknown) => {
         if (err instanceof DOMException && err.name === "NotAllowedError") return;
         const retry = () => {
@@ -179,7 +212,7 @@ export default function Hero() {
                     aria-label={s.alt}
                     muted
                     playsInline
-                    preload={i === 0 && isMobile ? "auto" : "none"}
+                    preload="none"
                     onEnded={next}
                     className="absolute inset-0 h-full w-full object-cover md:hidden"
                   />
