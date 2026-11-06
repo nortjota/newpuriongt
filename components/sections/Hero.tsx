@@ -42,7 +42,18 @@ export default function Hero() {
   // o object-cover cortava boa parte da imagem (e do texto embutido nela).
   // Em telas <768px a seção vira aspect-square (mostra a imagem inteira) e o
   // parallax de scroll fica desligado, já que não sobra margem de corte.
-  const [isMobile, setIsMobile] = useState(false);
+  //
+  // Inicializador "preguiçoso" (função, não valor) — roda de novo durante a
+  // primeira renderização no cliente (hidratação), então `isMobile` já sai
+  // correto nesse primeiro render, sem esperar um efeito rodar depois pra
+  // corrigir. Antes, `useState(false)` sempre começava assumindo desktop por
+  // um ciclo de render inteiro: o efeito de play do vídeo (abaixo) rodava
+  // uma primeira vez com isMobile ainda falso (não chamava play()), e só
+  // tentava de verdade no SEGUNDO ciclo — exatamente a janela em que a
+  // reprodução falhava silenciosamente na primeira visita.
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(max-width: 767px)").matches
+  );
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
     const update = () => setIsMobile(mq.matches);
@@ -60,14 +71,43 @@ export default function Hero() {
   // carrossel chega nele — sem precisar de clique, igual à galeria do produto.
   // No desktop o slide de vídeo mostra só o poster estático (ver JSX), então
   // não tem vídeo rodando ali pra dar play.
+  //
+  // play() pode rejeitar por um motivo transitório (o elemento ainda não
+  // tinha dados suficientes no instante exato da chamada) sem que seja
+  // bloqueio real de política de autoplay — como é muted, a política em si
+  // não deveria barrar. Sem nenhum retry, essa rejeição ficava sem
+  // tratamento nenhum (catch vazio) e o vídeo só voltava a tentar tocar
+  // quando `slide`/`isMobile` mudassem de novo (ex: o usuário trocar de
+  // slide e voltar) — daí o sintoma relatado. Uma única retentativa,
+  // amarrada ao evento `canplay` do próprio elemento (não timer/polling),
+  // cobre esse caso. `NotAllowedError` é bloqueio real do navegador — nesse
+  // caso não insiste.
   useEffect(() => {
+    const cleanups: Array<() => void> = [];
+
     SLIDES.forEach((s, i) => {
       if (s.type !== "video") return;
       const el = videoRefs.current[i];
       if (!el) return;
-      if (i === slide && isMobile) el.play().catch(() => {});
-      else el.pause();
+
+      if (i !== slide || !isMobile) {
+        el.pause();
+        return;
+      }
+
+      if (!el.paused) return; // já tocando — evita play() redundante
+
+      el.play().catch((err: unknown) => {
+        if (err instanceof DOMException && err.name === "NotAllowedError") return;
+        const retry = () => {
+          el.play().catch(() => {});
+        };
+        el.addEventListener("canplay", retry, { once: true });
+        cleanups.push(() => el.removeEventListener("canplay", retry));
+      });
     });
+
+    return () => cleanups.forEach((fn) => fn());
   }, [slide, isMobile]);
 
   function next() {
