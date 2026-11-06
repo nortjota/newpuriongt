@@ -1,0 +1,99 @@
+"use client";
+
+import { useState } from "react";
+import { getImageProps } from "next/image";
+import Dialog from "@/components/ui/Dialog";
+import { supabase } from "@/lib/supabase/client";
+
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+// O container nunca passa de ~600px (largura do Dialog). `getImageProps` usa
+// o mesmo otimizador/URL que o componente <Image> geraria — em vez do PNG de
+// 1672px cru, o navegador baixa um WebP/AVIF já no tamanho certo — mas sem
+// depender de montar a URL do endpoint na mão. `.src` (o fallback sem
+// srcset, o que um background-image via CSS consegue usar) é sempre a
+// variante 2x — por isso o `width` passado é o tamanho real de exibição
+// (~600px), não o tamanho final do arquivo (que sai em ~1200px, pra retina).
+const {
+  props: { src: HERO_BANNER_BG },
+} = getImageProps({ src: "/hero-banner.png", alt: "", width: 600, height: 338, quality: 75 });
+
+export default function EmailCaptureModalContent({ open, onClose }: { open: boolean; onClose: () => void }) {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
+  const [done, setDone] = useState(false);
+
+  async function submit() {
+    if (!EMAIL_RE.test(email)) {
+      setError("Digite um e-mail válido.");
+      return;
+    }
+    setError("");
+    setDone(true);
+    if (supabase) {
+      await supabase.from("leads_site").insert({ email, pagina: "home" });
+    }
+  }
+
+  return (
+    <Dialog open={open} onClose={onClose} width={500}>
+      <div className="flex flex-col gap-4.5">
+        <div
+          className="-mx-6 -mt-6 mb-1 h-[180px] bg-cover sm:-mx-8 sm:-mt-8"
+          style={{ backgroundImage: `url(${HERO_BANNER_BG})`, backgroundPosition: "center 45%" }}
+        />
+        {!done ? (
+          <div className="flex flex-col gap-4">
+            <span className="text-[11px] uppercase text-[var(--text-muted)] tracking-[var(--ls-caps)]">
+              Lista Purion
+            </span>
+            <h3
+              className="m-0 font-display text-[40px] font-medium leading-[0.92] tracking-[-0.045em]"
+              style={{ fontVariationSettings: "'wdth' 88" }}
+            >
+              Chegue antes de todo mundo.
+            </h3>
+            <p className="m-0 text-[15px] leading-relaxed text-[var(--text-secondary)]">
+              Lançamentos, kits e condições exclusivas direto no seu e-mail.
+            </p>
+            <input
+              type="email"
+              placeholder="seu@email.com"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setError("");
+              }}
+              className="rounded-[var(--radius-md)] border border-[var(--border-strong)] px-4.5 py-4 text-[15px]"
+            />
+            {error && <span className="text-sm text-[var(--danger-500)]">{error}</span>}
+            <button
+              onClick={submit}
+              className="w-full rounded-[var(--radius-pill)] bg-signal-400 py-4 text-sm font-medium text-ink-950"
+            >
+              Quero receber
+            </button>
+            <span className="text-center text-xs text-[var(--text-muted)]">Sem spam. Saia quando quiser.</span>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-3.5">
+            <h3
+              className="m-0 font-display text-[40px] font-medium leading-[0.92] tracking-[-0.045em]"
+              style={{ fontVariationSettings: "'wdth' 88" }}
+            >
+              Pronto. Você está na lista.
+            </h3>
+            <p className="m-0 text-[15px] leading-relaxed text-[var(--text-secondary)]">
+              Fique de olho na caixa de entrada.
+            </p>
+            <button
+              onClick={() => onClose()}
+              className="w-fit rounded-[var(--radius-pill)] bg-ink-950 px-5.5 py-3 text-sm font-medium text-paper-0"
+            >
+              Continuar
+            </button>
+          </div>
+        )}
+      </div>
+    </Dialog>
+  );
+}
