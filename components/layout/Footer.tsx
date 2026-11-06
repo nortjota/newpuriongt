@@ -1,8 +1,5 @@
-"use client";
-
-import { useState } from "react";
 import Image from "next/image";
-import { ChevronDown, MessageCircle, ShieldCheck, Star, Truck, BadgeCheck } from "lucide-react";
+import { MessageCircle, ShieldCheck, Star, Truck, BadgeCheck } from "lucide-react";
 
 function InstagramIcon({ size = 16 }: { size?: number }) {
   return (
@@ -14,42 +11,12 @@ function InstagramIcon({ size = 16 }: { size?: number }) {
   );
 }
 import { WHATSAPP_URL } from "@/lib/content/whatsapp";
-import { useCheckoutUrl } from "@/lib/content/checkout";
 import { COMPANY } from "@/lib/config/company";
+import FooterCategories from "./FooterCategories";
 
 const PARTNER_URL = `${WHATSAPP_URL}?text=${encodeURIComponent(
   "Olá! Quero saber mais sobre me tornar parceiro/revendedor do Purion GT."
 )}`;
-
-function buildCategories(checkoutUrl: string) {
-  return [
-    {
-      title: "Comprar",
-      links: [
-        { href: "#comprar", label: "Produto e planos" },
-        { href: "#fragrancia", label: "Pirâmide olfativa" },
-        { href: checkoutUrl, label: "Comprar agora", external: true },
-      ],
-    },
-    {
-      title: "Ajuda e Suporte",
-      links: [
-        { href: WHATSAPP_URL, label: "Falar no WhatsApp", external: true },
-        { href: "#faq", label: "Perguntas frequentes" },
-        { href: "mailto:puriongt@gmail.com", label: "puriongt@gmail.com" },
-      ],
-    },
-    {
-      title: "Institucional",
-      links: [
-        { href: "#historia", label: "Nossa história" },
-        { href: "#avaliacoes", label: "Avaliações" },
-        { href: "/privacy", label: "Política de Privacidade" },
-        { href: "/terms", label: "Termos de Uso" },
-      ],
-    },
-  ];
-}
 
 const PAYMENTS = ["visa", "mastercard", "amex", "elo", "hipercard", "discover", "aura", "boleto", "pix"];
 
@@ -61,10 +28,6 @@ const BENEFITS = [
 ];
 
 export default function Footer() {
-  const [open, setOpen] = useState(-1);
-  const checkoutUrl = useCheckoutUrl();
-  const categories = buildCategories(checkoutUrl);
-
   return (
     <footer className="m-[10px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 px-6 pt-14 text-paper-0">
       <div className="mx-auto grid max-w-[var(--content-max)] gap-12 lg:grid-cols-[minmax(0,300px)_1fr]">
@@ -75,42 +38,7 @@ export default function Footer() {
           </span>
         </div>
 
-        <div className="flex flex-col divide-y divide-[var(--border-inverse)] border-t border-[var(--border-inverse)]">
-          {categories.map((cat, i) => {
-            const isOpen = open === i;
-            return (
-              <div key={cat.title}>
-                <button
-                  onClick={() => setOpen(isOpen ? -1 : i)}
-                  className="flex w-full items-center justify-between py-4 text-left text-sm font-medium"
-                >
-                  {cat.title}
-                  <ChevronDown size={16} className={`transition-transform duration-300 ${isOpen ? "rotate-180" : ""}`} />
-                </button>
-                <div
-                  className="grid transition-[grid-template-rows] duration-500"
-                  style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
-                >
-                  <div className="overflow-hidden">
-                    <div className="flex flex-col gap-3 pb-4">
-                      {cat.links.map((link) => (
-                        <a
-                          key={link.label}
-                          href={link.href}
-                          target={"external" in link && link.external ? "_blank" : undefined}
-                          rel={"external" in link && link.external ? "noreferrer" : undefined}
-                          className="text-sm text-paper-0/80 hover:text-paper-0"
-                        >
-                          {link.label}
-                        </a>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
+        <FooterCategories />
       </div>
 
       <div className="mx-auto mt-10 flex max-w-[var(--content-max)] justify-center">
