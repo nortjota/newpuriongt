@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type TouchEvent } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 
 const SLIDE_INTERVAL_MS = 6000;
@@ -89,17 +89,27 @@ export default function Hero() {
   // play() pode rejeitar por um motivo transitório (o elemento ainda não
   // tinha dados suficientes no instante exato da chamada) sem que seja
   // bloqueio real de política de autoplay — como é muted, a política em si
-  // não deveria barrar. `NotAllowedError` é bloqueio real do navegador —
-  // nesse caso não insiste. Qualquer outro erro dispara UMA retentativa
-  // amarrada ao evento `canplay` do próprio elemento (não timer/polling).
+  // não deveria barrar. Qualquer erro que não seja `NotAllowedError` dispara
+  // UMA retentativa amarrada ao evento `canplay` do próprio elemento (não
+  // timer/polling).
   //
-  // A Promise resolver não é garantia de reprodução de verdade: é possível
-  // o navegador aceitar o play() (`paused` vira false, sem rejeição) e o
-  // `currentTime` nunca avançar (travado no frame inicial) — reproduzido
-  // de forma controlada sob CPU lenta o bastante. Por isso, depois que o
-  // evento `playing` dispara, uma ÚNICA checagem (um `setTimeout`, não um
-  // intervalo) confirma que `currentTime` realmente avançou; se não, UMA
-  // retentativa de play() e para por aí — sem loop, sem polling contínuo.
+  // `NotAllowedError` é o caso documentado de alguns iPhones (ex: com Modo
+  // de Baixo Consumo ativo) bloquearem autoplay programático mesmo sendo
+  // mudo, até existir uma interação real do usuário na página — o que bate
+  // com o relato de "só funciona depois de trocar de slide e voltar" (trocar
+  // de slide é um toque real). Em vez de depender do usuário achar o botão
+  // certo, uma retentativa única escuta o PRIMEIRO toque/clique em qualquer
+  // lugar da página (não só no vídeo) e tenta de novo — ainda é 100%
+  // dependente de um gesto real do usuário, não é bypass de política.
+  //
+  // A Promise resolver também não é garantia de reprodução de verdade: é
+  // possível o navegador aceitar o play() (`paused` vira false, sem
+  // rejeição) e o `currentTime` nunca avançar (travado no frame inicial) —
+  // reproduzido de forma controlada sob CPU lenta o bastante. Por isso,
+  // depois que o evento `playing` dispara, uma ÚNICA checagem (um
+  // `setTimeout`, não um intervalo) confirma que `currentTime` realmente
+  // avançou; se não, UMA retentativa de play() e para por aí — sem loop,
+  // sem polling contínuo, sem retries infinitos.
   useEffect(() => {
     const cleanups: Array<() => void> = [];
 
@@ -115,6 +125,31 @@ export default function Hero() {
       };
       el.addEventListener("playing", onPlaying, { once: true });
       cleanups.push(() => el.removeEventListener("playing", onPlaying));
+
+      // 'playing' pode nunca disparar (bloqueio real, não só travado) —
+      // se não disparar em ~2s, tenta mais uma vez.
+      let fired = false;
+      const onPlayingFlag = () => {
+        fired = true;
+      };
+      el.addEventListener("playing", onPlayingFlag, { once: true });
+      cleanups.push(() => el.removeEventListener("playing", onPlayingFlag));
+      const noPlayingTimer = setTimeout(() => {
+        if (!fired) el.play().catch(() => {});
+      }, 2000);
+      cleanups.push(() => clearTimeout(noPlayingTimer));
+    }
+
+    function waitForUserGestureThenPlay(el: HTMLVideoElement) {
+      const retry = () => {
+        if (el.paused) el.play().catch(() => {});
+      };
+      // qualquer gesto real do usuário em qualquer lugar da página — não é
+      // específico do vídeo/slide, só precisa ser uma interação de verdade.
+      document.addEventListener("pointerdown", retry, { once: true, passive: true });
+      document.addEventListener("keydown", retry, { once: true });
+      cleanups.push(() => document.removeEventListener("pointerdown", retry));
+      cleanups.push(() => document.removeEventListener("keydown", retry));
     }
 
     SLIDES.forEach((s, i) => {
@@ -129,9 +164,17 @@ export default function Hero() {
 
       if (!el.paused) return; // já tocando — evita play() redundante
 
+      // Gotcha documentado do Safari/iOS: garantir `muted` como propriedade
+      // (não só atributo) antes de chamar play() — às vezes diverge.
+      el.muted = true;
+      el.defaultMuted = true;
+
       verifyRealPlayback(el);
       el.play().catch((err: unknown) => {
-        if (err instanceof DOMException && err.name === "NotAllowedError") return;
+        if (err instanceof DOMException && err.name === "NotAllowedError") {
+          waitForUserGestureThenPlay(el);
+          return;
+        }
         const retry = () => {
           el.play().catch(() => {});
         };
@@ -174,9 +217,30 @@ export default function Hero() {
     setSlide(i);
   }
 
+  // Arrastar o dedo pro lado também troca de slide, igual à galeria de
+  // produto (ProductGallery) — só decide no touchend (não intercepta
+  // touchmove), então a rolagem vertical normal da página continua
+  // funcionando sem interferência. Só vira troca de slide se o gesto for
+  // claramente mais horizontal que vertical, pra não confundir com scroll.
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  function onTouchStart(e: TouchEvent) {
+    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }
+  function onTouchEnd(e: TouchEvent) {
+    if (!touchStart.current) return;
+    const dx = e.changedTouches[0].clientX - touchStart.current.x;
+    const dy = e.changedTouches[0].clientY - touchStart.current.y;
+    touchStart.current = null;
+    if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy) * 1.5) return;
+    const dir = dx < 0 ? 1 : -1;
+    setSlide((s) => (s + dir + SLIDES.length) % SLIDES.length);
+  }
+
   return (
     <section
       ref={ref}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
       className="relative w-full overflow-hidden bg-ink-900 aspect-square md:aspect-auto md:min-h-[90svh]"
     >
       <motion.div style={{ y }} className="absolute inset-0 will-change-transform">
