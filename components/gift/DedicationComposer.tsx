@@ -33,12 +33,12 @@ export default function DedicationComposer() {
 
   const whatsappHref = `https://wa.me/?text=${encodeURIComponent(fullText)}`;
   const fieldClass =
-    "w-full rounded-[var(--radius-sm)] border border-white/12 bg-white/[0.04] px-4 py-3 text-[15px] text-paper-0 placeholder:text-paper-0/35 transition-colors focus:border-signal-400/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-signal-400/40";
+    "w-full rounded-[var(--radius-sm)] border border-white/12 bg-white/[0.04] px-4 py-3 text-[15px] text-paper-0 placeholder:text-paper-0/35 transition-colors focus:border-[var(--gift-accent)]/70 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gift-accent)]/40";
 
   return (
     <div className="flex flex-col gap-5 rounded-[var(--radius-lg)] border border-white/10 bg-ink-900 p-6 sm:p-8">
       <div className="flex flex-col gap-1.5">
-        <h3 className="m-0 font-display text-[22px] font-medium tracking-[-0.02em] text-paper-0">Escreva sua dedicatória</h3>
+        <h3 className="m-0 font-display text-[22px] font-medium tracking-[-0.02em] text-paper-0">Dedicatória <span className="font-sans text-[13px] font-normal text-paper-0/45">(opcional)</span></h3>
         <p className="m-0 text-[13px] leading-relaxed text-paper-0/55">
           {GIFT_FEATURES.printedDedication
             ? "Sua mensagem segue impressa junto com o pedido."
@@ -108,14 +108,14 @@ export default function DedicationComposer() {
             href={whatsappHref}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-pill)] border border-white/25 bg-white/[0.06] px-7 py-3.5 text-sm font-medium text-paper-0 transition-colors hover:border-white/50 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-signal-400 sm:flex-1"
+            className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[var(--radius-pill)] border border-white/25 bg-white/[0.06] px-7 py-3.5 text-sm font-medium text-paper-0 transition-colors hover:border-white/50 focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-[var(--gift-accent)] sm:flex-1"
           >
             <Send size={15} aria-hidden />
             Enviar por WhatsApp
           </a>
         )}
       </div>
-      <p role="status" aria-live="polite" className="m-0 min-h-[1.25em] text-[13px] text-signal-400">
+      <p role="status" aria-live="polite" className="m-0 min-h-[1.25em] text-[13px] text-[var(--gift-accent)]">
         {status}
       </p>
     </div>

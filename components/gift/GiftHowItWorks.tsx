@@ -11,13 +11,13 @@ export default function GiftHowItWorks() {
       className="mx-auto max-w-[var(--content-max)] scroll-mt-20 px-6 py-[var(--section-y)] sm:px-10"
     >
       <Reveal>
-        <SectionHeading id="gift-how-title" eyebrow="Como funciona" title="Presentear em três passos." />
+        <SectionHeading id="gift-how-title" eyebrow="Como funciona" title="Como funciona." />
       </Reveal>
-      <ol className="m-0 mt-12 grid list-none gap-3 p-0 md:grid-cols-3">
+      <ol className="m-0 mt-12 grid list-none gap-3 p-0 sm:grid-cols-2 lg:grid-cols-4">
         {GIFT_STEPS.map((step, i) => (
           <li key={step.title}>
             <Reveal delay={i * 80} className="flex h-full flex-col gap-10 rounded-[var(--radius-md)] border border-white/10 p-7">
-              <span className="font-mono text-[13px] text-signal-400" aria-hidden>
+              <span className="font-mono text-[13px] text-[var(--gift-accent)]" aria-hidden>
                 {String(i + 1).padStart(2, "0")}
               </span>
               <span className="flex flex-col gap-2.5">

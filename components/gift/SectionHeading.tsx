@@ -19,7 +19,7 @@ export default function SectionHeading({
   return (
     <div className={`flex flex-col gap-5 ${centered ? "items-center text-center" : ""}`}>
       <span className="flex items-center gap-2.5 text-[11px] uppercase tracking-[var(--ls-caps)] text-[var(--text-inverse-muted)]">
-        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-signal-400" />
+        <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--gift-accent)]" />
         {eyebrow}
       </span>
       <h2

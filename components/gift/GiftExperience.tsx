@@ -1,36 +1,37 @@
 import Image from "next/image";
-import { Package, ShieldCheck, Truck } from "lucide-react";
+import { Layers, Package, ShieldCheck, Truck } from "lucide-react";
 import { GIFT_FEATURES } from "@/lib/content/gifts";
 import Reveal from "@/components/ui/Reveal";
 import SectionHeading from "./SectionHeading";
 import DedicationComposer from "./DedicationComposer";
+import { EXPERIENCE_ID } from "./ids";
 
 const POINTS = [
   {
     icon: Package,
-    title: "Caixa original PURION GT",
+    title: "Apresentação",
     text: GIFT_FEATURES.giftWrap
       ? "Frasco de vidro 60 ml na caixa original, com embalagem de presente."
-      : "Frasco de vidro premium de 60 ml, protegido na caixa preta original da marca.",
+      : "Frasco de vidro de 60 ml, protegido na caixa preta original da marca — a mesma de todo pedido.",
   },
-  { icon: Truck, title: "Envio no mesmo dia", text: "Rastreio liberado na hora, para todo o Brasil." },
-  { icon: ShieldCheck, title: "Troca sem complicação", text: "Até 7 dias após o recebimento para devolver." },
+  { icon: Truck, title: "Entrega", text: "Envio no mesmo dia da aprovação, com rastreio, para todo o Brasil. Prazo e frete no checkout pelo CEP." },
+  { icon: Layers, title: "Facilidade de escolha", text: "Três opções com o mesmo perfume. Você só decide quantos frascos." },
+  { icon: ShieldCheck, title: "Troca sem complicação", text: "Até 7 dias após o recebimento para solicitar a devolução." },
 ];
 
 // 5. Experiência de presentear — o produto real como ele chega + dedicatória.
 export default function GiftExperience() {
   return (
     <section
-      id="presentear"
+      id={EXPERIENCE_ID}
       aria-labelledby="gift-experience-title"
       className="scroll-mt-20 bg-ink-900/60 py-[var(--section-y)]"
     >
       <div className="mx-auto max-w-[var(--content-max)] px-6 sm:px-10">
         <Reveal>
-          <SectionHeading id="gift-experience-title" eyebrow="A experiência de presentear" title="Do pedido às mãos dele.">
+          <SectionHeading id="gift-experience-title" eyebrow="A experiência de presentear" title="A experiência de presentear.">
             <p className="m-0">
-              Um presente que chega bem embalado, sem complicação para você — e com espaço para dizer o que ele
-              significa.
+              Fácil de escolher, chega bem protegido e, se você quiser, acompanha uma dedicatória escrita por você.
             </p>
           </SectionHeading>
         </Reveal>
@@ -39,7 +40,7 @@ export default function GiftExperience() {
           <Reveal className="relative aspect-[4/3] overflow-hidden rounded-[var(--radius-lg)] bg-ink-800 md:aspect-auto md:min-h-[460px]">
             <Image
               src="/images/cenas/cena-mesa-expedicao.webp"
-              alt="Mãos abrindo a caixa de envio com o frasco PURION GT e sua caixa preta original"
+              alt="Mãos abrindo a caixa de envio com o frasco PURION GT 60 ml ao lado da caixa preta original da marca"
               fill
               loading="lazy"
               sizes="(min-width: 768px) 55vw, 100vw"

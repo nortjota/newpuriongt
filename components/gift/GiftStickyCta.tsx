@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { CHOOSER_ID } from "./GiftContext";
+import { CHOOSER_ID } from "./ids";
 import { giftButtonClass } from "./GiftButton";
 
 // CTA fixo no mobile: aparece depois do hero e some enquanto a seção de
@@ -45,7 +45,7 @@ export default function GiftStickyCta() {
         tabIndex={visible ? 0 : -1}
         className={giftButtonClass("accent", "w-full shadow-[0_20px_40px_-12px_rgba(0,0,0,.6)]")}
       >
-        Escolher presente
+        Escolher meu presente
       </a>
     </div>
   );

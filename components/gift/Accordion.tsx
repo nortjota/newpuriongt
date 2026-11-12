@@ -33,7 +33,7 @@ export default function Accordion({ items }: { items: { q: string; a: string }[]
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => toggle(i)}
-                className="flex w-full items-center gap-5 py-6 text-left text-paper-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-signal-400"
+                className="flex w-full items-center gap-5 py-6 text-left text-paper-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--gift-accent)]"
               >
                 <span className="flex-1 font-display text-[clamp(17px,1.6vw,21px)] font-medium leading-snug tracking-[-0.015em]">
                   {item.q}
@@ -41,7 +41,7 @@ export default function Accordion({ items }: { items: { q: string; a: string }[]
                 <span
                   aria-hidden
                   className={`flex h-9 w-9 flex-none items-center justify-center rounded-full border transition-[transform,background-color,border-color] duration-500 ease-[var(--ease-out)] ${
-                    isOpen ? "rotate-45 border-transparent bg-signal-400 text-ink-950" : "border-white/20 text-paper-0"
+                    isOpen ? "rotate-45 border-transparent bg-[var(--gift-accent)] text-ink-950" : "border-white/20 text-paper-0"
                   }`}
                 >
                   <Plus size={16} />

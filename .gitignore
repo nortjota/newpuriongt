@@ -46,3 +46,7 @@ next-env.d.ts
 
 # originais em alta resolução (não versionados — ver assets-originais/)
 /assets-originais
+
+# testes
+/test-results/
+/playwright-report/

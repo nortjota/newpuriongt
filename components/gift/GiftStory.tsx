@@ -6,7 +6,7 @@ import SectionHeading from "./SectionHeading";
 export default function GiftStory() {
   return (
     <section
-      id="experiencia"
+      id="motivacao"
       aria-labelledby="gift-story-title"
       className="mx-auto grid max-w-[var(--content-max)] scroll-mt-20 items-center gap-12 px-6 py-[var(--section-y)] sm:px-10 lg:grid-cols-[1.05fr_1fr] lg:gap-20"
     >
@@ -25,10 +25,10 @@ export default function GiftStory() {
       </Reveal>
 
       <Reveal className="order-1 flex flex-col gap-10 lg:order-2">
-        <SectionHeading id="gift-story-title" eyebrow="O significado" title="Não é só um carro. É uma conquista.">
+        <SectionHeading id="gift-story-title" eyebrow="Por que presentear" title="Tem gente que não vê apenas um carro. Vê uma conquista.">
           <p className="m-0">
-            Para quem ama carros, o carro guarda histórias: a primeira parcela paga, a viagem de férias, o domingo
-            dedicado a deixar tudo impecável. É extensão de quem ele é.
+            O carro guarda histórias: a primeira parcela paga, a viagem de férias, o domingo dedicado a deixar tudo
+            impecável. Para quem ama carros, ele é extensão de quem a pessoa é.
           </p>
         </SectionHeading>
         <div className="grid gap-6 border-t border-white/10 pt-8 sm:grid-cols-2">

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { GiftLink } from "./GiftButton";
-import { CHOOSER_ID } from "./GiftContext";
+import { CHOOSER_ID } from "./ids";
 
 // 9. CTA final.
 export default function GiftFinalCta() {
@@ -21,7 +21,7 @@ export default function GiftFinalCta() {
       />
       <div className="mx-auto flex max-w-[860px] flex-col items-center gap-8">
         <span className="flex items-center gap-2.5 text-[11px] uppercase tracking-[var(--ls-caps)] text-paper-0/60">
-          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-signal-400" />
+          <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-[var(--gift-accent)]" />
           PURION GIFT
         </span>
         <h2
@@ -29,10 +29,10 @@ export default function GiftFinalCta() {
           className="m-0 text-balance font-display text-[clamp(40px,7vw,96px)] font-medium leading-[0.95] tracking-[-0.04em] text-paper-0"
           style={{ fontVariationSettings: "'wdth' 86" }}
         >
-          Surpreenda quem é apaixonado por carros.
+          O próximo presente inesquecível pode estar aqui.
         </h2>
         <GiftLink href={`#${CHOOSER_ID}`} variant="accent">
-          Escolher presente
+          Escolher meu presente
         </GiftLink>
       </div>
     </section>
