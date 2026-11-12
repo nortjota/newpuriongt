@@ -19,3 +19,10 @@ describe("checkout links", () => {
     expect(u.searchParams.get("fbclid")).toBe("abc");
   });
 });
+
+describe("gift_ref", () => {
+  it("anexa a referência da personalização só quando existe", () => {
+    expect(new URL(buildCheckoutUrl("k2", { giftRef: "PG-ABCDEFGH" })).searchParams.get("gift_ref")).toBe("PG-ABCDEFGH");
+    expect(buildCheckoutUrl("k2", { giftRef: null })).not.toContain("gift_ref");
+  });
+});

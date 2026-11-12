@@ -13,24 +13,27 @@ type State = {
   // do Quiz precisa "empurrar" esse valor para a Pirâmide, que fica muito
   // distante no DOM — ver nota no plano sobre essa única ligação cruzada.
   pyramidLevel: 0 | 1 | 2 | 3;
+  // Referência da personalização de presente (/presentes/kits) — vai para o
+  // link de checkout. Some se o plano do carrinho mudar.
+  giftRef: string | null;
 };
 
 type Action =
   | { type: "SET_PLAN"; id: Plan["id"] }
   | { type: "SET_QTY"; qty: number }
   | { type: "ADD_TO_CART" }
-  | { type: "REPLACE_CART"; id: Plan["id"] }
+  | { type: "REPLACE_CART"; id: Plan["id"]; giftRef?: string | null }
   | { type: "TOGGLE_CART" }
   | { type: "CLOSE_CART" }
   | { type: "CLEAR_TOAST" }
   | { type: "SET_PYRAMID_LEVEL"; level: 0 | 1 | 2 | 3 };
 
-const initialState: State = { planId: "un", qty: 1, cart: 0, cartOpen: false, toast: "", pyramidLevel: 0 };
+const initialState: State = { planId: "un", qty: 1, cart: 0, cartOpen: false, toast: "", pyramidLevel: 0, giftRef: null };
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "SET_PLAN":
-      return { ...state, planId: action.id };
+      return { ...state, planId: action.id, giftRef: action.id === state.planId ? state.giftRef : null };
     case "SET_QTY":
       return { ...state, qty: Math.min(10, Math.max(1, action.qty)) };
     case "ADD_TO_CART": {
@@ -38,6 +41,7 @@ function reducer(state: State, action: Action): State {
       const units = plan.isSubscription || plan.id === "un" ? state.qty : unitsForPlan(plan.id);
       return {
         ...state,
+        giftRef: null,
         cart: state.cart + units,
         toast: plan.isSubscription ? "Assinatura adicionada à sacola" : "Purion GT adicionado à sacola",
       };
@@ -53,6 +57,7 @@ function reducer(state: State, action: Action): State {
         qty: 1,
         cart: unitsForPlan(plan.id),
         cartOpen: true,
+        giftRef: action.giftRef ?? null,
         toast: "Presente adicionado à sacola",
       };
     }
@@ -90,7 +95,7 @@ type Ctx = {
   setPlan: (id: Plan["id"]) => void;
   setQty: (qty: number) => void;
   addToCart: () => void;
-  replaceCart: (id: Plan["id"]) => void;
+  replaceCart: (id: Plan["id"], opts?: { giftRef?: string | null }) => void;
   toggleCart: () => void;
   closeCart: () => void;
   clearToast: () => void;
@@ -119,7 +124,7 @@ export function PurionProvider({ children }: { children: ReactNode }) {
       setPlan: (id) => dispatch({ type: "SET_PLAN", id }),
       setQty: (qty) => dispatch({ type: "SET_QTY", qty }),
       addToCart: () => dispatch({ type: "ADD_TO_CART" }),
-      replaceCart: (id) => dispatch({ type: "REPLACE_CART", id }),
+      replaceCart: (id, opts) => dispatch({ type: "REPLACE_CART", id, giftRef: opts?.giftRef ?? null }),
       toggleCart: () => dispatch({ type: "TOGGLE_CART" }),
       closeCart: () => dispatch({ type: "CLOSE_CART" }),
       clearToast: () => dispatch({ type: "CLEAR_TOAST" }),

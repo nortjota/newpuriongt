@@ -27,6 +27,16 @@ export function hasConfirmedCheckout(planId: Plan["id"]): boolean {
   return CONFIRMED_CHECKOUT_PLANS.has(planId) || Boolean(CHECKOUT_URL_BY_PLAN[planId]);
 }
 
+// O link de checkout do Appmax aponta para UM produto e não recebe
+// quantidade — por isso cada pedido leva 1 unidade do plano escolhido.
+// Só aumentar depois de confirmar um parâmetro de quantidade no Appmax.
+export const CHECKOUT_MAX_QUANTITY = 1;
+
+// Parâmetro com a referência da personalização de presente (PG-XXXXXXXX).
+// PENDENTE: confirmar se o Appmax repassa parâmetros extras no webhook; sem
+// isso, o vínculo com o pedido é feito manualmente no Despacho do CRM.
+export const GIFT_REF_PARAM = "gift_ref";
+
 export function baseCheckoutUrl(planId: Plan["id"]): string {
   return CHECKOUT_URL_BY_PLAN[planId] ?? CHECKOUT_URL;
 }
@@ -36,8 +46,12 @@ export function baseCheckoutUrl(planId: Plan["id"]): string {
 // presentes no link.
 export function buildCheckoutUrl(
   planId: Plan["id"],
-  { referralSlug, tracking }: { referralSlug?: string | null; tracking?: TrackingParams } = {}
+  { referralSlug, tracking, giftRef }: { referralSlug?: string | null; tracking?: TrackingParams; giftRef?: string | null } = {}
 ): string {
-  return appendTracking(baseCheckoutUrl(planId), { ref: referralSlug ?? undefined, ...tracking });
+  return appendTracking(baseCheckoutUrl(planId), {
+    ref: referralSlug ?? undefined,
+    ...tracking,
+    [GIFT_REF_PARAM]: giftRef ?? undefined,
+  });
 }
 

@@ -27,5 +27,8 @@ export default defineConfig({
     url: `http://localhost:${PORT}/presentes`,
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,
+    // Personalização em memória e estoque fixo só para os testes (os dois
+    // overrides são ignorados na Vercel — ver lib/gift/*).
+    env: { GIFT_PERSONALIZATION_STORE: "memory", GIFT_STOCK_BOTTLES: "10" },
   },
 });

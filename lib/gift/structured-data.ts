@@ -5,8 +5,11 @@ export const SITE_URL = "https://www.puriongt.com.br";
 
 // JSON-LD coerente com as ofertas reais: só entram no ItemList as ofertas
 // DISPONÍVEIS, com o preço do plano real. Ofertas inativas não são anunciadas.
-export function buildGiftJsonLd(offers: GiftOffer[], { title, description }: { title: string; description: string }) {
-  const url = `${SITE_URL}/presentes`;
+export function buildGiftJsonLd(
+  offers: GiftOffer[],
+  { title, description, path = "/presentes", faq = GIFT_FAQ }: { title: string; description: string; path?: string; faq?: { q: string; a: string }[] }
+) {
+  const url = `${SITE_URL}${path}`;
   const available = offers.filter(isAvailable);
   return {
     "@context": "https://schema.org",
@@ -36,7 +39,7 @@ export function buildGiftJsonLd(offers: GiftOffer[], { title, description }: { t
       },
       {
         "@type": "FAQPage",
-        mainEntity: GIFT_FAQ.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+        mainEntity: faq.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
       },
     ],
   };

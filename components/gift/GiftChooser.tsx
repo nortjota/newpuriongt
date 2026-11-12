@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Link from "next/link";
 import { MessageCircle, X } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/content/whatsapp";
 import { isAvailable, toAnalyticsItem } from "@/lib/gift/catalog";
@@ -109,6 +110,11 @@ export default function GiftChooser() {
 
       <p className="m-0 mt-6 text-center text-[13px] text-paper-0/45">
         Envio no mesmo dia · Rastreio liberado na hora · Garantia de 7 dias
+      </p>
+      <p className="m-0 mt-3 text-center text-[14px]">
+        <Link href="/presentes/kits" className="text-paper-0/80 underline decoration-white/30 underline-offset-4 hover:text-paper-0">
+          Comparar kits e personalizar com dedicatória
+        </Link>
       </p>
     </section>
   );

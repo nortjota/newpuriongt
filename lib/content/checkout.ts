@@ -21,10 +21,16 @@ export function useCheckoutUrl(): string {
   useEffect(() => {
     // Leitura de localStorage só existe no cliente — por isso o efeito.
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setUrl(buildCheckoutUrl(plan.id, { referralSlug: getStoredReferral()?.slug, tracking: readStoredTracking() }));
+    setUrl(
+      buildCheckoutUrl(plan.id, {
+        referralSlug: getStoredReferral()?.slug,
+        tracking: readStoredTracking(),
+        giftRef: state.giftRef,
+      })
+    );
     // Recalcula também ao abrir o carrinho: a origem de campanha pode ter
     // sido capturada depois da montagem deste hook.
-  }, [base, plan.id, state.cartOpen]);
+  }, [base, plan.id, state.cartOpen, state.giftRef]);
 
   return url;
 }
