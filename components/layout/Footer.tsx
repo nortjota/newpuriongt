@@ -21,8 +21,8 @@ const PARTNER_URL = `${WHATSAPP_URL}?text=${encodeURIComponent(
   "Olá! Quero saber mais sobre me tornar parceiro/revendedor do Purion GT."
 )}`;
 
-function buildCategories(checkoutUrl: string) {
-  return [
+function buildCategories(checkoutUrl: string, hashBase: string) {
+  const categories = [
     {
       title: "Comprar",
       links: [
@@ -49,6 +49,13 @@ function buildCategories(checkoutUrl: string) {
       ],
     },
   ];
+  // Em páginas fora da home (ex: /presentes), âncoras como "#fragrancia"
+  // precisam apontar para a home ("/#fragrancia").
+  if (!hashBase) return categories;
+  return categories.map((cat) => ({
+    ...cat,
+    links: cat.links.map((l) => (l.href.startsWith("#") ? { ...l, href: `${hashBase}${l.href}` } : l)),
+  }));
 }
 
 const PAYMENTS = ["visa", "mastercard", "amex", "elo", "hipercard", "discover", "aura", "boleto", "pix"];
@@ -60,10 +67,10 @@ const BENEFITS = [
   { icon: Star, title: "+450 motoristas", desc: "4.9 de nota em avaliações reais." },
 ];
 
-export default function Footer() {
+export default function Footer({ hashBase = "" }: { hashBase?: string } = {}) {
   const [open, setOpen] = useState(-1);
   const checkoutUrl = useCheckoutUrl();
-  const categories = buildCategories(checkoutUrl);
+  const categories = buildCategories(checkoutUrl, hashBase);
 
   return (
     <footer className="m-[10px] overflow-hidden rounded-[var(--radius-lg)] bg-ink-950 px-6 pt-14 text-paper-0">

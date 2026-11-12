@@ -52,6 +52,15 @@ export const PLANS: Plan[] = [
   },
 ];
 
+// Valor numérico de cada plano (preço do kit inteiro; na assinatura, por
+// entrega). Fonte única usada pelo PurionProvider (totais do carrinho) e pela
+// página /presentes — os textos de preço em PLANS são derivados dos mesmos
+// números confirmados em PLACEHOLDERS.md.
+export const PLAN_AMOUNT: Record<Plan["id"], number> = { un: 97.9, k2: 176.22, k3: 249.65, sub: 83.22 };
+
+// Quantos frascos cada plano entrega por pedido.
+export const PLAN_UNITS: Record<Plan["id"], number> = { un: 1, k2: 2, k3: 3, sub: 1 };
+
 // Estado inicial do protótipo: plano "Unidade", quantidade 1.
 export const DEFAULT_TOTAL = fmt(97.9);
 export const DEFAULT_INSTALLMENT = fmt(97.9 / 3);

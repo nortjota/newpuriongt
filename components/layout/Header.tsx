@@ -7,20 +7,36 @@ import { WHATSAPP_URL } from "@/lib/content/whatsapp";
 import { usePurion } from "@/lib/store/PurionProvider";
 import CarIcon from "@/components/icons/CarIcon";
 
-const NAV_LINKS = [
+export type NavLink = { href: string; label: string; primary?: boolean };
+
+const NAV_LINKS: NavLink[] = [
   { href: "#fragrancia", label: "Fragrância" },
   { href: "#comparativo", label: "Comparativo" },
   { href: "#quiz", label: "Quiz" },
   { href: "#videos", label: "Vídeos" },
   { href: "#avaliacoes", label: "Avaliações" },
   { href: "#faq", label: "FAQ" },
-  { href: "#comprar", label: "Comprar" },
+  { href: "#comprar", label: "Comprar", primary: true },
 ];
 
-export default function Header() {
+// Props opcionais usadas por landings secundárias (ex: /presentes). Sem props,
+// o comportamento é exatamente o da homepage.
+//  - navLinks: troca os links (o item `primary` vira o destaque do menu mobile
+//    e some da nav desktop, como o "Comprar" da home).
+//  - tone="dark": ao rolar, mantém o vidro escuro e o logo branco em vez de
+//    virar claro (para páginas de fundo preto).
+export default function Header({
+  navLinks = NAV_LINKS,
+  tone = "light",
+}: {
+  navLinks?: NavLink[];
+  tone?: "light" | "dark";
+} = {}) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { state, toggleCart } = usePurion();
+  const dark = tone === "dark";
+  const lightSurface = scrolled && !dark;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -39,14 +55,16 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 grid grid-cols-[1fr_auto_1fr] items-center gap-4 px-6 py-3 transition-colors duration-500 ${
-        scrolled
+        lightSurface
           ? "bg-paper-0/35 text-ink-950 border-b border-white/25 backdrop-blur-2xl backdrop-saturate-150"
-          : "bg-transparent text-paper-0 border-b border-transparent"
+          : scrolled
+            ? "bg-ink-950/70 text-paper-0 border-b border-white/10 backdrop-blur-2xl backdrop-saturate-150"
+            : "bg-transparent text-paper-0 border-b border-transparent"
       }`}
     >
       <div className="flex items-center">
         <nav className="hidden [@media(min-width:1140px)]:flex gap-6 text-[13px] font-medium">
-          {NAV_LINKS.filter((l) => l.href !== "#comprar").map((link) => (
+          {navLinks.filter((l) => !l.primary).map((link) => (
             <a key={link.href} href={link.href} className="opacity-90 hover:opacity-100">
               {link.label}
             </a>
@@ -63,7 +81,7 @@ export default function Header() {
 
       <a href="#topo" className="flex items-center gap-2 justify-self-center">
         <Image
-          src={scrolled ? "/logo-black.png" : "/logo-white.png"}
+          src={lightSurface ? "/logo-black.png" : "/logo-white.png"}
           alt="PURION GT"
           width={160}
           height={37}
@@ -88,7 +106,7 @@ export default function Header() {
           className={`relative flex h-11 w-11 items-center justify-center rounded-full border backdrop-blur-md transition-colors ${
             state.cartOpen
               ? "border-transparent bg-signal-400 text-ink-950"
-              : scrolled
+              : lightSurface
                 ? "border-ink-950/15 bg-ink-950/8 text-ink-950"
                 : "border-white/28 bg-white/14 text-paper-0"
           }`}
@@ -111,13 +129,13 @@ export default function Header() {
           nenhuma seção a partir do cabeçalho em telas menores. */}
       {menuOpen && (
         <div className="absolute inset-x-0 top-full z-50 grid grid-cols-2 gap-2 border-t border-[var(--border-subtle)] bg-paper-0 p-4 text-ink-950 shadow-[var(--shadow-lg)] [@media(min-width:1140px)]:hidden">
-          {NAV_LINKS.map((link) => (
+          {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
               className={`rounded-[var(--radius-md)] px-4 py-3 text-sm font-medium ${
-                link.href === "#comprar" ? "bg-signal-400 text-ink-950" : "bg-paper-50"
+                link.primary ? "bg-signal-400 text-ink-950" : "bg-paper-50"
               }`}
             >
               {link.label}

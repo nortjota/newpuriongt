@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useMemo, useReducer, type ReactNode } from "react";
-import { PLANS, type Plan } from "@/lib/content/plans";
+import { PLANS, PLAN_AMOUNT, PLAN_UNITS, type Plan } from "@/lib/content/plans";
 
 type State = {
   planId: Plan["id"];
@@ -19,6 +19,7 @@ type Action =
   | { type: "SET_PLAN"; id: Plan["id"] }
   | { type: "SET_QTY"; qty: number }
   | { type: "ADD_TO_CART" }
+  | { type: "REPLACE_CART"; id: Plan["id"] }
   | { type: "TOGGLE_CART" }
   | { type: "CLOSE_CART" }
   | { type: "CLEAR_TOAST" }
@@ -41,6 +42,20 @@ function reducer(state: State, action: Action): State {
         toast: plan.isSubscription ? "Assinatura adicionada à sacola" : "Purion GT adicionado à sacola",
       };
     }
+    // O carrinho só representa um plano por vez (um único link de checkout).
+    // Usado pela /presentes: escolher outro presente substitui o anterior em
+    // vez de somar unidades que não iriam para o checkout.
+    case "REPLACE_CART": {
+      const plan = PLANS.find((p) => p.id === action.id)!;
+      return {
+        ...state,
+        planId: plan.id,
+        qty: 1,
+        cart: unitsForPlan(plan.id),
+        cartOpen: true,
+        toast: "Presente adicionado à sacola",
+      };
+    }
     case "TOGGLE_CART":
       return { ...state, cartOpen: !state.cartOpen };
     case "CLOSE_CART":
@@ -55,16 +70,14 @@ function reducer(state: State, action: Action): State {
 }
 
 function unitsForPlan(id: Plan["id"]) {
-  if (id === "k2") return 2;
-  if (id === "k3") return 3;
-  return 1;
+  return PLAN_UNITS[id];
 }
 
 function fmt(v: number) {
   return "R$ " + v.toFixed(2).replace(".", ",");
 }
 
-const UNIT_PRICE: Record<Plan["id"], number> = { un: 97.9, k2: 176.22, k3: 249.65, sub: 83.22 };
+const UNIT_PRICE = PLAN_AMOUNT;
 
 type Ctx = {
   state: State;
@@ -77,6 +90,7 @@ type Ctx = {
   setPlan: (id: Plan["id"]) => void;
   setQty: (qty: number) => void;
   addToCart: () => void;
+  replaceCart: (id: Plan["id"]) => void;
   toggleCart: () => void;
   closeCart: () => void;
   clearToast: () => void;
@@ -105,6 +119,7 @@ export function PurionProvider({ children }: { children: ReactNode }) {
       setPlan: (id) => dispatch({ type: "SET_PLAN", id }),
       setQty: (qty) => dispatch({ type: "SET_QTY", qty }),
       addToCart: () => dispatch({ type: "ADD_TO_CART" }),
+      replaceCart: (id) => dispatch({ type: "REPLACE_CART", id }),
       toggleCart: () => dispatch({ type: "TOGGLE_CART" }),
       closeCart: () => dispatch({ type: "CLOSE_CART" }),
       clearToast: () => dispatch({ type: "CLEAR_TOAST" }),
