@@ -6,6 +6,7 @@ import Dialog from "@/components/ui/Dialog";
 import { useExitIntent } from "@/lib/hooks/useExitIntent";
 import { readFlag, setFlag } from "@/lib/hooks/useLocalStorageFlag";
 import { supabase } from "@/lib/supabase/client";
+import { enviarLead } from "@/lib/crm";
 
 const SEEN_KEY = "purion_email_v1";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -49,7 +50,10 @@ export default function EmailCaptureModal() {
     }
     setError("");
     setDone(true);
-    if (supabase) {
+    // Vai para o CRM (Leads do Site) com a origem da visita; se o CRM não responder,
+    // grava direto como antes para não perder o contato.
+    const ok = await enviarLead(email, "home");
+    if (!ok && supabase) {
       await supabase.from("leads_site").insert({ email, pagina: "home" });
     }
   }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getStoredReferral } from "@/lib/referral";
+import { getTracking } from "@/lib/tracking";
 import { usePurion } from "@/lib/store/PurionProvider";
 import type { Plan } from "./plans";
 
@@ -33,13 +33,15 @@ export function useCheckoutUrl(): string {
   const [url, setUrl] = useState(base);
 
   useEffect(() => {
-    const referral = getStoredReferral();
-    if (!referral) {
-      setUrl(base);
-      return;
-    }
-    const separator = base.includes("?") ? "&" : "?";
-    setUrl(`${base}${separator}ref=${encodeURIComponent(referral.slug)}`);
+    // Leva a origem até o checkout: ref = afiliado; utm_* = campanha.
+    // utm_content recebe o afiliado quando não há outro valor — é o campo que o
+    // webhook do CRM usa para atribuir a venda ao parceiro.
+    const { utm, ref } = getTracking();
+    const u = new URL(base);
+    if (ref) u.searchParams.set("ref", ref);
+    for (const [k, v] of Object.entries(utm)) if (v) u.searchParams.set(`utm_${k}`, v);
+    if (ref && !utm.content) u.searchParams.set("utm_content", ref);
+    setUrl(u.toString());
   }, [base]);
 
   return url;
