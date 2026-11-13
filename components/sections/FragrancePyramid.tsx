@@ -5,7 +5,7 @@ import { Briefcase, Calendar, Clock, Cloud, Gauge, Heart, Layers, MapPin, SunMed
 import { ACCORDS, FRAGRANCE_FAMILY, FRAGRANCE_LAYERS, NOTE_COLORS, OCCASIONS, PERFORMANCE } from "@/lib/content/fragrance";
 import RevealBar from "@/components/ui/RevealBar";
 import { usePurion } from "@/lib/store/PurionProvider";
-import { useCheckoutUrl } from "@/lib/content/checkout";
+import { CHECKOUT_LINK_TARGET, useCheckoutUrl } from "@/lib/content/checkout";
 
 const OCCASION_ICONS: Record<string, typeof SunMedium> = {
   "sun-medium": SunMedium,
@@ -246,7 +246,7 @@ export default function FragrancePyramid() {
       <div className="mx-auto mt-5 flex max-w-[var(--content-max)] justify-center">
         <a
           href={checkoutUrl}
-          target="_blank"
+          target={CHECKOUT_LINK_TARGET}
           rel="noreferrer"
           className="rounded-[var(--radius-pill)] bg-signal-400 px-7 py-3.5 text-sm font-medium text-ink-950 transition-transform hover:-translate-y-0.5"
         >

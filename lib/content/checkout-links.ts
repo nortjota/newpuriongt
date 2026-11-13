@@ -37,7 +37,19 @@ export const CHECKOUT_MAX_QUANTITY = 1;
 // isso, o vínculo com o pedido é feito manualmente no Despacho do CRM.
 export const GIFT_REF_PARAM = "gift_ref";
 
+// ── Pausa de vendas (estoque esgotado, 2026-11) ─────────────────────────
+// Pausado, TODO botão de compra do site leva a /em-breve em vez do Appmax:
+// home, carrinho, barra fixa, rodapé, kits de presente, indicações e
+// benefícios. Pausado por padrão; para reabrir as vendas, definir
+// NEXT_PUBLIC_CHECKOUT_PAUSED=false na Vercel (ou trocar o padrão aqui) e
+// publicar de novo — a variável é lida no build.
+export const CHECKOUT_PAUSED = process.env.NEXT_PUBLIC_CHECKOUT_PAUSED !== "false";
+export const COMING_SOON_PATH = "/em-breve";
+// Pausado, /em-breve abre na mesma aba; com o Appmax, em aba nova como antes.
+export const CHECKOUT_LINK_TARGET: "_blank" | undefined = CHECKOUT_PAUSED ? undefined : "_blank";
+
 export function baseCheckoutUrl(planId: Plan["id"]): string {
+  if (CHECKOUT_PAUSED) return COMING_SOON_PATH;
   return CHECKOUT_URL_BY_PLAN[planId] ?? CHECKOUT_URL;
 }
 
@@ -48,6 +60,8 @@ export function buildCheckoutUrl(
   planId: Plan["id"],
   { referralSlug, tracking, giftRef }: { referralSlug?: string | null; tracking?: TrackingParams; giftRef?: string | null } = {}
 ): string {
+  // Sem parâmetros de rastreio na página "em breve": ela não é um checkout.
+  if (CHECKOUT_PAUSED) return COMING_SOON_PATH;
   return appendTracking(baseCheckoutUrl(planId), {
     ref: referralSlug ?? undefined,
     ...tracking,

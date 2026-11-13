@@ -9,7 +9,7 @@
 //     vai no link do checkout no parâmetro APPMAX_COUPON_PARAM. Exige que o
 //     Appmax aceite esse parâmetro e que cada código esteja cadastrado lá como
 //     cupom de uso único (ver relatório). A confirmação vem pelo webhook.
-import { buildCheckoutUrl } from "@/lib/content/checkout-links";
+import { CHECKOUT_PAUSED, buildCheckoutUrl } from "@/lib/content/checkout-links";
 import type { Plan } from "@/lib/content/plans";
 
 export type CheckoutMode = "off" | "coupon_param";
@@ -27,6 +27,8 @@ export function checkoutUrlWithBenefit(
   env: NodeJS.ProcessEnv = process.env
 ): string | null {
   if (checkoutMode(env) !== "coupon_param") return null;
+  // Vendas pausadas: sem link de checkout com benefício (o botão some).
+  if (CHECKOUT_PAUSED) return null;
   const url = new URL(buildCheckoutUrl(planId));
   url.searchParams.set(env.APPMAX_COUPON_PARAM!, code);
   // Id da reserva (não é credencial: só é aceito via webhook assinado).

@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { usePurion } from "@/lib/store/PurionProvider";
-import { useCheckoutUrl } from "@/lib/content/checkout";
+import { CHECKOUT_LINK_TARGET, useCheckoutUrl } from "@/lib/content/checkout";
 
 // Barra fixa só no mobile (lg:hidden) — aparece depois que o usuário passa da
 // Oferta (#comprar) e some quando ele volta pra lá ou chega no rodapé, pra
@@ -50,7 +50,7 @@ export default function StickyBuyBar() {
         </div>
         <a
           href={checkoutUrl}
-          target="_blank"
+          target={CHECKOUT_LINK_TARGET}
           rel="noreferrer"
           className="rounded-[var(--radius-pill)] bg-ink-950 px-5 py-3 text-sm font-medium text-paper-0"
         >

@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { Minus, Plus, ShieldCheck, Truck, X } from "lucide-react";
 import { usePurion } from "@/lib/store/PurionProvider";
-import { useCheckoutUrl } from "@/lib/content/checkout";
+import { CHECKOUT_LINK_TARGET, useCheckoutUrl } from "@/lib/content/checkout";
 import CarIcon from "@/components/icons/CarIcon";
 
 export default function CartDrawer() {
@@ -133,7 +133,7 @@ export default function CartDrawer() {
                   </span>
                   <a
                     href={checkoutUrl}
-                    target="_blank"
+                    target={CHECKOUT_LINK_TARGET}
                     rel="noreferrer"
                     className="mt-2 w-full rounded-[var(--radius-pill)] bg-ink-950 py-4 text-center text-sm font-medium text-paper-0 transition-transform hover:-translate-y-0.5"
                   >

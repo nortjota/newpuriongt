@@ -6,7 +6,7 @@ import { usePurion } from "@/lib/store/PurionProvider";
 import { readStoredTracking, type TrackingParams } from "@/lib/tracking/utm";
 import { baseCheckoutUrl, buildCheckoutUrl } from "./checkout-links";
 
-export { CHECKOUT_URL } from "./checkout-links";
+export { CHECKOUT_URL, CHECKOUT_LINK_TARGET } from "./checkout-links";
 
 // Link de checkout do plano atualmente selecionado (ver PurionProvider).
 // Origem até o checkout (regra do PURION OS, lib/tracking.ts):
