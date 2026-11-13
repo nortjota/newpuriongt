@@ -16,6 +16,7 @@ const NAV_LINKS: NavLink[] = [
   { href: "#videos", label: "Vídeos" },
   { href: "#avaliacoes", label: "Avaliações" },
   { href: "#faq", label: "FAQ" },
+  { href: "/presentes", label: "Presentes" },
   { href: "#comprar", label: "Comprar", primary: true },
 ];
 
