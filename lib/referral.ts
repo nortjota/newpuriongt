@@ -15,8 +15,9 @@ export const REFERRALS: Record<string, Referral> = {
   jujuba10: { slug: "jujuba10", affiliateName: "Jujuba" },
 };
 
-export function saveReferral(slug: string) {
-  const ref = REFERRALS[slug];
+export function saveReferral(slug: string, affiliateName?: string) {
+  // Lista fixa acima OU afiliado cadastrado no CRM (validado na rota /[affiliate])
+  const ref: Referral | undefined = REFERRALS[slug] ?? (affiliateName !== undefined ? { slug, affiliateName } : undefined);
   if (!ref) return;
   try {
     localStorage.setItem(REFERRAL_KEY, JSON.stringify(ref));

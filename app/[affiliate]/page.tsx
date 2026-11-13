@@ -1,18 +1,23 @@
 import { notFound } from "next/navigation";
 import { REFERRALS } from "@/lib/referral";
+import { afiliadoValidoNoCrm } from "@/lib/crm";
 import AffiliateRedirect from "./AffiliateRedirect";
 
-// Rota única pra todos os links de afiliado (/marcelo10, /cristiano10,
-// /jujuba10, ...) — qualquer segmento que não bata com REFERRALS cai no
-// 404 padrão do Next.js, então isso não conflita com rotas estáticas como
-// /privacy ou /terms (o App Router prioriza rotas mais específicas).
+// Rota única pra todos os links de afiliado (/marcelo10, /cristiano10, ...).
+// Vale o afiliado da lista fixa (REFERRALS) OU qualquer afiliado ATIVO cadastrado
+// no CRM (módulo Afiliados) — assim um parceiro novo funciona sem mexer no site.
+// Segmento que não bate com nenhum cai no 404 padrão; rotas estáticas como
+// /privacy ou /terms têm prioridade no App Router.
 export default async function AffiliatePage({
   params,
 }: {
   params: Promise<{ affiliate: string }>;
 }) {
   const { affiliate } = await params;
-  if (!REFERRALS[affiliate]) notFound();
+  const slug = affiliate.toLowerCase();
+  if (REFERRALS[slug]) return <AffiliateRedirect slug={slug} />;
 
-  return <AffiliateRedirect slug={affiliate} />;
+  const crm = await afiliadoValidoNoCrm(slug);
+  if (!crm.valido) notFound();
+  return <AffiliateRedirect slug={slug} nome={crm.nome ?? ""} />;
 }

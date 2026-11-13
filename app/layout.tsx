@@ -6,6 +6,7 @@ import { PurionProvider } from "@/lib/store/PurionProvider";
 import Toast from "@/components/widgets/Toast";
 import WhatsAppFab from "@/components/widgets/WhatsAppFab";
 import EmailCaptureModal from "@/components/widgets/EmailCaptureModal";
+import TrackingCapture from "@/components/widgets/TrackingCapture";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -141,6 +142,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           <Toast />
           <WhatsAppFab />
           <EmailCaptureModal />
+          <TrackingCapture />
         </PurionProvider>
       </body>
     </html>
