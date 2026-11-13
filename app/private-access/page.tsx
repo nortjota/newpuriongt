@@ -24,8 +24,9 @@ const NAV: NavLink[] = [
   { href: "#ativar", label: "Acessar", primary: true },
 ];
 
-// Programa de indicações: ainda não existe. Só vira link quando houver URL real.
-const REFERRALS_URL = process.env.NEXT_PUBLIC_REFERRALS_URL || null;
+// Programa de indicação: a página /indicacoes mostra "em preparação" enquanto
+// o programa estiver inativo (sem anunciar valores).
+const REFERRALS_URL = process.env.NEXT_PUBLIC_REFERRALS_URL || "/indicacoes";
 
 const FAQ = [
   {

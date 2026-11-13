@@ -325,6 +325,9 @@ export async function unsubscribe(s: Secrets, token: unknown, ip: string) {
 
 export async function maintenance() {
   const a = await callFn("beneficio_manutencao", {});
-  const b = await callFn("crm_outbox_processar", { p_limite: 100 });
-  return { manutencao: a, outbox: b };
+  // Programa de indicação: aprova recompensas após a janela de validação,
+  // reprocessa pedidos que chegaram depois do evento e expira convites/créditos.
+  const i = await callFn("indicacao_processar", {});
+  const b = await callFn("crm_outbox_processar", { p_limite: 200 });
+  return { manutencao: a, indicacoes: i, outbox: b };
 }

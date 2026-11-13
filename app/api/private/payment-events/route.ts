@@ -1,8 +1,10 @@
 import { verifyWebhook } from "@/lib/private/crypto";
 import { applyPaymentEvent, parsePaymentEvent } from "@/lib/private/service";
+import { applyReferralPaymentEvent, isReferralCode } from "@/lib/indicacoes/service";
 import { getSecrets, handleError, json, unavailable } from "@/lib/private/http";
 
-// Eventos de pagamento (pago, falhou, cancelado, estornado, chargeback),
+// Eventos de pagamento (pago, falhou, cancelado, estornado, chargeback) para
+// benefícios do Private Access e para o programa de indicação,
 // encaminhados pelo webhook Appmax do CRM com assinatura HMAC. Idempotente
 // por event_id; o efeito acontece numa transação no banco.
 export async function POST(req: Request) {
@@ -17,7 +19,12 @@ export async function POST(req: Request) {
   try {
     const parsed = parsePaymentEvent(JSON.parse(body));
     if (!parsed.ok) return json({ code: "evento_invalido" }, 400);
-    const r = await applyPaymentEvent(s, parsed.value);
+    const e = parsed.value;
+    // Cupom do indicado (PGI-) ou crédito do indicador (PGC-) → programa de
+    // indicação; demais códigos/reservas → benefícios do Private Access.
+    const r = isReferralCode(e.codigo)
+      ? await applyReferralPaymentEvent(s, { eventId: e.eventId, tipo: e.tipo, pedidoRef: e.pedidoRef, codigo: e.codigo!, valorPedido: e.valorPedido })
+      : await applyPaymentEvent(s, e);
     return json({ code: "ok", ...r });
   } catch (e) {
     return handleError("payment-events", e);

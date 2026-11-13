@@ -52,7 +52,7 @@ test("visitante: hero, benefício ativo, ativação, atalhos e FAQ — sem dados
   await expect(page.getByText("R$ 15 na sua primeira compra de presente")).toBeVisible();
   await expect(page.getByRole("heading", { name: "Ative seu acesso" })).toBeVisible();
   await expect(page.getByRole("link", { name: /Presentes/ }).last()).toHaveAttribute("href", "/presentes");
-  await expect(page.locator('[data-state="indicacoes_em_preparacao"]')).toBeVisible();
+  await expect(page.getByRole("link", { name: /Programa de indicações/ })).toHaveAttribute("href", "/indicacoes");
   await expect(page.getByRole("button", { name: "O benefício vira dinheiro ou crédito?" })).toBeVisible();
   const me = await page.request.get("/api/private/me");
   expect(await me.json()).toEqual({ authenticated: false });
