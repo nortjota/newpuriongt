@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { Minus, Plus, MapPin, RotateCcw, Sparkles, Star, Truck } from "lucide-react";
 import { PLANS, TRUST_SEALS } from "@/lib/content/plans";
-import { useCheckoutUrl } from "@/lib/content/checkout";
+import { CHECKOUT_LINK_TARGET, useCheckoutUrl } from "@/lib/content/checkout";
 import { usePurion } from "@/lib/store/PurionProvider";
 
 const SEAL_ICONS = {
@@ -136,7 +136,7 @@ export default function Offer() {
         </div>
         <a
           href={checkoutUrl}
-          target="_blank"
+          target={CHECKOUT_LINK_TARGET}
           rel="noreferrer"
           className="w-full rounded-[var(--radius-pill)] bg-ink-950 py-4 text-center text-sm font-medium text-paper-0"
         >

@@ -4,7 +4,7 @@
 // formato das respostas. O indicador NUNCA recebe dados do indicado.
 import { randomBytes } from "node:crypto";
 import { getGiftCatalog, isAvailable } from "@/lib/gift/catalog";
-import { buildCheckoutUrl } from "@/lib/content/checkout-links";
+import { CHECKOUT_PAUSED, buildCheckoutUrl } from "@/lib/content/checkout-links";
 import { callFn } from "@/lib/private/db";
 import { checkoutMode } from "@/lib/private/checkout-discount";
 import { decrypt, encrypt, generateVoucherCode, hashIp, hmacHex, hashVoucherCode, isWellFormedToken, type Secrets } from "@/lib/private/crypto";
@@ -177,7 +177,7 @@ export async function inviteCheckout(s: Secrets, visitorId: string | undefined, 
   const offer = (await getGiftCatalog()).find((o) => o.id === offerId);
   if (!offer || !isAvailable(offer)) return { ok: false as const, motivo: "oferta_indisponivel" };
   if (offer.amount < programa.compra_minima) return { ok: false as const, motivo: "compra_minima" };
-  if (checkoutMode() !== "coupon_param") return { ok: false as const, motivo: "checkout_desligado" };
+  if (CHECKOUT_PAUSED || checkoutMode() !== "coupon_param") return { ok: false as const, motivo: "checkout_desligado" };
   const url = new URL(buildCheckoutUrl(offer.planId));
   url.searchParams.set(process.env.APPMAX_COUPON_PARAM!, invite.cupom);
   url.searchParams.set(REFERRAL_PARAM, invite.atribuicaoId);

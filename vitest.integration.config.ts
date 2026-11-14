@@ -19,6 +19,7 @@ export default defineConfig({
       BENEFITS_CODE_KEY: Buffer.alloc(32, 7).toString("base64"),
       BENEFITS_CHECKOUT_MODE: "coupon_param",
       APPMAX_COUPON_PARAM: "coupon",
+      NEXT_PUBLIC_CHECKOUT_PAUSED: "false",
     },
   },
 });

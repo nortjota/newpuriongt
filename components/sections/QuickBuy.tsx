@@ -2,7 +2,7 @@
 
 import { ArrowRight, Check, Minus, Plus, RotateCcw, ShieldCheck, Sparkles, Star, Truck } from "lucide-react";
 import { PLANS } from "@/lib/content/plans";
-import { useCheckoutUrl } from "@/lib/content/checkout";
+import { CHECKOUT_LINK_TARGET, useCheckoutUrl } from "@/lib/content/checkout";
 import { usePurion } from "@/lib/store/PurionProvider";
 import ProductGallery from "@/components/widgets/ProductGallery";
 
@@ -142,7 +142,7 @@ export default function QuickBuy() {
             </button>
             <a
               href={checkoutUrl}
-              target="_blank"
+              target={CHECKOUT_LINK_TARGET}
               rel="noreferrer"
               className="w-full rounded-[var(--radius-pill)] bg-ink-950 py-4 text-center text-sm font-medium text-paper-0"
             >

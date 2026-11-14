@@ -1,6 +1,6 @@
 // Serviço da /presentes/kits — tudo que decide preço, composição, estoque e
 // disponibilidade roda AQUI, no servidor. O navegador só envia ids e textos.
-import { CHECKOUT_MAX_QUANTITY, buildCheckoutUrl } from "@/lib/content/checkout-links";
+import { CHECKOUT_MAX_QUANTITY, CHECKOUT_PAUSED, buildCheckoutUrl } from "@/lib/content/checkout-links";
 import { getGiftCatalog, isAvailable, type GiftOffer } from "./catalog";
 import { computeSummary, type PriceSummary } from "./pricing";
 import { generateReference, hasPersonalization, parseGiftCartRequest, type ValidationError } from "./personalization";
@@ -77,6 +77,12 @@ export async function prepareGiftCart(rawBody: unknown, search: string, deps: De
   const parsed = parseGiftCartRequest(rawBody, deps.now());
   if (!parsed.ok) return { ok: false, status: 400, body: { code: "invalid_request", message: "Revise os campos destacados.", errors: parsed.errors } };
   const req = parsed.value;
+
+  // Vendas pausadas: não monta carrinho nem grava personalização de um pedido
+  // que não pode ser concluído.
+  if (CHECKOUT_PAUSED) {
+    return { ok: false, status: 409, body: { code: "checkout_paused", message: "Nosso estoque esgotou. Em breve voltamos com novos presentes." } };
+  }
 
   const offers = await deps.catalog();
   const offer = offers.find((o) => o.id === req.offerId);
