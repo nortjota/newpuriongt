@@ -14,7 +14,7 @@ function InstagramIcon({ size = 16 }: { size?: number }) {
   );
 }
 import { WHATSAPP_URL } from "@/lib/content/whatsapp";
-import { useCheckoutUrl } from "@/lib/content/checkout";
+import { CHECKOUT_LINK_TARGET, useCheckoutUrl } from "@/lib/content/checkout";
 import { COMPANY } from "@/lib/config/company";
 
 const PARTNER_URL = `${WHATSAPP_URL}?text=${encodeURIComponent(
@@ -28,7 +28,7 @@ function buildCategories(checkoutUrl: string, hashBase: string) {
       links: [
         { href: "#comprar", label: "Produto e planos" },
         { href: "#fragrancia", label: "Pirâmide olfativa" },
-        { href: checkoutUrl, label: "Comprar agora", external: true },
+        { href: checkoutUrl, label: "Comprar agora", external: CHECKOUT_LINK_TARGET === "_blank" },
       ],
     },
     {
