@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS public.indicacao_programas (
   updated_at                      timestamptz NOT NULL DEFAULT now(),
   atualizado_por                  text,
   created_at                      timestamptz NOT NULL DEFAULT now(),
-  tenant_id                       uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id                       uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uq_indicacao_programas_codigo ON public.indicacao_programas (tenant_id, codigo);
 
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS public.indicacao_codigos (
   codigo       text        NOT NULL CHECK (codigo ~ '^[2-9A-HJ-NP-Z]{8}$'),  -- público, aleatório, sem dado pessoal
   ativo        boolean     NOT NULL DEFAULT true,
   created_at   timestamptz NOT NULL DEFAULT now(),
-  tenant_id    uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id    uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uq_indicacao_codigos_codigo ON public.indicacao_codigos (codigo);
 CREATE UNIQUE INDEX IF NOT EXISTS uq_indicacao_codigos_cliente ON public.indicacao_codigos (programa_id, cliente_id);
@@ -67,7 +67,7 @@ CREATE TABLE IF NOT EXISTS public.indicacao_cliques (
   ip_hash          text,
   contabilizado    boolean     NOT NULL DEFAULT true,   -- false = repetido/abuso (não entra em métricas)
   created_at       timestamptz NOT NULL DEFAULT now(),
-  tenant_id        uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id        uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE INDEX IF NOT EXISTS idx_indicacao_cliques_codigo ON public.indicacao_cliques (codigo_id, visitante_hash, created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_indicacao_cliques_ip ON public.indicacao_cliques (ip_hash, created_at DESC);
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS public.indicacao_atribuicoes (
   revertida_em    timestamptz,
   created_at      timestamptz NOT NULL DEFAULT now(),
   updated_at      timestamptz NOT NULL DEFAULT now(),
-  tenant_id       uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id       uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uq_indicacao_atrib_cupom ON public.indicacao_atribuicoes (cupom_hash);
 -- Primeiro convite vence: no máximo 1 convite ativo por visitante.
@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS public.indicacao_creditos (
   expira_em     timestamptz NOT NULL,
   created_at    timestamptz NOT NULL DEFAULT now(),
   updated_at    timestamptz NOT NULL DEFAULT now(),
-  tenant_id     uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id     uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uq_indicacao_creditos_codigo ON public.indicacao_creditos (codigo_hash);
 CREATE UNIQUE INDEX IF NOT EXISTS uq_indicacao_creditos_ativo ON public.indicacao_creditos (indicador_id) WHERE status = 'disponivel';
@@ -143,7 +143,7 @@ CREATE TABLE IF NOT EXISTS public.indicacao_ledger (
   bucket          text        NOT NULL CHECK (bucket IN ('pendente','disponivel')),
   valor           numeric(10,2) NOT NULL CHECK (valor <> 0),
   created_at      timestamptz NOT NULL DEFAULT now(),
-  tenant_id       uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id       uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 -- Idempotência: cada transição contábil acontece uma única vez.
 CREATE UNIQUE INDEX IF NOT EXISTS uq_indicacao_ledger_atrib ON public.indicacao_ledger (atribuicao_id, tipo) WHERE atribuicao_id IS NOT NULL;
@@ -194,7 +194,7 @@ REVOKE UPDATE, DELETE, TRUNCATE ON public.indicacao_ledger FROM service_role, au
 -- ── 8. Helpers ─────────────────────────────────────────────────────────────
 CREATE OR REPLACE FUNCTION public.indicacao__programa(p_codigo text)
 RETURNS public.indicacao_programas LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public AS $$
-  SELECT * FROM public.indicacao_programas WHERE codigo = p_codigo AND tenant_id = public.meu_tenant_id();
+  SELECT * FROM public.indicacao_programas WHERE codigo = p_codigo AND tenant_id = public.pa__tenant();
 $$;
 
 CREATE OR REPLACE FUNCTION public.indicacao__norm_tel(p text) RETURNS text LANGUAGE sql IMMUTABLE AS $$
@@ -619,7 +619,7 @@ RETURNS jsonb LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public AS $
     'desconto_max_percentual', p.desconto_max_percentual, 'janela_atribuicao_dias', p.janela_atribuicao_dias,
     'janela_validacao_dias', p.janela_validacao_dias, 'max_recompensas_por_indicador', p.max_recompensas_por_indicador,
     'validade_credito_dias', p.validade_credito_dias, 'termos_versao', p.termos_versao, 'termos_texto', p.termos_texto) END
-  FROM (SELECT * FROM public.indicacao_programas WHERE codigo = p_programa AND tenant_id = public.meu_tenant_id()) p
+  FROM (SELECT * FROM public.indicacao_programas WHERE codigo = p_programa AND tenant_id = public.pa__tenant()) p
   RIGHT JOIN (SELECT 1) one ON true;
 $$;
 
@@ -652,7 +652,7 @@ BEGIN
     termos_versao = COALESCE(p_campos->>'termos_versao', p.termos_versao),
     termos_texto = COALESCE(p_campos->>'termos_texto', p.termos_texto),
     updated_at = now(), atualizado_por = p_por
-  WHERE p.codigo = p_programa AND p.tenant_id = public.meu_tenant_id()
+  WHERE p.codigo = p_programa AND p.tenant_id = public.pa__tenant()
   RETURNING * INTO prog;
   IF prog.id IS NULL THEN RETURN jsonb_build_object('resultado', 'programa_inexistente'); END IF;
   PERFORM public.pa__auditar('indicacao_programa_atualizado', true, NULL, NULL, NULL, NULL, NULL, jsonb_build_object('campos', p_campos, 'por', p_por));
@@ -665,7 +665,7 @@ END $$;
 -- ── 18. Mensuração ────────────────────────────────────────────────────────
 CREATE OR REPLACE FUNCTION public.indicacao_metricas(p_programa text, p_desde timestamptz DEFAULT now() - interval '90 days')
 RETURNS jsonb LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public AS $$
-  WITH prog AS (SELECT * FROM public.indicacao_programas WHERE codigo = p_programa AND tenant_id = public.meu_tenant_id()),
+  WITH prog AS (SELECT * FROM public.indicacao_programas WHERE codigo = p_programa AND tenant_id = public.pa__tenant()),
   cods AS (SELECT c.id FROM public.indicacao_codigos c, prog WHERE c.programa_id = prog.id),
   cli AS (SELECT * FROM public.indicacao_cliques WHERE codigo_id IN (SELECT id FROM cods) AND contabilizado AND created_at >= p_desde),
   atr AS (SELECT a.*, v.quantidade, v.frascos_por_unidade FROM public.indicacao_atribuicoes a LEFT JOIN public.vendas v ON v.id = a.venda_id, prog
@@ -759,6 +759,14 @@ SELECT 'PILOTO_INDICACAO_10', false, 10, 10, 97.90, 20, 30, 14, 10, 90, 'indicac
     || 'Estorno, cancelamento ou chargeback revertem a recompensa. A PURION GT pode suspender indicações com indício de abuso.',
        'a1b2c3d4-e5f6-7890-abcd-ef1234567890'::uuid
 WHERE NOT EXISTS (SELECT 1 FROM public.indicacao_programas WHERE codigo = 'PILOTO_INDICACAO_10');
+
+-- Default de tenant válido também para gravações do servidor (chave de serviço).
+ALTER TABLE public.indicacao_programas ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.indicacao_codigos ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.indicacao_cliques ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.indicacao_atribuicoes ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.indicacao_creditos ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.indicacao_ledger ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
 
 -- ── ROLLBACK (manual) ──────────────────────────────────────────────────────
 -- Restaurar crm_outbox_processar da migration 20261113 e então:

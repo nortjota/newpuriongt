@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS public.pa_clientes (
   documento_norm  text        CHECK (documento_norm ~ '^[0-9]{11}([0-9]{3})?$'),
   primeiro_nome   text        CHECK (char_length(primeiro_nome) <= 40),
   created_at      timestamptz NOT NULL DEFAULT now(),
-  tenant_id       uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id       uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uq_pa_clientes_email ON public.pa_clientes (tenant_id, email_norm);
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS public.pa_tokens (
   revogado_em  timestamptz,
   emitido_por  text,
   created_at   timestamptz NOT NULL DEFAULT now(),
-  tenant_id    uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id    uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uq_pa_tokens_hash ON public.pa_tokens (token_hash);
 CREATE INDEX IF NOT EXISTS idx_pa_tokens_cliente ON public.pa_tokens (cliente_id, created_at DESC);
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS public.pa_sessoes (
   revogada_em  timestamptz,
   ultimo_uso   timestamptz NOT NULL DEFAULT now(),
   created_at   timestamptz NOT NULL DEFAULT now(),
-  tenant_id    uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id    uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uq_pa_sessoes_hash ON public.pa_sessoes (sessao_hash);
 
@@ -85,7 +85,7 @@ CREATE TABLE IF NOT EXISTS public.beneficio_politicas (
   termos_texto             text        NOT NULL,
   created_at               timestamptz NOT NULL DEFAULT now(),
   updated_at               timestamptz NOT NULL DEFAULT now(),
-  tenant_id                uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id                uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uq_beneficio_politicas_codigo ON public.beneficio_politicas (tenant_id, codigo);
 
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS public.beneficio_vouchers (
   cancelado_em         timestamptz,
   motivo_cancelamento  text,
   updated_at           timestamptz NOT NULL DEFAULT now(),
-  tenant_id            uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id            uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uq_beneficio_vouchers_codigo ON public.beneficio_vouchers (codigo_hash);
 CREATE UNIQUE INDEX IF NOT EXISTS uq_beneficio_vouchers_cliente_politica ON public.beneficio_vouchers (politica_id, cliente_id);
@@ -125,7 +125,7 @@ CREATE TABLE IF NOT EXISTS public.beneficio_resgates (
   confirmado_em      timestamptz,
   encerrado_em       timestamptz,
   motivo             text,
-  tenant_id          uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id          uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uq_beneficio_resgates_idem ON public.beneficio_resgates (idempotency_key);
 -- No máximo UM resgate ativo por voucher (proteção contra concorrência).
@@ -153,7 +153,7 @@ CREATE TABLE IF NOT EXISTS public.beneficio_auditoria (
   ip_hash     text,
   detalhe     jsonb       NOT NULL DEFAULT '{}'::jsonb,
   created_at  timestamptz NOT NULL DEFAULT now(),
-  tenant_id   uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id   uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE INDEX IF NOT EXISTS idx_beneficio_auditoria_ip ON public.beneficio_auditoria (ip_hash, evento, created_at DESC) WHERE NOT sucesso;
 CREATE INDEX IF NOT EXISTS idx_beneficio_auditoria_cliente ON public.beneficio_auditoria (cliente_id, created_at DESC);
@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS public.consentimentos (
   texto_hash    text        NOT NULL CHECK (texto_hash ~ '^[0-9a-f]{64}$'),
   ip_hash       text,
   created_at    timestamptz NOT NULL DEFAULT now(),
-  tenant_id     uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id     uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE INDEX IF NOT EXISTS idx_consentimentos_email ON public.consentimentos (tenant_id, email_norm, canal, created_at DESC);
 DROP TRIGGER IF EXISTS trg_consentimentos_imutavel ON public.consentimentos;
@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS public.pa_descadastro_tokens (
   token_hash  text        PRIMARY KEY CHECK (token_hash ~ '^[0-9a-f]{64}$'),
   email_norm  text        NOT NULL,
   created_at  timestamptz NOT NULL DEFAULT now(),
-  tenant_id   uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id   uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 
 -- ── 7. Outbox para o CRM ───────────────────────────────────────────────────
@@ -212,7 +212,7 @@ CREATE TABLE IF NOT EXISTS public.crm_outbox (
   ultimo_erro        text,
   created_at         timestamptz NOT NULL DEFAULT now(),
   enviado_em         timestamptz,
-  tenant_id          uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id          uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 CREATE UNIQUE INDEX IF NOT EXISTS uq_crm_outbox_idem ON public.crm_outbox (idempotency_key);
 CREATE INDEX IF NOT EXISTS idx_crm_outbox_fila ON public.crm_outbox (status, proxima_tentativa) WHERE status <> 'enviado';
@@ -406,7 +406,7 @@ DECLARE
   eleg text;
   v public.beneficio_vouchers;
 BEGIN
-  SELECT * INTO pol FROM public.beneficio_politicas WHERE codigo = p_politica_codigo AND tenant_id = public.meu_tenant_id();
+  SELECT * INTO pol FROM public.beneficio_politicas WHERE codigo = p_politica_codigo AND tenant_id = public.pa__tenant();
   IF NOT FOUND THEN RETURN jsonb_build_object('resultado', 'politica_inexistente'); END IF;
   -- Serializa emissões do mesmo cliente nesta política.
   PERFORM pg_advisory_xact_lock(hashtextextended(pol.id::text || p_cliente::text, 0));
@@ -654,7 +654,7 @@ BEGIN
         'somente_presente', p.somente_presente, 'planos_permitidos', p.planos_permitidos, 'termos_versao', p.termos_versao,
         'termos_texto', p.termos_texto, 'elegibilidade', public.beneficio_elegibilidade(p_cliente, p.id)) ORDER BY p.created_at)
       FROM public.beneficio_politicas p
-      WHERE p.tenant_id = public.meu_tenant_id() AND p.ativo AND now() >= p.vigencia_inicio AND (p.vigencia_fim IS NULL OR now() <= p.vigencia_fim)), '[]'::jsonb),
+      WHERE p.tenant_id = public.pa__tenant() AND p.ativo AND now() >= p.vigencia_inicio AND (p.vigencia_fim IS NULL OR now() <= p.vigencia_fim)), '[]'::jsonb),
     'vouchers', COALESCE((
       SELECT jsonb_agg(jsonb_build_object(
         'id', v.id, 'politica', p.codigo, 'status', v.status, 'valor', v.valor, 'codigo_cifrado', v.codigo_cifrado,
@@ -679,7 +679,7 @@ RETURNS jsonb LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public AS $
     'somente_presente', p.somente_presente, 'somente_primeira_compra_presente', p.somente_primeira_compra_presente,
     'planos_permitidos', p.planos_permitidos, 'termos_versao', p.termos_versao, 'termos_texto', p.termos_texto) ORDER BY p.created_at), '[]'::jsonb)
   FROM public.beneficio_politicas p
-  WHERE p.tenant_id = public.meu_tenant_id() AND p.ativo AND now() >= p.vigencia_inicio AND (p.vigencia_fim IS NULL OR now() <= p.vigencia_fim);
+  WHERE p.tenant_id = public.pa__tenant() AND p.ativo AND now() >= p.vigencia_inicio AND (p.vigencia_fim IS NULL OR now() <= p.vigencia_fim);
 $$;
 
 -- ── 16. Consentimento ─────────────────────────────────────────────────────
@@ -702,7 +702,7 @@ END $$;
 CREATE OR REPLACE FUNCTION public.consentimento_vigente_cliente(p_email text)
 RETURNS jsonb LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public AS $$
   SELECT COALESCE(jsonb_object_agg(canal, concedido), '{}'::jsonb)
-    FROM public.consentimento_vigente WHERE tenant_id = public.meu_tenant_id() AND email_norm = lower(btrim(p_email)) AND finalidade = 'marketing';
+    FROM public.consentimento_vigente WHERE tenant_id = public.pa__tenant() AND email_norm = lower(btrim(p_email)) AND finalidade = 'marketing';
 $$;
 
 -- Descadastro por link (todos os canais de marketing). Não exige login.
@@ -786,6 +786,18 @@ SELECT 'PILOTO_PRESENTE_15', 'R$ 15 na sua primeira compra de presente',
        'Benefício pessoal e intransferível, válido por 60 dias a partir da emissão, para uma única compra de presente. Desconto de R$ 15,00 limitado a 20% do valor do pedido, em pedidos a partir de R$ 97,90. Não cumulativo com outros benefícios ou cupons. Não é convertido em dinheiro nem em crédito. Se o pagamento não for aprovado, o benefício volta a ficar disponível dentro da validade; em caso de estorno ou chargeback de um pedido que usou o benefício, ele é cancelado.',
        'a1b2c3d4-e5f6-7890-abcd-ef1234567890'::uuid
 WHERE NOT EXISTS (SELECT 1 FROM public.beneficio_politicas WHERE codigo = 'PILOTO_PRESENTE_15');
+
+-- Default de tenant válido também para gravações do servidor (chave de serviço).
+ALTER TABLE public.pa_clientes ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.pa_tokens ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.pa_sessoes ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.beneficio_politicas ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.beneficio_vouchers ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.beneficio_resgates ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.beneficio_auditoria ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.consentimentos ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.pa_descadastro_tokens ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
+ALTER TABLE public.crm_outbox ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
 
 -- ── ROLLBACK (manual) ──────────────────────────────────────────────────────
 -- DROP FUNCTION IF EXISTS public.beneficio_manutencao(), public.crm_outbox_processar(int), public.consentimento_descadastrar(text,text),

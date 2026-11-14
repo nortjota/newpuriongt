@@ -11,10 +11,11 @@ END $$;
 CREATE SCHEMA IF NOT EXISTS auth;
 CREATE OR REPLACE FUNCTION auth.uid() RETURNS uuid LANGUAGE sql STABLE AS $$ SELECT NULL::uuid $$;
 
-CREATE OR REPLACE FUNCTION public.meu_tenant_id() RETURNS uuid LANGUAGE sql STABLE
-AS $$ SELECT 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'::uuid $$;
-
-CREATE TABLE IF NOT EXISTS public.perfis (id uuid PRIMARY KEY, role text);
+-- Igual à produção: o tenant vem do perfil do usuário logado. Chamadas com a
+-- chave de serviço (o servidor do site) não têm auth.uid() → NULL.
+CREATE TABLE IF NOT EXISTS public.perfis (id uuid PRIMARY KEY, role text, tenant_id uuid);
+CREATE OR REPLACE FUNCTION public.meu_tenant_id() RETURNS uuid LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public
+AS $$ SELECT tenant_id FROM public.perfis WHERE id = auth.uid() $$;
 CREATE OR REPLACE FUNCTION public.sou_logistica() RETURNS boolean LANGUAGE sql STABLE
 AS $$ SELECT EXISTS (SELECT 1 FROM public.perfis WHERE id = auth.uid() AND role = 'logistica') $$;
 
@@ -38,7 +39,7 @@ CREATE TABLE IF NOT EXISTS public.vendas (
   data_venda        timestamptz DEFAULT now(),
   updated_at        timestamptz DEFAULT now(),
   deleted_at        timestamptz,
-  tenant_id         uuid DEFAULT public.meu_tenant_id()
+  tenant_id         uuid DEFAULT 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'::uuid
 );
 
 CREATE TABLE IF NOT EXISTS public.notificacoes (

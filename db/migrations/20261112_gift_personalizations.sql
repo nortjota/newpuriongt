@@ -15,6 +15,13 @@
 --   Despacho já exibe) e vendas.compra_presente = true (que adapta o pós-venda).
 -- ============================================================
 
+-- Tenant efetivo: o do usuário logado (equipe no CRM) ou, quando a chamada
+-- vem do servidor do site com a chave de serviço (sem auth.uid()), o tenant
+-- único da PURION — mesmo critério do webhook Appmax do CRM.
+CREATE OR REPLACE FUNCTION public.pa__tenant() RETURNS uuid
+LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public
+AS $$ SELECT COALESCE(public.meu_tenant_id(), 'a1b2c3d4-e5f6-7890-abcd-ef1234567890'::uuid) $$;
+
 CREATE TABLE IF NOT EXISTS public.gift_personalizations (
   id                    uuid        PRIMARY KEY DEFAULT gen_random_uuid(),
   reference             text        NOT NULL,
@@ -40,7 +47,7 @@ CREATE TABLE IF NOT EXISTS public.gift_personalizations (
   expires_at            timestamptz NOT NULL,
   created_at            timestamptz NOT NULL DEFAULT now(),
   updated_at            timestamptz NOT NULL DEFAULT now(),
-  tenant_id             uuid        NOT NULL DEFAULT public.meu_tenant_id()
+  tenant_id             uuid        NOT NULL DEFAULT public.pa__tenant()
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS uq_gift_personalizations_reference ON public.gift_personalizations (reference);
@@ -77,7 +84,7 @@ DECLARE
   nota text;
 BEGIN
   SELECT * INTO g FROM public.gift_personalizations
-   WHERE reference = upper(trim(p_reference)) AND tenant_id = public.meu_tenant_id()
+   WHERE reference = upper(trim(p_reference)) AND tenant_id = public.pa__tenant()
    FOR UPDATE;
   IF NOT FOUND THEN RAISE EXCEPTION 'Referência de presente não encontrada'; END IF;
   IF g.venda_id IS NOT NULL AND g.venda_id <> p_venda_id THEN
@@ -101,7 +108,7 @@ BEGIN
            WHEN COALESCE(observacoes, '') = '' THEN nota
            ELSE observacoes || E'\n' || nota END,
          updated_at = now()
-   WHERE id = p_venda_id AND tenant_id = public.meu_tenant_id();
+   WHERE id = p_venda_id AND tenant_id = public.pa__tenant();
 END $$;
 
 REVOKE ALL ON FUNCTION public.vincular_personalizacao_presente(text, uuid) FROM public, anon;
@@ -121,6 +128,9 @@ AS $$
   SELECT count(*)::int FROM upd;
 $$;
 REVOKE ALL ON FUNCTION public.expirar_personalizacoes_presente() FROM public, anon, authenticated;
+
+-- Default de tenant válido também para gravações do servidor (chave de serviço).
+ALTER TABLE public.gift_personalizations ALTER COLUMN tenant_id SET DEFAULT public.pa__tenant();
 
 -- ── ROLLBACK (manual) ──────────────────────────────────────────
 -- DROP FUNCTION IF EXISTS public.expirar_personalizacoes_presente();
